@@ -21,23 +21,23 @@ public class Evaluation {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @JoinColumn(name="user_id")
-    private User userId;
+    @JoinColumn(name="eval_user_id")
+    private User evalUserId;
     @ManyToOne
-    @JoinColumn(name="pdf_id")
-    private Pdf pdfId;
+    @JoinColumn(name="eval_pdf_id")
+    private Pdf evalPdfId;
 
     public Evaluation() {
     }
 
-    public Evaluation(String title, String comment, Byte star, Date createdAt, Date updateAt, User userId, Pdf pdfId) {
+    public Evaluation(String title, String comment, Byte star, Date createdAt, Date updateAt, User evalUserId, Pdf evalPdfId) {
         this.title = title;
         this.comment = comment;
         this.star = star;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.userId = userId;
-        this.pdfId = pdfId;
+        this.evalUserId = evalUserId;
+        this.evalPdfId = evalPdfId;
     }
 
     public Integer getId() {
@@ -88,19 +88,19 @@ public class Evaluation {
         this.updateAt = updateAt;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getEvalUserId() {
+        return evalUserId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setEvalUserId(User evalUserId) {
+        this.evalUserId = evalUserId;
     }
 
-    public Pdf getPdfId() {
-        return pdfId;
+    public Pdf getEvalPdfId() {
+        return evalPdfId;
     }
 
-    public void setPdfId(Pdf pdfId) {
-        this.pdfId = pdfId;
+    public void setEvalPdfId(Pdf evalPdfId) {
+        this.evalPdfId = evalPdfId;
     }
 }

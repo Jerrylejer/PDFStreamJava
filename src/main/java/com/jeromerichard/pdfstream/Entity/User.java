@@ -28,13 +28,13 @@ public class User {
     @Column(name="updated_at")
     private Date updateAt;
     @ManyToOne
-    @JoinColumn(name="profil_id")
-    private Profil profilId;
+    @JoinColumn(name="user_profil_id")
+    private Profil userProfilId;
 
     public User() {
     }
 
-    public User(String username, String password, String avatar, String email, String bio, String role, Date createdAt, Date updateAt, Profil profilId) {
+    public User(String username, String password, String avatar, String email, String bio, String role, Date createdAt, Date updateAt, Profil userProfilId) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -43,7 +43,7 @@ public class User {
         this.role = role;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.profilId = profilId;
+        this.userProfilId = userProfilId;
     }
 
     public Integer getId() {
@@ -118,11 +118,11 @@ public class User {
         this.updateAt = updateAt;
     }
 
-    public Profil getProfilId() {
-        return profilId;
+    public Profil getUserProfilId() {
+        return userProfilId;
     }
 
-    public void setProfilId(Profil profilId) {
-        this.profilId = profilId;
+    public void setProfilId(Profil userProfilId) {
+        this.userProfilId = userProfilId;
     }
 }

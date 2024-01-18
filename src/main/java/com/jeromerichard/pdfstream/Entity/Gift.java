@@ -21,22 +21,22 @@ public class Gift {
     private Date createdAt;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User userId;
+    @JoinColumn(name="gift_user_id")
+    private User giftUserId;
     @ManyToOne
-    @JoinColumn(name="pdf_id")
-    private Pdf pdfId;
+    @JoinColumn(name="gift_pdf_id")
+    private Pdf giftPdfId;
 
     public Gift() {
     }
 
-    public Gift(Integer amount, String message, String beneficiary, Date createdAt, User userId, Pdf pdfId) {
+    public Gift(Integer amount, String message, String beneficiary, Date createdAt, User giftUserId, Pdf giftPdfId) {
         this.amount = amount;
         this.message = message;
         this.beneficiary = beneficiary;
         this.createdAt = createdAt;
-        this.userId = userId;
-        this.pdfId = pdfId;
+        this.giftUserId = giftUserId;
+        this.giftPdfId = giftPdfId;
     }
 
     public Integer getId() {
@@ -79,19 +79,19 @@ public class Gift {
         this.createdAt = createdAt;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getGiftUserId() {
+        return giftUserId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setGiftUserId(User giftUserId) {
+        this.giftUserId = giftUserId;
     }
 
-    public Pdf getPdfId() {
-        return pdfId;
+    public Pdf getGiftPdfId() {
+        return giftPdfId;
     }
 
-    public void setPdfId(Pdf pdfId) {
-        this.pdfId = pdfId;
+    public void setGiftPdfId(Pdf giftPdfId) {
+        this.giftPdfId = giftPdfId;
     }
 }
