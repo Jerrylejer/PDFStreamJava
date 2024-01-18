@@ -8,6 +8,7 @@ import java.util.Date;
 @Table(name="pdf")
 public class Pdf {
     @Id
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name="title")

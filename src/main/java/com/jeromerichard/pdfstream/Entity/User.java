@@ -8,6 +8,7 @@ import java.util.Date;
 @Table(name="user")
 public class User {
     @Id
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
     @Column(name="username")
