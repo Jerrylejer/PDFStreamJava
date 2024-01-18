@@ -26,11 +26,14 @@ public class User {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
+    @ManyToOne
+    @JoinColumn(name="profil_id")
+    private Profil profilId;
 
     public User() {
     }
 
-    public User(String username, String password, String avatar, String email, String bio, String role, Date createdAt, Date updateAt) {
+    public User(String username, String password, String avatar, String email, String bio, String role, Date createdAt, Date updateAt, Profil profilId) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -39,6 +42,7 @@ public class User {
         this.role = role;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+        this.profilId = profilId;
     }
 
     public Integer getId() {
@@ -111,5 +115,13 @@ public class User {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Profil getProfilId() {
+        return profilId;
+    }
+
+    public void setProfilId(Profil profilId) {
+        this.profilId = profilId;
     }
 }
