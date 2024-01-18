@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="profile")
-public class Profile {
+@Table(name="profil")
+public class Profil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -29,10 +29,10 @@ public class Profile {
     @Column(name="updated_at")
     private Date updateAt;
 
-    public Profile() {
+    public Profil() {
     }
 
-    public Profile(String gender, String firstname, String lastname, String adress1, String adress2, String zipcode, String city, Date createdAt, Date updateAt) {
+    public Profil(String gender, String firstname, String lastname, String adress1, String adress2, String zipcode, String city, Date createdAt, Date updateAt) {
         this.gender = gender;
         this.firstname = firstname;
         this.lastname = lastname;
