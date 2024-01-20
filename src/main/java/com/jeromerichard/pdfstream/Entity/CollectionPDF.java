@@ -10,16 +10,16 @@ public class CollectionPDF {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
-    @JoinColumn(name="collPDF_collection_id")
+    @JoinColumn(name="collectionPDF_collection_id")
     private Collection collectionId;
     @ManyToOne
-    @JoinColumn(name="collPDF_pdf_id")
-    private Collection pdfId;
+    @JoinColumn(name="collectionPDF_pdf_id")
+    private Pdf pdfId;
 
     public CollectionPDF() {
     }
 
-    public CollectionPDF(Collection collectionId, Collection pdfId) {
+    public CollectionPDF(Collection collectionId, Pdf pdfId) {
         this.collectionId = collectionId;
         this.pdfId = pdfId;
     }
@@ -40,11 +40,11 @@ public class CollectionPDF {
         this.collectionId = collectionId;
     }
 
-    public Collection getPdfId() {
+    public Pdf getPdfId() {
         return pdfId;
     }
 
-    public void setPdfId(Collection pdfId) {
+    public void setPdfId(Pdf pdfId) {
         this.pdfId = pdfId;
     }
 }

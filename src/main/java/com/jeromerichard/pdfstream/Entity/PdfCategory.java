@@ -3,23 +3,23 @@ package com.jeromerichard.pdfstream.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="category_PDF")
-public class CategoryPDF {
+@Table(name="category_pdf")
+public class PdfCategory {
      @Id
      @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
-    @JoinColumn(name="catPDF_category_id")
-    private Collection categoryId;
+    @JoinColumn(name="pdfCategory_category_id")
+    private Category categoryId;
     @ManyToOne
-    @JoinColumn(name="catPDF_pdf_id")
-    private Collection pdfId;
+    @JoinColumn(name="pdfCategory_pdf_id")
+    private Pdf pdfId;
 
-    public CategoryPDF() {
+    public PdfCategory() {
     }
 
-    public CategoryPDF(Collection categoryId, Collection pdfId) {
+    public PdfCategory(Category categoryId, Pdf pdfId) {
         this.categoryId = categoryId;
         this.pdfId = pdfId;
     }
@@ -32,19 +32,19 @@ public class CategoryPDF {
         this.id = id;
     }
 
-    public Collection getCategoryId() {
+    public Category getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Collection categoryId) {
+    public void setCategoryId(Category categoryId) {
         this.categoryId = categoryId;
     }
 
-    public Collection getPdfId() {
+    public Pdf getPdfId() {
         return pdfId;
     }
 
-    public void setPdfId(Collection pdfId) {
+    public void setPdfId(Pdf pdfId) {
         this.pdfId = pdfId;
     }
 }

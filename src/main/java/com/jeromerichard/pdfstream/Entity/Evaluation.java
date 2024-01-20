@@ -21,10 +21,10 @@ public class Evaluation {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @JoinColumn(name="eval_user_id")
+    @JoinColumn(name="evaluation_user_id")
     private User userId;
     @ManyToOne
-    @JoinColumn(name="eval_pdf_id")
+    @JoinColumn(name="evaluation_pdf_id")
     private Pdf pdfId;
 
     public Evaluation() {

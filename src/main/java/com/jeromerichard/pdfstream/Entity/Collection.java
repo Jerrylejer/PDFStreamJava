@@ -16,7 +16,7 @@ public class Collection {
     @Column(name="updated_at")
     private Date updateAt;
     @OneToOne
-    @JoinColumn(name="coll_user_id")
+    @JoinColumn(name="collection_user_id")
     private User userId;
     public Collection() {
     }
