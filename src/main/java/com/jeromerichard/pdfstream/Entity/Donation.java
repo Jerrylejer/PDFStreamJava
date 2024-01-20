@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="gift")
-public class Gift {
+public class Donation {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,22 +21,21 @@ public class Gift {
     private Date createdAt;
 
     @ManyToOne
-    @JoinColumn(name="gift_user_id")
-    private User giftUserId;
+    @JoinColumn(name="donation_user_id")
+    private User userId;
     @ManyToOne
-    @JoinColumn(name="gift_pdf_id")
-    private Pdf giftPdfId;
+    @JoinColumn(name="donation_pdf_id")
+    private Pdf pdfId;
 
-    public Gift() {
+    public Donation() {
     }
-
-    public Gift(Integer amount, String message, String beneficiary, Date createdAt, User giftUserId, Pdf giftPdfId) {
+    public Donation(Integer amount, String message, String beneficiary, Date createdAt, User userId, Pdf pdfId) {
         this.amount = amount;
         this.message = message;
         this.beneficiary = beneficiary;
         this.createdAt = createdAt;
-        this.giftUserId = giftUserId;
-        this.giftPdfId = giftPdfId;
+        this.userId = userId;
+        this.pdfId = pdfId;
     }
 
     public Integer getId() {
@@ -79,19 +78,19 @@ public class Gift {
         this.createdAt = createdAt;
     }
 
-    public User getGiftUserId() {
-        return giftUserId;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setGiftUserId(User giftUserId) {
-        this.giftUserId = giftUserId;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public Pdf getGiftPdfId() {
-        return giftPdfId;
+    public Pdf getPdfId() {
+        return pdfId;
     }
 
-    public void setGiftPdfId(Pdf giftPdfId) {
-        this.giftPdfId = giftPdfId;
+    public void setPdfId(Pdf pdfId) {
+        this.pdfId = pdfId;
     }
 }

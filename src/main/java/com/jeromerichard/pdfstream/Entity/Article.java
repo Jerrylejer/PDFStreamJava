@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="article")
-public class article {
+public class Article {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,10 @@ public class article {
     @Column(name="updated_at")
     private Date updateAt;
 
-    public article() {
+    public Article() {
     }
 
-    public article(String title, String description, Integer order, Date createdAt, Date updateAt) {
+    public Article(String title, String description, Integer order, Date createdAt, Date updateAt) {
         this.title = title;
         this.description = description;
         this.order = order;

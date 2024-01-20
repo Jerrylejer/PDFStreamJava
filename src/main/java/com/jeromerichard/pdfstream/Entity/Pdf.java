@@ -21,8 +21,6 @@ public class Pdf {
     private String image;
     @Column(name="author")
     private String author;
-    @Column(name="type")
-    private String type;
     @Column(name="size")
     private Integer size;
     @Column(name="counter")
@@ -35,13 +33,12 @@ public class Pdf {
     public Pdf() {
     }
 
-    public Pdf(String title, String smallDescription, String description, String image, String author, String type, Integer size, Integer counter, Date createdAt, Date updateAt) {
+    public Pdf(String title, String smallDescription, String description, String image, String author, Integer size, Integer counter, Date createdAt, Date updateAt) {
         this.title = title;
         this.smallDescription = smallDescription;
         this.description = description;
         this.image = image;
         this.author = author;
-        this.type = type;
         this.size = size;
         this.counter = counter;
         this.createdAt = createdAt;
@@ -94,14 +91,6 @@ public class Pdf {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Integer getSize() {

@@ -5,29 +5,26 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="search")
-public class Search {
+@Table(name="collection")
+public class Collection {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name="result")
-    private String result;
-    @Column(name="create_at")
+    @Column(name="created_at")
     private Date createdAt;
-    @ManyToOne
-    @JoinColumn(name="search_user_id")
+    @Column(name="updated_at")
+    private Date updateAt;
+    @OneToOne
+    @JoinColumn(name="coll_user_id")
     private User userId;
-
-    public Search() {
+    public Collection() {
     }
-
-    public Search(String result, Date createdAt, User userId) {
-        this.result = result;
+    public Collection(Date createdAt, Date updateAt, User userId) {
         this.createdAt = createdAt;
+        this.updateAt = updateAt;
         this.userId = userId;
     }
-
     public Integer getId() {
         return id;
     }
@@ -36,20 +33,20 @@ public class Search {
         this.id = id;
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 
     public User getUserId() {

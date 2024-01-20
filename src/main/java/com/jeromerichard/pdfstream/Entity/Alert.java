@@ -23,26 +23,26 @@ public class Alert {
     private Date updateAt;
     @ManyToOne
     @JoinColumn(name="alert_user_id")
-    private User alertUserId;
+    private User userId;
     @ManyToOne
     @JoinColumn(name="alert_article_id")
-    private Alert alertArticleId;
+    private Alert articleId;
     @ManyToOne
     @JoinColumn(name="alert_pdf_id")
-    private Pdf alertPdfId;
+    private Pdf pdfId;
 
     public Alert() {
     }
 
-    public Alert(String title, String description, String state, Date createdAt, Date updateAt, User alertUserId, Alert alertArticleId, Pdf alertPdfId) {
+    public Alert(String title, String description, String state, Date createdAt, Date updateAt, User userId, Alert articleId, Pdf pdfId) {
         this.title = title;
         this.description = description;
         this.state = state;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.alertUserId = alertUserId;
-        this.alertArticleId = alertArticleId;
-        this.alertPdfId = alertPdfId;
+        this.userId = userId;
+        this.articleId = articleId;
+        this.pdfId = pdfId;
     }
 
     public Integer getId() {
@@ -93,27 +93,27 @@ public class Alert {
         this.updateAt = updateAt;
     }
 
-    public User getAlertUserId() {
-        return alertUserId;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setAlertUserId(User alertUserId) {
-        this.alertUserId = alertUserId;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public Alert getAlertArticleId() {
-        return alertArticleId;
+    public Alert getArticleId() {
+        return articleId;
     }
 
-    public void setAlertArticleId(Alert alertArticleId) {
-        this.alertArticleId = alertArticleId;
+    public void setArticleId(Alert articleId) {
+        this.articleId = articleId;
     }
 
-    public Pdf getAlertPdfId() {
-        return alertPdfId;
+    public Pdf getPdfId() {
+        return pdfId;
     }
 
-    public void setAlertPdfId(Pdf alertPdfId) {
-        this.alertPdfId = alertPdfId;
+    public void setPdfId(Pdf pdfId) {
+        this.pdfId = pdfId;
     }
 }
