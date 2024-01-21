@@ -1,15 +1,14 @@
-package com.jeromerichard.pdfstream.Dto.DtoToEntity;
+package com.jeromerichard.pdfstream.Dto.EntityToDto;
 
 import com.jeromerichard.pdfstream.Entity.User;
-
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class CollectionDTO {
-    private Integer id;
+public class SearchDTOUp {
+    private Long id;
+    private String result;
     private Date createdAt;
-    private Date updateAt;
     private User userId;
 }

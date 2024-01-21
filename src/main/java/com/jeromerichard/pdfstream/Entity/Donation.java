@@ -10,7 +10,7 @@ public class Donation {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name="amount")
     private Integer amount;
     @Column(name="message")
@@ -37,11 +37,11 @@ public class Donation {
         this.pdfId = pdfId;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

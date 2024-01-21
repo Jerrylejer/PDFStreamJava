@@ -10,7 +10,7 @@ public class Search {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name="result")
     private String result;
     @Column(name="create_at")
@@ -28,11 +28,11 @@ public class Search {
         this.userId = userId;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

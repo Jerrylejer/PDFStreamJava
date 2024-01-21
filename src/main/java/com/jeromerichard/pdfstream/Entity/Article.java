@@ -3,6 +3,7 @@ package com.jeromerichard.pdfstream.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ public class Article {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name="title")
     private String title;
     @Column(name="description")
@@ -22,8 +23,9 @@ public class Article {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @OneToMany(mappedBy = "articleId", cascade = CascadeType.ALL) // Liste des alerts pour un article authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Alert> alertList;
+    @OneToMany(mappedBy = "articleId", cascade = CascadeType.ALL)
+    // Liste des alerts pour un article authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Alert> alertList = new HashSet<>();
 
     public Article() {
     }
@@ -36,11 +38,11 @@ public class Article {
         this.updateAt = updateAt;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

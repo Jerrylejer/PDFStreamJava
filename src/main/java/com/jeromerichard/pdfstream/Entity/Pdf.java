@@ -12,7 +12,7 @@ public class Pdf {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name="title")
     private String title;
     @Column(name="small_description")
@@ -41,10 +41,12 @@ public class Pdf {
     @ManyToOne
     @JoinColumn(name="pdf_user_id") // user lié au pdf
     private User userId;
-    @OneToMany(mappedBy = "pdfId", cascade = CascadeType.ALL) // liste des evaluations par pdf authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Evaluation> evaluationList;
-    @OneToMany(mappedBy = "pdfId", cascade = CascadeType.ALL) // liste des alerts par pdf authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Alert> alertList;
+    @OneToMany(mappedBy = "pdfId", cascade = CascadeType.ALL)
+    // liste des evaluations par pdf authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Evaluation> evaluationList = new HashSet<>();
+    @OneToMany(mappedBy = "pdfId", cascade = CascadeType.ALL)
+    // liste des alerts par pdf authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Alert> alertList = new HashSet<>();
 
     public Pdf() {
     }
@@ -61,11 +63,11 @@ public class Pdf {
         this.updateAt = updateAt;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -12,7 +12,7 @@ public class Collection {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
@@ -32,11 +32,11 @@ public class Collection {
         this.updateAt = updateAt;
         this.userId = userId;
     }
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

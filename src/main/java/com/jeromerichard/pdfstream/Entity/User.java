@@ -12,7 +12,7 @@ public class User {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Long Id;
     @Column(name="username")
     private String username;
     @Column(name="password")
@@ -35,16 +35,21 @@ public class User {
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> role = new HashSet<>();
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste des donations par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Donation> donationList;
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste des evaluations par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Evaluation> evaluationList;
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // Liste des pdfs par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Pdf> pdfList;
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste des recherches par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Search> searchList;
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste alerts par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Alert> alertList;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    // liste des donations par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Donation> donationList = new HashSet<>();
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    // liste des evaluations par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Evaluation> evaluationList = new HashSet<>();
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    // Liste des pdfs par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Pdf> pdfList = new HashSet<>();
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    // liste des recherches par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Search> searchList = new HashSet<>();
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    // liste alerts par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Alert> alertList = new HashSet<>();
 
     public User() {
     }
@@ -60,11 +65,11 @@ public class User {
         this.profilId = profilId;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         Id = id;
     }
 
