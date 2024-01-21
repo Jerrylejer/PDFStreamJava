@@ -11,7 +11,7 @@ public interface ProfilServiceInt {
     // CRUD JPA
     public Profil saveAlert(ProfilDTODown profil);
     public Set<Profil> getAllProfils() throws EmptyListException;
-    public Profil getProfilById(Long id) throws NotFoundException;
-    public Profil updateProfil(Long id, ProfilDTODown profil) throws NotFoundException;
-    public void deleteProfil(Long id) throws NotFoundException;
+    public Profil getProfilById(Integer id) throws NotFoundException;
+    public Profil updateProfil(Integer id, ProfilDTODown profil) throws NotFoundException;
+    public void deleteProfil(Integer id) throws NotFoundException;
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
-    Set<Evaluation> findByUser(User userId);
-    Set<Evaluation> findByPdf(Pdf pdfId);
+public interface EvaluationRepository extends JpaRepository<Evaluation, Integer> {
+    Set<Evaluation> findByUser(User user);
+    Set<Evaluation> findByPdf(Pdf pdf);
 }

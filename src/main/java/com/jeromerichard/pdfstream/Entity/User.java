@@ -12,7 +12,7 @@ public class User {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Integer Id;
     @Column(name="username")
     private String username;
     @Column(name="password")
@@ -29,32 +29,32 @@ public class User {
     private Date updateAt;
     @ManyToOne
     @JoinColumn(name="user_profil_id")
-    private Profil profilId;
+    private Profil profil;
     @ManyToMany
     @JoinTable(name="user_role",
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> role = new HashSet<>();
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // liste des donations par user authentifié => update ou delete, modifie ou supprime la liste
     private Set<Donation> donationList = new HashSet<>();
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // liste des evaluations par user authentifié => update ou delete, modifie ou supprime la liste
     private Set<Evaluation> evaluationList = new HashSet<>();
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // Liste des pdfs par user authentifié => update ou delete, modifie ou supprime la liste
     private Set<Pdf> pdfList = new HashSet<>();
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // liste des recherches par user authentifié => update ou delete, modifie ou supprime la liste
     private Set<Search> searchList = new HashSet<>();
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // liste alerts par user authentifié => update ou delete, modifie ou supprime la liste
     private Set<Alert> alertList = new HashSet<>();
 
     public User() {
     }
 
-    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updateAt, Profil profilId) {
+    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updateAt, Profil profil) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -62,14 +62,14 @@ public class User {
         this.bio = bio;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.profilId = profilId;
+        this.profil = profil;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         Id = id;
     }
 
@@ -129,12 +129,12 @@ public class User {
         this.updateAt = updateAt;
     }
 
-    public Profil getProfilId() {
-        return profilId;
+    public Profil getProfil() {
+        return profil;
     }
 
-    public void setProfilId(Profil profilId) {
-        this.profilId = profilId;
+    public void setProfil(Profil profil) {
+        this.profil = profil;
     }
 
     public Set<Role> getRole() {

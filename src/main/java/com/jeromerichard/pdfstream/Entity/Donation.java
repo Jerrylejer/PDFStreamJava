@@ -10,7 +10,7 @@ public class Donation {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="amount")
     private Integer amount;
     @Column(name="message")
@@ -21,27 +21,27 @@ public class Donation {
     private Date createdAt;
     @ManyToOne
     @JoinColumn(name="donation_user_id") // user lié à la donation
-    private User userId;
+    private User user;
     @ManyToOne
     @JoinColumn(name="donation_pdf_id") // pdf lié à la donation
-    private Pdf pdfId;
+    private Pdf pdf;
 
     public Donation() {
     }
-    public Donation(Integer amount, String message, String beneficiary, Date createdAt, User userId, Pdf pdfId) {
+    public Donation(Integer amount, String message, String beneficiary, Date createdAt, User user, Pdf pdf) {
         this.amount = amount;
         this.message = message;
         this.beneficiary = beneficiary;
         this.createdAt = createdAt;
-        this.userId = userId;
-        this.pdfId = pdfId;
+        this.user = user;
+        this.pdf = pdf;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -77,19 +77,19 @@ public class Donation {
         this.createdAt = createdAt;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Pdf getPdfId() {
-        return pdfId;
+    public Pdf getPdf() {
+        return pdf;
     }
 
-    public void setPdfId(Pdf pdfId) {
-        this.pdfId = pdfId;
+    public void setPdf(Pdf pdf) {
+        this.pdf = pdf;
     }
 }

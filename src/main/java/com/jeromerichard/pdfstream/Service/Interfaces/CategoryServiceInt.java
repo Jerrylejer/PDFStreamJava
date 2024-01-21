@@ -11,7 +11,7 @@ public interface CategoryServiceInt {
     // CRUD JPA
     public Category saveCategory(CategoryDTODown category);
     public Set<Category> getAllCategories() throws EmptyListException;
-    public Category getCategoryById(Long id) throws NotFoundException;
-    public Category updateCategory(Long id, CategoryDTODown category) throws NotFoundException;
-    public void deleteCategory(Long id) throws NotFoundException;
+    public Category getCategoryById(Integer id) throws NotFoundException;
+    public Category updateCategory(Integer id, CategoryDTODown category) throws NotFoundException;
+    public void deleteCategory(Integer id) throws NotFoundException;
 }

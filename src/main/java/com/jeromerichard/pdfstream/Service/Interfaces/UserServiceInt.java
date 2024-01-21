@@ -11,9 +11,9 @@ public interface UserServiceInt {
     // CRUD JPA
     public User saveSearch(UserDTODown user);
     public Set<User> getAllUsers() throws EmptyListException;
-    public User getUserById(Long id) throws NotFoundException;
-    public User updateUser(Long id, UserDTODown user) throws NotFoundException;
-    public void deleteUser(Long id) throws NotFoundException;
+    public User getUserById(Integer id) throws NotFoundException;
+    public User updateUser(Integer id, UserDTODown user) throws NotFoundException;
+    public void deleteUser(Integer id) throws NotFoundException;
     // FOREIGN KEY
     public Set<User> findByUsername(String username) throws EmptyListException;
 }

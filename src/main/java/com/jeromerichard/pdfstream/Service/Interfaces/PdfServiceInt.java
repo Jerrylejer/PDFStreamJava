@@ -13,7 +13,7 @@ public interface PdfServiceInt {
     // CRUD JPA
     public Pdf savePdf(PdfDTODown pdf);
     public Set<Pdf> getAllPdfs() throws EmptyListException;
-    public Pdf getPdfById(Long id) throws NotFoundException;
-    public Pdf updatePdf(Long id, PdfDTODown pdf) throws NotFoundException;
-    public void deletePdf(Long id) throws NotFoundException;
+    public Pdf getPdfById(Integer id) throws NotFoundException;
+    public Pdf updatePdf(Integer id, PdfDTODown pdf) throws NotFoundException;
+    public void deletePdf(Integer id) throws NotFoundException;
 }

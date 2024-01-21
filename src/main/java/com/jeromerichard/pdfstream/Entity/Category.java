@@ -12,7 +12,7 @@ public class Category {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="title")
     private String title;
     @Column(name="parent")
@@ -33,11 +33,11 @@ public class Category {
         this.updateAt = updateAt;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

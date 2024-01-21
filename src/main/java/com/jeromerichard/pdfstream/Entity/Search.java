@@ -10,29 +10,29 @@ public class Search {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="result")
     private String result;
     @Column(name="create_at")
     private Date createdAt;
     @ManyToOne
     @JoinColumn(name="search_user_id") // user lié à la recherche
-    private User userId;
+    private User user;
 
     public Search() {
     }
 
-    public Search(String result, Date createdAt, User userId) {
+    public Search(String result, Date createdAt, User user) {
         this.result = result;
         this.createdAt = createdAt;
-        this.userId = userId;
+        this.user = user;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,11 +52,11 @@ public class Search {
         this.createdAt = createdAt;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

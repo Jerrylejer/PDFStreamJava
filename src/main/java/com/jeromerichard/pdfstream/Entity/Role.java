@@ -11,7 +11,7 @@ public class Role {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="name")
     @Enumerated(EnumType.STRING) // conversion de Enum à String
     private ERole name;
@@ -25,11 +25,11 @@ public class Role {
         this.name = name;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

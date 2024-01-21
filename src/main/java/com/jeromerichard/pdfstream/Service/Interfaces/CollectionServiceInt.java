@@ -12,9 +12,9 @@ public interface CollectionServiceInt {
     // CRUD JPA
     public Collection saveCollection(CollectionDTODown collection);
     public Set<Collection> getAllCollections() throws EmptyListException;
-    public Collection getCollectionById(Long id) throws NotFoundException;
-    public Collection updateCollection(Long id, CollectionDTODown collection) throws NotFoundException;
-    public void deleteCollection(Long id) throws NotFoundException;
+    public Collection getCollectionById(Integer id) throws NotFoundException;
+    public Collection updateCollection(Integer id, CollectionDTODown collection) throws NotFoundException;
+    public void deleteCollection(Integer id) throws NotFoundException;
     // FOREIGN KEY
-    public Set<Collection> findByUser(User userId) throws EmptyListException;
+    public Set<Collection> findByUser(User user) throws EmptyListException;
 }

@@ -13,9 +13,9 @@ public interface DonationServiceInt {
     // CRUD JPA
     public Donation saveDonation(DonationDTODown donation);
     public Set<Donation> getAllDonations() throws EmptyListException;
-    public Donation getDonationById(Long id) throws NotFoundException;
-    public Donation updateDonation(Long id, DonationDTODown donation) throws NotFoundException;
-    public void deleteDonation(Long id) throws NotFoundException;
+    public Donation getDonationById(Integer id) throws NotFoundException;
+    public Donation updateDonation(Integer id, DonationDTODown donation) throws NotFoundException;
+    public void deleteDonation(Integer id) throws NotFoundException;
     // FOREIGN KEY
     public Set<Donation> findByUser(User userId) throws EmptyListException;
     public Set<Donation> findByPdf(Pdf pdfId) throws EmptyListException;

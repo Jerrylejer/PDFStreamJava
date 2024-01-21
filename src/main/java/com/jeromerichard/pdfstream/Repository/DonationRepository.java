@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface DonationRepository extends JpaRepository<Donation, Long> {
-    Set<Donation> findByUser(User userId);
-    Set<Donation> findByPdf(Pdf pdfId);
+public interface DonationRepository extends JpaRepository<Donation, Integer> {
+    Set<Donation> findByUser(User user);
+    Set<Donation> findByPdf(Pdf pdf);
 }

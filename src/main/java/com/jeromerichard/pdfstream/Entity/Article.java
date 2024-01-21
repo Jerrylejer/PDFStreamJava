@@ -12,37 +12,37 @@ public class Article {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="title")
     private String title;
     @Column(name="description")
     private String description;
-    @Column(name="order")
-    private Integer order;
+    @Column(name="ordering")
+    private Integer ordering;
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @OneToMany(mappedBy = "articleId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     // Liste des alerts pour un article authentifié => update ou delete, modifie ou supprime la liste
     private Set<Alert> alertList = new HashSet<>();
 
     public Article() {
     }
 
-    public Article(String title, String description, Integer order, Date createdAt, Date updateAt) {
+    public Article(String title, String description, Integer ordering, Date createdAt, Date updateAt) {
         this.title = title;
         this.description = description;
-        this.order = order;
+        this.ordering = ordering;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,11 +63,11 @@ public class Article {
     }
 
     public Integer getOrder() {
-        return order;
+        return ordering;
     }
 
     public void setOrder(Integer order) {
-        this.order = order;
+        this.ordering = order;
     }
 
     public Date getCreatedAt() {

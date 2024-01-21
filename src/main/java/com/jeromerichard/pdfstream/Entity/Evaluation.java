@@ -10,7 +10,7 @@ public class Evaluation {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="title")
     private String title;
     @Column(name="comment")
@@ -23,29 +23,29 @@ public class Evaluation {
     private Date updateAt;
     @ManyToOne
     @JoinColumn(name="evaluation_pdf_id") // pdf lié à l'évaluation
-    private Pdf pdfId;
+    private Pdf pdf;
     @ManyToOne
     @JoinColumn(name="evaluation_user_id") // user lié à l'évaluation
-    private User userId;
+    private User user;
 
     public Evaluation() {
     }
 
-    public Evaluation(String title, String comment, Byte star, Date createdAt, Date updateAt, User userId, Pdf pdfId) {
+    public Evaluation(String title, String comment, Byte star, Date createdAt, Date updateAt, User user, Pdf pdf) {
         this.title = title;
         this.comment = comment;
         this.star = star;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.userId = userId;
-        this.pdfId = pdfId;
+        this.user = user;
+        this.pdf = pdf;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -89,19 +89,19 @@ public class Evaluation {
         this.updateAt = updateAt;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Pdf getPdfId() {
-        return pdfId;
+    public Pdf getPdf() {
+        return pdf;
     }
 
-    public void setPdfId(Pdf pdfId) {
-        this.pdfId = pdfId;
+    public void setPdf(Pdf pdf) {
+        this.pdf = pdf;
     }
 }

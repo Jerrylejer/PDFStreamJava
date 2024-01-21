@@ -13,9 +13,9 @@ public interface EvaluationServiceInt {
     // CRUD JPA
     public Evaluation saveEvaluation(EvaluationDTODown evaluation);
     public Set<Evaluation> getAllEvaluations() throws EmptyListException;
-    public Evaluation getEvaluationById(Long id) throws NotFoundException;
-    public Evaluation updateEvaluation(Long id, EvaluationDTODown evaluation) throws NotFoundException;
-    public void deleteEvaluation(Long id) throws NotFoundException;
+    public Evaluation getEvaluationById(Integer id) throws NotFoundException;
+    public Evaluation updateEvaluation(Integer id, EvaluationDTODown evaluation) throws NotFoundException;
+    public void deleteEvaluation(Integer id) throws NotFoundException;
     // FOREIGN KEY
     public Set<Evaluation> findByUser(User userId) throws EmptyListException;
     public Set<Evaluation> findByPdf(Pdf pdfId) throws EmptyListException;

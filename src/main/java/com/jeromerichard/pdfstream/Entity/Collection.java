@@ -12,14 +12,14 @@ public class Collection {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
     @OneToOne
     @JoinColumn(name="collection_user_id") // user lié à la collection
-    private User userId;
+    private User user;
     @ManyToMany
     @JoinTable(name="collection_pdf",
             joinColumns = @JoinColumn(name="collection_id"),
@@ -27,16 +27,16 @@ public class Collection {
     private Set<Pdf> pdfList = new HashSet<>();
     public Collection() {
     }
-    public Collection(Date createdAt, Date updateAt, User userId) {
+    public Collection(Date createdAt, Date updateAt, User user) {
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.userId = userId;
+        this.user = user;
     }
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,11 +56,11 @@ public class Collection {
         this.updateAt = updateAt;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

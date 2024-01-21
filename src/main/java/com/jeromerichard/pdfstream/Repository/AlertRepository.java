@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface AlertRepository extends JpaRepository<Alert, Long> {
-    Set<Alert> findByUser(User userId);
-    Set<Alert> findByArticle(Article articleId);
-    Set<Alert> findByPdf(Pdf pdfId);
+public interface AlertRepository extends JpaRepository<Alert, Integer> {
+    Set<Alert> findByUser(User user);
+    Set<Alert> findByArticle(Article article);
+    Set<Alert> findByPdf(Pdf pdf);
 }

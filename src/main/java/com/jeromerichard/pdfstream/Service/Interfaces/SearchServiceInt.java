@@ -12,9 +12,9 @@ public interface SearchServiceInt {
     // CRUD JPA
     public Search saveSearch(SearchDTODown search);
     public Set<Search> getAllSearchs() throws EmptyListException;
-    public Search getSearchById(Long id) throws NotFoundException;
-    public Search updateSearch(Long id, SearchDTODown search) throws NotFoundException;
-    public void deleteSearch(Long id) throws NotFoundException;
+    public Search getSearchById(Integer id) throws NotFoundException;
+    public Search updateSearch(Integer id, SearchDTODown search) throws NotFoundException;
+    public void deleteSearch(Integer id) throws NotFoundException;
     // FOREIGN KEY
     public Set<Search> findByUser(User userId) throws EmptyListException;
 }

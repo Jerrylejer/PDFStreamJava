@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface CollectionRepository extends JpaRepository<Collection, Long> {
-    Set<Collection> findByUser(User userId);
+public interface CollectionRepository extends JpaRepository<Collection, Integer> {
+    Set<Collection> findByUser(User user);
 }

@@ -10,7 +10,7 @@ public class Alert {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(name="title")
     private String title;
     @Column(name="description")
@@ -23,33 +23,33 @@ public class Alert {
     private Date updateAt;
     @ManyToOne // user lié à l'alert
     @JoinColumn(name="alert_user_id")
-    private User userId;
+    private User user;
     @ManyToOne // article lié à l'alert
     @JoinColumn(name="alert_article_id")
-    private Article articleId;
+    private Article article;
     @ManyToOne // pdf lié à l'alert
     @JoinColumn(name="alert_pdf_id")
-    private Pdf pdfId;
+    private Pdf pdf;
 
     public Alert() {
     }
 
-    public Alert(String title, String description, String state, Date createdAt, Date updateAt, User userId, Article articleId, Pdf pdfId) {
+    public Alert(String title, String description, String state, Date createdAt, Date updateAt, User user, Article article, Pdf pdf) {
         this.title = title;
         this.description = description;
         this.state = state;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.userId = userId;
-        this.articleId = articleId;
-        this.pdfId = pdfId;
+        this.user = user;
+        this.article = article;
+        this.pdf = pdf;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -93,27 +93,27 @@ public class Alert {
         this.updateAt = updateAt;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Article getArticleId() {
-        return articleId;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setArticleId(Article articleId) {
-        this.articleId = articleId;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
-    public Pdf getPdfId() {
-        return pdfId;
+    public Pdf getPdf() {
+        return pdf;
     }
 
-    public void setPdfId(Pdf pdfId) {
-        this.pdfId = pdfId;
+    public void setPdf(Pdf pdf) {
+        this.pdf = pdf;
     }
 }
