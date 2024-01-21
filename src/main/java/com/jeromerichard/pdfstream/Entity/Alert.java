@@ -26,7 +26,7 @@ public class Alert {
     private User userId;
     @ManyToOne // article lié à l'alert
     @JoinColumn(name="alert_article_id")
-    private Alert articleId;
+    private Article articleId;
     @ManyToOne // pdf lié à l'alert
     @JoinColumn(name="alert_pdf_id")
     private Pdf pdfId;
@@ -34,7 +34,7 @@ public class Alert {
     public Alert() {
     }
 
-    public Alert(String title, String description, String state, Date createdAt, Date updateAt, User userId, Alert articleId, Pdf pdfId) {
+    public Alert(String title, String description, String state, Date createdAt, Date updateAt, User userId, Article articleId, Pdf pdfId) {
         this.title = title;
         this.description = description;
         this.state = state;
@@ -101,11 +101,11 @@ public class Alert {
         this.userId = userId;
     }
 
-    public Alert getArticleId() {
+    public Article getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(Alert articleId) {
+    public void setArticleId(Article articleId) {
         this.articleId = articleId;
     }
 
