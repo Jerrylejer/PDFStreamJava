@@ -3,6 +3,8 @@ package com.jeromerichard.pdfstream.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -21,8 +23,6 @@ public class User {
     private String email;
     @Column(name="bio")
     private String bio;
-    @Column(name="role")
-    private String role;
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
@@ -30,17 +30,31 @@ public class User {
     @ManyToOne
     @JoinColumn(name="user_profil_id")
     private Profil profilId;
+    @ManyToMany
+    @JoinTable(name="user_role",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
+    private Set<Role> role = new HashSet<>();
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste des donations par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Donation> donationList;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste des evaluations par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Evaluation> evaluationList;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // Liste des pdfs par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Pdf> pdfList;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste des recherches par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Search> searchList;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL) // liste alerts par user authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Alert> alertList;
 
     public User() {
     }
 
-    public User(String username, String password, String avatar, String email, String bio, String role, Date createdAt, Date updateAt, Profil profilId) {
+    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updateAt, Profil profilId) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
         this.email = email;
         this.bio = bio;
-        this.role = role;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
         this.profilId = profilId;
@@ -94,14 +108,6 @@ public class User {
         this.bio = bio;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -124,5 +130,13 @@ public class User {
 
     public void setProfilId(Profil profilId) {
         this.profilId = profilId;
+    }
+
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
     }
 }

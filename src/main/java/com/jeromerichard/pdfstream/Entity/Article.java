@@ -3,6 +3,7 @@ package com.jeromerichard.pdfstream.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="article")
@@ -21,6 +22,8 @@ public class Article {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
+    @OneToMany(mappedBy = "articleId", cascade = CascadeType.ALL) // Liste des alerts pour un article authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Alert> alertList;
 
     public Article() {
     }

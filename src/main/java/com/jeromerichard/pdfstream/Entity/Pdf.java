@@ -3,6 +3,8 @@ package com.jeromerichard.pdfstream.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="pdf")
@@ -29,6 +31,20 @@ public class Pdf {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
+    @ManyToMany
+    @JoinTable(name="pdf_category",
+            joinColumns = @JoinColumn(name="pdf_id"),
+            inverseJoinColumns = @JoinColumn(name="category_id"))
+    private Set<Category> CategoriesList = new HashSet<>();
+    @ManyToMany(mappedBy = "pdfList")
+    private Set<Collection> collectionList = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name="pdf_user_id") // user lié au pdf
+    private User userId;
+    @OneToMany(mappedBy = "pdfId", cascade = CascadeType.ALL) // liste des evaluations par pdf authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Evaluation> evaluationList;
+    @OneToMany(mappedBy = "pdfId", cascade = CascadeType.ALL) // liste des alerts par pdf authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Alert> alertList;
 
     public Pdf() {
     }

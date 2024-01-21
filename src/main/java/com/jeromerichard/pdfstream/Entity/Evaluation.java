@@ -21,11 +21,12 @@ public class Evaluation {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @JoinColumn(name="evaluation_user_id")
-    private User userId;
     @ManyToOne
-    @JoinColumn(name="evaluation_pdf_id")
+    @JoinColumn(name="evaluation_pdf_id") // pdf lié à l'évaluation
     private Pdf pdfId;
+    @ManyToOne
+    @JoinColumn(name="evaluation_user_id") // user lié à l'évaluation
+    private User userId;
 
     public Evaluation() {
     }

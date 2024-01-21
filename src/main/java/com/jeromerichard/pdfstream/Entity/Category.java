@@ -3,6 +3,8 @@ package com.jeromerichard.pdfstream.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="category")
@@ -19,7 +21,8 @@ public class Category {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-
+    @ManyToMany(mappedBy = "categoriesList")
+    private Set<Pdf> pdfList = new HashSet<>();
     public Category() {
     }
 

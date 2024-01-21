@@ -21,13 +21,13 @@ public class Alert {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @ManyToOne
+    @ManyToOne // user lié à l'alert
     @JoinColumn(name="alert_user_id")
     private User userId;
-    @ManyToOne
+    @ManyToOne // article lié à l'alert
     @JoinColumn(name="alert_article_id")
     private Alert articleId;
-    @ManyToOne
+    @ManyToOne // pdf lié à l'alert
     @JoinColumn(name="alert_pdf_id")
     private Pdf pdfId;
 

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="gift")
+@Table(name="donation")
 public class Donation {
     @Id
     @Column(name="id")
@@ -19,12 +19,11 @@ public class Donation {
     private String beneficiary;
     @Column(name="created_at")
     private Date createdAt;
-
     @ManyToOne
-    @JoinColumn(name="donation_user_id")
+    @JoinColumn(name="donation_user_id") // user lié à la donation
     private User userId;
     @ManyToOne
-    @JoinColumn(name="donation_pdf_id")
+    @JoinColumn(name="donation_pdf_id") // pdf lié à la donation
     private Pdf pdfId;
 
     public Donation() {

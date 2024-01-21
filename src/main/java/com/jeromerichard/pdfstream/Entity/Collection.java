@@ -3,6 +3,8 @@ package com.jeromerichard.pdfstream.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="collection")
@@ -16,8 +18,13 @@ public class Collection {
     @Column(name="updated_at")
     private Date updateAt;
     @OneToOne
-    @JoinColumn(name="collection_user_id")
+    @JoinColumn(name="collection_user_id") // user lié à la collection
     private User userId;
+    @ManyToMany
+    @JoinTable(name="collection_pdf",
+            joinColumns = @JoinColumn(name="collection_id"),
+            inverseJoinColumns = @JoinColumn(name="pdf_id"))
+    private Set<Pdf> pdfList = new HashSet<>();
     public Collection() {
     }
     public Collection(Date createdAt, Date updateAt, User userId) {

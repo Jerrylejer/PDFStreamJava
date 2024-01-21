@@ -16,7 +16,7 @@ public class Search {
     @Column(name="create_at")
     private Date createdAt;
     @ManyToOne
-    @JoinColumn(name="search_user_id")
+    @JoinColumn(name="search_user_id") // user lié à la recherche
     private User userId;
 
     public Search() {
