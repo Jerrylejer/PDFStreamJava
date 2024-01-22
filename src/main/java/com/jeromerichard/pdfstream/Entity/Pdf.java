@@ -33,8 +33,8 @@ public class Pdf {
     private Date updateAt;
     @ManyToMany
     @JoinTable(name="pdf_category",
-            joinColumns = @JoinColumn(name="pdf_id"),
-            inverseJoinColumns = @JoinColumn(name="category_id"))
+            joinColumns = @JoinColumn(name="pdfCategory_pdf_id"),
+            inverseJoinColumns = @JoinColumn(name="pdfCategory_category_id"))
     private Set<Category> categoriesList = new HashSet<>();
     @ManyToMany(mappedBy = "pdfList")
     private Set<Collection> collectionList = new HashSet<>();

@@ -20,7 +20,7 @@ public class Evaluation {
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
-    private Date updateAt;
+    private Date updatedAt;
     @ManyToOne
     @JoinColumn(name="evaluation_pdf_id") // pdf lié à l'évaluation
     private Pdf pdf;
@@ -36,7 +36,7 @@ public class Evaluation {
         this.comment = comment;
         this.star = star;
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
         this.user = user;
         this.pdf = pdf;
     }
@@ -81,12 +81,12 @@ public class Evaluation {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public User getUser() {

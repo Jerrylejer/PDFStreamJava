@@ -20,7 +20,7 @@ public class Alert {
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
-    private Date updateAt;
+    private Date updatedAt;
     @ManyToOne // user lié à l'alert
     @JoinColumn(name="alert_user_id")
     private User user;
@@ -34,12 +34,12 @@ public class Alert {
     public Alert() {
     }
 
-    public Alert(String title, String description, String state, Date createdAt, Date updateAt, User user, Article article, Pdf pdf) {
+    public Alert(String title, String description, String state, Date createdAt, Date updatedAt, User user, Article article, Pdf pdf) {
         this.title = title;
         this.description = description;
         this.state = state;
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
         this.user = user;
         this.article = article;
         this.pdf = pdf;
@@ -85,12 +85,12 @@ public class Alert {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public User getUser() {

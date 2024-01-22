@@ -16,20 +16,20 @@ public class Collection {
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
-    private Date updateAt;
+    private Date updatedAt;
     @OneToOne
     @JoinColumn(name="collection_user_id") // user lié à la collection
     private User user;
     @ManyToMany
     @JoinTable(name="collection_pdf",
-            joinColumns = @JoinColumn(name="collection_id"),
-            inverseJoinColumns = @JoinColumn(name="pdf_id"))
+            joinColumns = @JoinColumn(name="collectionPDF_collection_id"),
+            inverseJoinColumns = @JoinColumn(name="collectionPDF_pdf_id"))
     private Set<Pdf> pdfList = new HashSet<>();
     public Collection() {
     }
-    public Collection(Date createdAt, Date updateAt, User user) {
+    public Collection(Date createdAt, Date updatedAt, User user) {
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
         this.user = user;
     }
     public Integer getId() {
@@ -48,12 +48,12 @@ public class Collection {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public User getUser() {

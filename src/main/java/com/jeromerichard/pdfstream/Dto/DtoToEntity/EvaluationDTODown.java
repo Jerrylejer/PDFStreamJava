@@ -11,7 +11,7 @@ public class EvaluationDTODown {
     private String comment;
     private Byte star;
     private Date createdAt;
-    private Date updateAt;
+    private Date updatedAt;
     private Pdf pdfId;
     private User userId;
 }

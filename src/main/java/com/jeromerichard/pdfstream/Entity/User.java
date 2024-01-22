@@ -26,7 +26,7 @@ public class User {
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
-    private Date updateAt;
+    private Date updatedAt;
     @ManyToOne
     @JoinColumn(name="user_profil_id")
     private Profil profil;
@@ -54,14 +54,14 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updateAt, Profil profil) {
+    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updatedAt, Profil profil) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
         this.email = email;
         this.bio = bio;
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
         this.profil = profil;
     }
 
@@ -121,12 +121,12 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Profil getProfil() {

@@ -14,7 +14,7 @@ public class UserDTOUp {
     private String email;
     private String bio;
     private Date createdAt;
-    private Date updateAt;
+    private Date updatedAt;
     private Profil profilId;
     private Set<Role> role;
     private Set<Donation> donationList;

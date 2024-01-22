@@ -7,11 +7,12 @@ import com.jeromerichard.pdfstream.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 @Repository
 public interface AlertRepository extends JpaRepository<Alert, Integer> {
-    Set<Alert> findByUser(User user);
-    Set<Alert> findByArticle(Article article);
-    Set<Alert> findByPdf(Pdf pdf);
+    List<Alert> findByUser(User user);
+    List<Alert> findByArticle(Article article);
+    List<Alert> findByPdf(Pdf pdf);
 }

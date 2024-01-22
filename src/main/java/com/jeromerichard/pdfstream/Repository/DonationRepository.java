@@ -6,10 +6,11 @@ import com.jeromerichard.pdfstream.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 @Repository
 public interface DonationRepository extends JpaRepository<Donation, Integer> {
-    Set<Donation> findByUser(User user);
-    Set<Donation> findByPdf(Pdf pdf);
+    List<Donation> findByUser(User user);
+    List<Donation> findByPdf(Pdf pdf);
 }
