@@ -10,8 +10,8 @@ public class ProfilDTO {
     private String gender;
     private String firstname;
     private String lastname;
-    private String adress1;
-    private String adress2;
+    private String address1;
+    private String address2;
     private String zipcode;
     private String city;
     private Date createdAt;

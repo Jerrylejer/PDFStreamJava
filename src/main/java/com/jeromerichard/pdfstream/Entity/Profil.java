@@ -17,10 +17,10 @@ public class Profil {
     private String firstname;
     @Column(name="lastname")
     private String lastname;
-    @Column(name="adress1")
-    private String adress1;
-    @Column(name="adress2")
-    private String adress2;
+    @Column(name="address1")
+    private String address1;
+    @Column(name="address2")
+    private String address2;
     @Column(name="zipcode")
     private String zipcode;
     @Column(name="city")
@@ -33,12 +33,12 @@ public class Profil {
     public Profil() {
     }
 
-    public Profil(String gender, String firstname, String lastname, String adress1, String adress2, String zipcode, String city, Date createdAt, Date updateAt) {
+    public Profil(String gender, String firstname, String lastname, String address1, String address2, String zipcode, String city, Date createdAt, Date updateAt) {
         this.gender = gender;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.adress1 = adress1;
-        this.adress2 = adress2;
+        this.address1 = address1;
+        this.address2 = address2;
         this.zipcode = zipcode;
         this.city = city;
         this.createdAt = createdAt;
@@ -77,20 +77,20 @@ public class Profil {
         this.lastname = lastname;
     }
 
-    public String getAdress1() {
-        return adress1;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setAdress1(String adress1) {
-        this.adress1 = adress1;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
-    public String getAdress2() {
-        return adress2;
+    public String getAddress2() {
+        return address2;
     }
 
-    public void setAdress2(String adress2) {
-        this.adress2 = adress2;
+    public void setAddress2(String address2) {
+        this.address2 = address2;
     }
 
     public String getZipcode() {

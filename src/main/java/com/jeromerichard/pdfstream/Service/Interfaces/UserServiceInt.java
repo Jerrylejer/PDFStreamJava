@@ -10,12 +10,12 @@ import java.util.List;
 
 public interface UserServiceInt {
     // CRUD JPA
-    public User saveSearch(UserDTOWayIN user);
+    public User saveUser(UserDTOWayIN user);
     public List<User> getAllUsers() throws EmptyListException;
     public User getUserById(Integer id) throws NotFoundException;
     public User updateUser(Integer id, UserDTOWayIN user) throws NotFoundException;
     public void deleteUser(Integer id) throws NotFoundException;
     // FOREIGN KEY
     public List<User> findByProfil(Profil profil) throws EmptyListException;
-    public User findByUsername(String username) throws EmptyListException, NotFoundException;
+//    public List<User> findByUser(String username) throws EmptyListException, NotFoundException;
 }

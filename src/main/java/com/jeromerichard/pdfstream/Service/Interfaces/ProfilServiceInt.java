@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProfilServiceInt {
     // CRUD JPA
-    public Profil saveAlert(ProfilDTOWayIN profil);
+    public Profil saveProfil(ProfilDTOWayIN profil);
     public List<Profil> getAllProfils() throws EmptyListException;
     public Profil getProfilById(Integer id) throws NotFoundException;
     public Profil updateProfil(Integer id, ProfilDTOWayIN profil) throws NotFoundException;

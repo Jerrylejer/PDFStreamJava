@@ -22,7 +22,7 @@ public class UserService implements UserServiceInt {
     @Autowired
     private UserRepository repository;
     @Override
-    public User saveSearch(UserDTOWayIN user) {
+    public User saveUser(UserDTOWayIN user) {
         User userToSave = new User();
         userToSave.setUsername(user.getUsername());
         userToSave.setPassword(user.getPassword());
@@ -87,13 +87,12 @@ public class UserService implements UserServiceInt {
         return userListByProfil;
     }
 
-    @Override
-    public User findByUsername(String username) throws NotFoundException {
-        User user = repository.findByUsername(username);
-        if(user == null) {
-            throw new NotFoundException("Ce user n'existe pas, reformulez votre demande");
+/*    @Override
+    public List<User> findByUser(String username) throws EmptyListException {
+        List<User> userList = repository.findByUser(username);
+        if(userList == null) {
+            throw new EmptyListException("Aucun utilisateur ne correspond à cette recherche par profile, reformulez votre demande");
         }
-        log.info("le user " + user.getUsername() + " est affiché.");
-        return user;
-    }
+        return userList;
+    }*/
 }

@@ -44,7 +44,7 @@ public class AlertController {
         // Conversion des datas front en DTOWayIN
         AlertDTOWayIN alertDTOWayIN = modelMapper.map(clientDatas, AlertDTOWayIN.class);
         // Conversion sens DTOWayIN à Entité
-        Alert alert = service.updateAlert(id, clientDatas);
+        Alert alert = service.updateAlert(id, alertDTOWayIN);
         // Conversion sens Entité à DTO
         AlertDTO alertDTO = modelMapper.map(alert, AlertDTO.class);
         return new ResponseEntity<AlertDTO>(alertDTO, HttpStatus.CREATED);
@@ -57,14 +57,14 @@ public class AlertController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<AlertDTO>> getDtosList() throws EmptyListException {
+    public ResponseEntity<List<AlertDTO>> getAlertsList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<AlertDTO> alertDTOList = service.getAllAlerts().stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(alertDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<AlertDTO> getDto(@PathVariable Integer id) throws NotFoundException {
+    public ResponseEntity<AlertDTO> getAlert(@PathVariable Integer id) throws NotFoundException {
         Alert alert = service.getAlertById(id);
         // Conversion sens Entité à DTO
         AlertDTO alertDto = modelMapper.map(alert, AlertDTO.class);
@@ -74,17 +74,17 @@ public class AlertController {
     // ######### METHODES SUPPLEMENTAIRES #########
 
     @GetMapping("/user/{user}")
-    public ResponseEntity<List<AlertDTO>> getAlertByUser(@PathVariable User user) throws NotFoundException, EmptyListException {
+    public ResponseEntity<List<AlertDTO>> getAlertsByUser(@PathVariable User user) throws NotFoundException, EmptyListException {
         List<AlertDTO> dtosUserList = service.findByUser(user).stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<List<AlertDTO>>(dtosUserList, HttpStatus.OK);
     }
     @GetMapping("/article/{article}")
-    public ResponseEntity<List<AlertDTO>> getAlertByArticle(@PathVariable Article article) throws NotFoundException, EmptyListException {
+    public ResponseEntity<List<AlertDTO>> getAlertsByArticle(@PathVariable Article article) throws NotFoundException, EmptyListException {
         List<AlertDTO> dtosArticleList = service.findByArticle(article).stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<List<AlertDTO>>(dtosArticleList, HttpStatus.OK);
     }
     @GetMapping("/pdf/{pdf}")
-    public ResponseEntity<List<AlertDTO>> getAlertByPdf(@PathVariable Pdf pdf) throws NotFoundException, EmptyListException {
+    public ResponseEntity<List<AlertDTO>> getAlertsByPdf(@PathVariable Pdf pdf) throws NotFoundException, EmptyListException {
         List<AlertDTO> dtosPdfList = service.findByPdf(pdf).stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<List<AlertDTO>>(dtosPdfList, HttpStatus.OK);
     }

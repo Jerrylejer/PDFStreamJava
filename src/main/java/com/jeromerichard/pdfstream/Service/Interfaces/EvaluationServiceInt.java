@@ -17,6 +17,6 @@ public interface EvaluationServiceInt {
     public Evaluation updateEvaluation(Integer id, EvaluationDTOWayIN evaluation) throws NotFoundException;
     public void deleteEvaluation(Integer id) throws NotFoundException;
     // FOREIGN KEY
-    public List<Evaluation> findByUser(User userId) throws EmptyListException;
-    public List<Evaluation> findByPdf(Pdf pdfId) throws EmptyListException;
+    public List<Evaluation> findByUser(User user) throws EmptyListException;
+    public List<Evaluation> findByPdf(Pdf pdf) throws EmptyListException;
 }

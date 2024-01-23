@@ -21,13 +21,13 @@ public class ProfilService implements ProfilServiceInt {
     @Autowired
     private ProfilRepository repository;
     @Override
-    public Profil saveAlert(ProfilDTOWayIN profil) {
+    public Profil saveProfil(ProfilDTOWayIN profil) {
         Profil profilToSave = new Profil();
         profilToSave.setGender(profil.getGender());
         profilToSave.setFirstname(profil.getFirstname());
         profilToSave.setLastname(profil.getLastname());
-        profilToSave.setAdress1(profil.getAdress1());
-        profilToSave.setAdress2(profil.getAdress2());
+        profilToSave.setAddress1(profil.getAddress1());
+        profilToSave.setAddress2(profil.getAddress2());
         profilToSave.setZipcode(profil.getZipcode());
         profilToSave.setCity(profil.getCity());
         profilToSave.setCreatedAt(new Date());
@@ -62,12 +62,12 @@ public class ProfilService implements ProfilServiceInt {
         profilToUpdate.setGender(profil.getGender());
         profilToUpdate.setFirstname(profil.getFirstname());
         profilToUpdate.setLastname(profil.getLastname());
-        profilToUpdate.setAdress1(profil.getAdress1());
-        profilToUpdate.setAdress2(profil.getAdress2());
+        profilToUpdate.setAddress1(profil.getAddress1());
+        profilToUpdate.setAddress2(profil.getAddress2());
         profilToUpdate.setZipcode(profil.getZipcode());
         profilToUpdate.setCity(profil.getCity());
         profilToUpdate.setUpdateAt(new Date());
-        log.info("Le profile de " + profil.getFirstname() + "a correctement été modifié");
+        log.info("Le profile de " + profil.getFirstname() + " a correctement été modifié");
         repository.save(profilToUpdate);
         return profilToUpdate;
     }
@@ -77,7 +77,7 @@ public class ProfilService implements ProfilServiceInt {
         Profil profilToDelete = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce profile n'existe pas, reformulez votre demande")
         );
-        log.info("Le profile de " + profilToDelete.getFirstname() + "à correctement été supprimée");
+        log.info("Le profile de " + profilToDelete.getFirstname() + " à correctement été supprimée");
         repository.deleteById(id);
     }
 }
