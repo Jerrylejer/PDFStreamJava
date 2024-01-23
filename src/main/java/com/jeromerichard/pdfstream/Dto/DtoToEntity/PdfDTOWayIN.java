@@ -1,13 +1,12 @@
-package com.jeromerichard.pdfstream.Dto.EntityToDto;
+package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import com.jeromerichard.pdfstream.Entity.*;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Set;
+
 @Data
-public class PdfDTOUp {
-    private Long id;
+public class PdfDTOWayIN {
     private String title;
     private String smallDescription;
     private String description;
@@ -17,9 +16,9 @@ public class PdfDTOUp {
     private Integer counter;
     private Date createdAt;
     private Date updateAt;
-    private Set<Category> CategoriesList;
-    private Set<Collection> collectionList;
+//    private Set<Category> CategoriesList;
+//    private Set<Collection> collectionList;
     private User userId;
-    private Set<Evaluation> evaluationList;
-    private Set<Alert> alertList;
+//    private Set<Evaluation> evaluationList;
+//    private Set<Alert> alertList;
 }

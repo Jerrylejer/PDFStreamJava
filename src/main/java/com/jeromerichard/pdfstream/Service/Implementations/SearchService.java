@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.SearchDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.SearchDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Search;
 import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
@@ -22,7 +22,7 @@ public class SearchService implements SearchServiceInt {
     @Autowired
     private SearchRepository repository;
     @Override
-    public Search saveSearch(SearchDTODown search) {
+    public Search saveSearch(SearchDTOWayIN search) {
         Search searchToSave = new Search();
         searchToSave.setResult(search.getResult());
         searchToSave.setUser(search.getUserId());

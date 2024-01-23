@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.EvaluationDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.EvaluationDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Evaluation;
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.User;
@@ -24,7 +24,7 @@ public class EvaluationService implements EvaluationServiceInt {
     private EvaluationRepository repository;
 
     @Override
-    public Evaluation saveEvaluation(EvaluationDTODown evaluation) {
+    public Evaluation saveEvaluation(EvaluationDTOWayIN evaluation) {
         Evaluation evaluationToSave = new Evaluation();
         evaluationToSave.setTitle(evaluation.getTitle());
         evaluationToSave.setComment(evaluation.getComment());
@@ -56,7 +56,7 @@ public class EvaluationService implements EvaluationServiceInt {
     }
 
     @Override
-    public Evaluation updateEvaluation(Integer id, EvaluationDTODown evaluation) throws NotFoundException {
+    public Evaluation updateEvaluation(Integer id, EvaluationDTOWayIN evaluation) throws NotFoundException {
                 Evaluation evaluationToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette évaluation n'existe pas, reformulez votre demande")
         );

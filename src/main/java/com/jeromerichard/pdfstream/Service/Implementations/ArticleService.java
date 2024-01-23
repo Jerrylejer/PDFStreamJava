@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.ArticleDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.ArticleDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Article;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -22,7 +22,7 @@ public class ArticleService implements ArticleServiceInt {
     private ArticleRepository repository;
 
     @Override
-    public Article saveArticle(ArticleDTODown article) {
+    public Article saveArticle(ArticleDTOWayIN article) {
         Article articleToSave = new Article();
         articleToSave.setTitle(article.getTitle());
         articleToSave.setOrder(article.getOrder());
@@ -52,7 +52,7 @@ public class ArticleService implements ArticleServiceInt {
     }
 
     @Override
-    public Article updateArticle(Integer id, ArticleDTODown article) throws NotFoundException {
+    public Article updateArticle(Integer id, ArticleDTOWayIN article) throws NotFoundException {
         Article articleToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cet article n'existe pas, reformulez votre demande.")
         );

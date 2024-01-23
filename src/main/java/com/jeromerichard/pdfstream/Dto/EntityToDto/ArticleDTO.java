@@ -1,11 +1,11 @@
-package com.jeromerichard.pdfstream.Dto.DtoToEntity;
+package com.jeromerichard.pdfstream.Dto.EntityToDto;
 
 import lombok.Data;
 
 import java.util.Date;
-
 @Data
-public class ArticleDTODown {
+public class ArticleDTO {
+    private Integer id;
     private String title;
     private String description;
     private Integer order;

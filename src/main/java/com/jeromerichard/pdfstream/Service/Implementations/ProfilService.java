@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.ProfilDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.ProfilDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Profil;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -21,7 +21,7 @@ public class ProfilService implements ProfilServiceInt {
     @Autowired
     private ProfilRepository repository;
     @Override
-    public Profil saveAlert(ProfilDTODown profil) {
+    public Profil saveAlert(ProfilDTOWayIN profil) {
         Profil profilToSave = new Profil();
         profilToSave.setGender(profil.getGender());
         profilToSave.setFirstname(profil.getFirstname());
@@ -55,7 +55,7 @@ public class ProfilService implements ProfilServiceInt {
     }
 
     @Override
-    public Profil updateProfil(Integer id, ProfilDTODown profil) throws NotFoundException {
+    public Profil updateProfil(Integer id, ProfilDTOWayIN profil) throws NotFoundException {
         Profil profilToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce profile n'existe pas, reformulez votre demande")
         );

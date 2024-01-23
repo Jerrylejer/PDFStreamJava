@@ -1,14 +1,12 @@
-package com.jeromerichard.pdfstream.Dto.EntityToDto;
+package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.User;
-
 import lombok.Data;
 
 import java.util.Date;
 @Data
-public class DonationDTOUp {
-    private Long id;
+public class DonationDTOWayIN {
     private Integer amount;
     private String message;
     private String beneficiary;

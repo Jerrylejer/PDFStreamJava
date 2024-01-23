@@ -1,12 +1,11 @@
-package com.jeromerichard.pdfstream.Dto.EntityToDto;
+package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class CategoryDTOUp {
-    private Integer id;
+public class CategoryDTOWayIN {
     private String title;
     private Integer parent;
     private Date createdAt;

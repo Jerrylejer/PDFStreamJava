@@ -1,4 +1,4 @@
-package com.jeromerichard.pdfstream.Dto.EntityToDto;
+package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.User;
@@ -6,8 +6,7 @@ import lombok.Data;
 
 import java.util.Date;
 @Data
-public class EvaluationDTOUp {
-    private Long id;
+public class EvaluationDTOWayIN {
     private String title;
     private String comment;
     private Byte star;

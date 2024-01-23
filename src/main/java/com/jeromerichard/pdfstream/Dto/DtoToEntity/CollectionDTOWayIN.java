@@ -6,8 +6,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CollectionDTODown {
+public class CollectionDTOWayIN {
     private Date createdAt;
     private Date updateAt;
-    private User userId;
+    private User user;
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ProfilDTOUp {
+public class ProfilDTO {
     private Long id;
     private String gender;
     private String firstname;

@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.PdfDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.PdfDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -22,7 +22,7 @@ public class PdfService implements PdfServiceInt {
     private PdfRepository repository;
 
     @Override
-    public Pdf savePdf(PdfDTODown pdf) {
+    public Pdf savePdf(PdfDTOWayIN pdf) {
         Pdf pdfToSave = new Pdf();
         pdfToSave.setTitle(pdf.getTitle());
         pdfToSave.setSmallDescription(pdf.getSmallDescription());
@@ -56,7 +56,7 @@ public class PdfService implements PdfServiceInt {
     }
 
     @Override
-    public Pdf updatePdf(Integer id, PdfDTODown pdf) throws NotFoundException {
+    public Pdf updatePdf(Integer id, PdfDTOWayIN pdf) throws NotFoundException {
         Pdf pdfToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
         );

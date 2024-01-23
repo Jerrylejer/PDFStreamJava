@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.DonationDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.DonationDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Donation;
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.User;
@@ -23,7 +23,7 @@ public class DonationService implements DonationServiceInt {
     @Autowired
     private DonationRepository repository;
     @Override
-    public Donation saveDonation(DonationDTODown donation) {
+    public Donation saveDonation(DonationDTOWayIN donation) {
         Donation donationToSave = new Donation();
         donationToSave.setAmount(donation.getAmount());
         donationToSave.setMessage(donation.getMessage());

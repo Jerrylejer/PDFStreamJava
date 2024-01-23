@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.Date;
 @Data
-public class ProfilDTODown {
+public class ProfilDTOWayIN {
     private String gender;
     private String firstname;
     private String lastname;

@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.CategoryDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.CategoryDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Category;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -22,7 +22,7 @@ public class CategoryService implements CategoryServiceInt {
     @Autowired
     private CategoryRepository repository;
     @Override
-    public Category saveCategory(CategoryDTODown category) {
+    public Category saveCategory(CategoryDTOWayIN category) {
         Category categoryToSave = new Category();
         categoryToSave.setTitle(category.getTitle());
         categoryToSave.setParent(category.getParent());
@@ -51,7 +51,7 @@ public class CategoryService implements CategoryServiceInt {
     }
 
     @Override
-    public Category updateCategory(Integer id, CategoryDTODown category) throws NotFoundException {
+    public Category updateCategory(Integer id, CategoryDTOWayIN category) throws NotFoundException {
         Category categoryToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette catégorie n'existe pas, reformulez votre demande")
         );

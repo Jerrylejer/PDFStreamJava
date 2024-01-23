@@ -10,5 +10,5 @@ import java.util.Set;
 
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Integer> {
-    List<Collection> findByUsername(User username);
+    List<Collection> findByUser(User user);
 }

@@ -1,9 +1,7 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.CollectionDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.CollectionDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Collection;
-import com.jeromerichard.pdfstream.Entity.Donation;
-import com.jeromerichard.pdfstream.Entity.Evaluation;
 import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -24,9 +22,9 @@ public class CollectionService implements CollectionServiceInt {
     @Autowired
     private CollectionRepository repository;
     @Override
-    public Collection saveCollection(CollectionDTODown collection) {
+    public Collection saveCollection(CollectionDTOWayIN collection) {
         Collection collectionToSave = new Collection();
-        collectionToSave.setUser(collection.getUserId());
+        collectionToSave.setUser(collection.getUser());
         collectionToSave.setCreatedAt(new Date());
         log.info("Nouvelle collection " + collectionToSave.getId() + " ajoutée");
         repository.save(collectionToSave);
@@ -52,11 +50,11 @@ public class CollectionService implements CollectionServiceInt {
     }
 
     @Override
-    public Collection updateCollection(Integer id, CollectionDTODown collection) throws NotFoundException {
+    public Collection updateCollection(Integer id, CollectionDTOWayIN collection) throws NotFoundException {
         Collection collectionToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette collection n'existe pas, reformulez votre demande")
         );
-        collectionToUpdate.setUser(collection.getUserId());
+        collectionToUpdate.setUser(collection.getUser());
         collectionToUpdate.setUpdatedAt(new Date());
         log.info("La collection " + collectionToUpdate.getUser().getUsername() + " a été modifiée");
         repository.save(collectionToUpdate);
@@ -73,12 +71,12 @@ public class CollectionService implements CollectionServiceInt {
     }
 
     @Override
-    public List<Collection> findByUsername(User username) throws EmptyListException {
-        List<Collection> collection = repository.findByUsername(username);
+    public List<Collection> findByUser(User user) throws EmptyListException {
+        List<Collection> collection = repository.findByUser(user);
         if(collection == null) {
             throw new EmptyListException("Aucune liste ne correspond à votre demande");
         }
-        log.info("la collection de " + username + " est affichée");
+        log.info("la collection de " + user + " est affichée");
         return collection;
     }
 }

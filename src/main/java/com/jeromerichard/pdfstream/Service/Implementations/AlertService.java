@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.AlertDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.AlertDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Alert;
 import com.jeromerichard.pdfstream.Entity.Article;
 import com.jeromerichard.pdfstream.Entity.Pdf;
@@ -25,7 +25,7 @@ public class AlertService implements AlertServiceInt {
     private AlertRepository repository;
 
     @Override
-    public Alert saveAlert(AlertDTODown alert) {
+    public Alert saveAlert(AlertDTOWayIN alert) {
         Alert alertToSave = new Alert();
         alertToSave.setTitle(alert.getTitle());
         alertToSave.setDescription(alert.getDescription());
@@ -58,7 +58,7 @@ public class AlertService implements AlertServiceInt {
     }
 
     @Override
-    public Alert updateAlert(Integer id, AlertDTODown alert) throws NotFoundException {
+    public Alert updateAlert(Integer id, AlertDTOWayIN alert) throws NotFoundException {
         Alert alertToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette alerte n'existe pas, reformulez votre demande.")
         );

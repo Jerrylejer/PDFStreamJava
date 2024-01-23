@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.UserDTODown;
+import com.jeromerichard.pdfstream.Dto.DtoToEntity.UserDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Profil;
 import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
@@ -22,7 +22,7 @@ public class UserService implements UserServiceInt {
     @Autowired
     private UserRepository repository;
     @Override
-    public User saveSearch(UserDTODown user) {
+    public User saveSearch(UserDTOWayIN user) {
         User userToSave = new User();
         userToSave.setUsername(user.getUsername());
         userToSave.setPassword(user.getPassword());
@@ -54,7 +54,7 @@ public class UserService implements UserServiceInt {
     }
 
     @Override
-    public User updateUser(Integer id, UserDTODown user) throws NotFoundException {
+    public User updateUser(Integer id, UserDTOWayIN user) throws NotFoundException {
         User userToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce user n'existe pas, reformulez votre demande")
         );
