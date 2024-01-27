@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class DonationController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
     public ResponseEntity<DonationDTO> saveDonation(@RequestBody DonationDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
@@ -39,12 +41,14 @@ public class DonationController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteDonation(@PathVariable Integer id) throws NotFoundException {
         service.deleteDonation(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<DonationDTO>> getDonationsList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<DonationDTO> donationDTOList = service.getAllDonations().stream().map(donation -> modelMapper.map(donation, DonationDTO.class)).collect(Collectors.toList());
@@ -52,6 +56,7 @@ public class DonationController {
     }
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DonationDTO> getDonation(@PathVariable Integer id) throws NotFoundException {
         Donation donation = service.getDonationById(id);
         // Conversion sens Entité à DTO
@@ -60,11 +65,13 @@ public class DonationController {
     }
 
     @GetMapping("/user/{user}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<DonationDTO>> getDonationByUser(@PathVariable User user) throws NotFoundException, EmptyListException {
         List<DonationDTO> donationDTOList = service.findByUser(user).stream().map(item -> modelMapper.map(item, DonationDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(donationDTOList, HttpStatus.OK);
     }
     @GetMapping("/pdf/{pdf}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<DonationDTO>> getDonationsByPdf(@PathVariable Pdf pdf) throws NotFoundException, EmptyListException {
         List<DonationDTO> donationDTOList = service.findByPdf(pdf).stream().map(item -> modelMapper.map(item, DonationDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(donationDTOList, HttpStatus.OK);

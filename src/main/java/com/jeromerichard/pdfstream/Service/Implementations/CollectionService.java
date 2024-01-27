@@ -24,7 +24,7 @@ public class CollectionService implements CollectionServiceInt {
     @Override
     public Collection saveCollection(CollectionDTOWayIN collection) {
         Collection collectionToSave = new Collection();
-        collectionToSave.setUser(collection.getUser());
+        collectionToSave.setUser(collection.getUserId());
         collectionToSave.setCreatedAt(new Date());
         log.info("Nouvelle collection " + collectionToSave.getId() + " ajoutée");
         repository.save(collectionToSave);
@@ -54,7 +54,7 @@ public class CollectionService implements CollectionServiceInt {
         Collection collectionToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette collection n'existe pas, reformulez votre demande")
         );
-        collectionToUpdate.setUser(collection.getUser());
+        collectionToUpdate.setUser(collection.getUserId());
         collectionToUpdate.setUpdatedAt(new Date());
         log.info("La collection " + collectionToUpdate.getUser().getUsername() + " a été modifiée");
         repository.save(collectionToUpdate);

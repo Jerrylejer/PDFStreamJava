@@ -2,15 +2,15 @@ package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.User;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 @Data
 public class DonationDTOWayIN {
-    private Integer amount;
-    private String message;
-    private String beneficiary;
-    private Date createdAt;
-    private User userId;
-    private Pdf pdfId;
+    Integer amount;
+    String message;
+    String beneficiary;
+    Date createdAt;
+    User userId;
+    Pdf pdfId;
 }

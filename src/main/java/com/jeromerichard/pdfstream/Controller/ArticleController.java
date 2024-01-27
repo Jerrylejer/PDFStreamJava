@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class ArticleController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody
+    @PreAuthorize("hasRole('ADMIN')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
     public ResponseEntity<ArticleDTO> saveArticle(@RequestBody ArticleDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
@@ -42,6 +44,7 @@ public class ArticleController {
 
     @PutMapping("/update/{id}")
     @ResponseBody
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ArticleDTO> updateArticle(@PathVariable Integer id, @RequestBody ArticleDTOWayIN clientDatas) throws NotFoundException {
         // Conversion des datas front en DTOWayIN
         ArticleDTOWayIN articleDTOWayIN = modelMapper.map(clientDatas, ArticleDTOWayIN.class);
@@ -53,12 +56,14 @@ public class ArticleController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteArticle(@PathVariable Integer id) throws NotFoundException {
         service.deleteArticle(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ArticleDTO>> getArticlesList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<ArticleDTO> articleDTOList = service.getAllArticles().stream().map(article -> modelMapper.map(article, ArticleDTO.class)).collect(Collectors.toList());
@@ -66,6 +71,7 @@ public class ArticleController {
     }
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ArticleDTO> getArticle(@PathVariable Integer id) throws NotFoundException {
         Article article = service.getArticleById(id);
         // Conversion sens Entité à DTO

@@ -1,13 +1,13 @@
 package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
 public class CategoryDTOWayIN {
-    private String title;
-    private Integer parent;
-    private Date createdAt;
-    private Date updateAt;
+    String title;
+    Integer parent;
+    Date createdAt;
+    Date updateAt;
 }

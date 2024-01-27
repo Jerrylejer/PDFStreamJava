@@ -1,24 +1,25 @@
 package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import com.jeromerichard.pdfstream.Entity.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 public class PdfDTOWayIN {
-    private String title;
-    private String smallDescription;
-    private String description;
-    private String image;
-    private String author;
-    private Integer size;
-    private Integer counter;
-    private Date createdAt;
-    private Date updateAt;
-//    private Set<Category> CategoriesList;
+    String title;
+    String smallDescription;
+    String description;
+    String image;
+    String author;
+    Integer size;
+    Integer counter;
+    Date createdAt;
+    Date updateAt;
+    Set<Category> CategoriesList;
 //    private Set<Collection> collectionList;
-    private User userId;
+    User userId;
 //    private Set<Evaluation> evaluationList;
 //    private Set<Alert> alertList;
 }

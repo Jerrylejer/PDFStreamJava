@@ -2,7 +2,6 @@ package com.jeromerichard.pdfstream.Entity;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,11 +11,9 @@ public class Role {
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name="name")
-    @Enumerated(EnumType.STRING) // conversion de Enum à String
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private ERole name;
-    @ManyToMany(mappedBy = "role")
-    private Set<User> userList = new HashSet<>();
 
     public Role() {
     }

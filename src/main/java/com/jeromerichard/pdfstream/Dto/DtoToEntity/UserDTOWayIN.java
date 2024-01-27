@@ -1,23 +1,19 @@
 package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
-import com.jeromerichard.pdfstream.Entity.*;
-import lombok.Data;
+import com.jeromerichard.pdfstream.Entity.Role;
+import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 public class UserDTOWayIN {
-    private String username;
-    private String password;
-    private String avatar;
-    private String email;
-    private String bio;
-    private Date createdAt;
-    private Date updatedAt;
-    private Profil profilId;
-//    private Set<Role> role;
-//    private Set<Donation> donationList;
-//    private Set<Evaluation> evaluationList;
-//    private Set<Search> searchList;
-//    private Set<Alert> alertList;
+    String username;
+    String password;
+    String avatar;
+    String email;
+    String bio;
+    Date createdAt;
+    Date updatedAt;
+    Set<Role> roles;
 }

@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class SearchController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
     public ResponseEntity<SearchDTO> saveSearch(@RequestBody SearchDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
@@ -37,12 +39,14 @@ public class SearchController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     public ResponseEntity<?> deleteSearch(@PathVariable Integer id) throws NotFoundException {
         service.deleteSearch(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<SearchDTO>> getSearchList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<SearchDTO> searchDTOList = service.getAllSearchs().stream().map(search -> modelMapper.map(search, SearchDTO.class)).collect(Collectors.toList());
@@ -50,6 +54,7 @@ public class SearchController {
     }
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SearchDTO> getSearch(@PathVariable Integer id) throws NotFoundException {
         Search search = service.getSearchById(id);
         // Conversion sens Entité à DTO

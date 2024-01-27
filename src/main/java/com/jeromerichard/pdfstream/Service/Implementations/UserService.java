@@ -1,7 +1,6 @@
 package com.jeromerichard.pdfstream.Service.Implementations;
 
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.UserDTOWayIN;
-import com.jeromerichard.pdfstream.Entity.Profil;
 import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -29,9 +28,10 @@ public class UserService implements UserServiceInt {
         userToSave.setAvatar(user.getAvatar());
         userToSave.setEmail(user.getEmail());
         userToSave.setBio(user.getBio());
+        userToSave.setRoles(user.getRoles());
         userToSave.setCreatedAt(new Date());
         log.info("Nouvel utilisateur " + userToSave.getUsername() + " ajouté");
-        repository.save(userToSave);
+        repository.saveAndFlush(userToSave);
         return userToSave;
     }
 
@@ -45,7 +45,7 @@ public class UserService implements UserServiceInt {
     }
 
     @Override
-    public User getUserById(Integer id) throws NotFoundException {
+    public User getUserById(Long id) throws NotFoundException {
         User user = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce user n'existe pas, reformulez votre demande")
         );
@@ -54,7 +54,7 @@ public class UserService implements UserServiceInt {
     }
 
     @Override
-    public User updateUser(Integer id, UserDTOWayIN user) throws NotFoundException {
+    public User updateUser(Long id, UserDTOWayIN user) throws NotFoundException {
         User userToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce user n'existe pas, reformulez votre demande")
         );
@@ -63,14 +63,15 @@ public class UserService implements UserServiceInt {
         userToUpdate.setAvatar(user.getAvatar());
         userToUpdate.setEmail(user.getEmail());
         userToUpdate.setBio(user.getBio());
+        userToUpdate.setRoles(user.getRoles());
         userToUpdate.setUpdatedAt(new Date());
         log.info("L'utilisateur " + userToUpdate.getUsername() + " a correctement été modifié");
-        repository.save(userToUpdate);
+        repository.saveAndFlush(userToUpdate);
         return userToUpdate;
     }
 
     @Override
-    public void deleteUser(Integer id) throws NotFoundException {
+    public void deleteUser(Long id) throws NotFoundException {
         User userToDelete = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce user n'existe pas, reformulez votre demande")
         );
@@ -78,14 +79,6 @@ public class UserService implements UserServiceInt {
         repository.deleteById(id);
     }
 
-    @Override
-    public List<User> findByProfil(Profil profil) throws EmptyListException {
-        List<User> userListByProfil = repository.findByProfil(profil);
-        if(profil == null) {
-            throw new EmptyListException("Aucun utilisateur ne correspond à cette recherche par profile, reformulez votre demande");
-        };
-        return userListByProfil;
-    }
 
 /*    @Override
     public List<User> findByUser(String username) throws EmptyListException {

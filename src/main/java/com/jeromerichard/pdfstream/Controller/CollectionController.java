@@ -19,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class CollectionController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
     public ResponseEntity<CollectionDTO> saveCollection(@RequestBody CollectionDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
@@ -46,6 +48,7 @@ public class CollectionController {
     }
     @PutMapping("/update/{id}")
     @ResponseBody
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     public ResponseEntity<CollectionDTO> updateCollection(@PathVariable Integer id, @RequestBody CollectionDTOWayIN clientDatas) throws NotFoundException {
         // Conversion des datas front en DTOWayIN
         CollectionDTOWayIN collectionDTOWayIN = modelMapper.map(clientDatas, CollectionDTOWayIN.class);
@@ -57,12 +60,14 @@ public class CollectionController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     public ResponseEntity<?> deleteCollection(@PathVariable Integer id) throws NotFoundException {
         service.deleteCollection(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     public ResponseEntity<List<CollectionDTO>> getCollectionsList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<CollectionDTO> collectionDTOList = service.getAllCollections().stream().map(collection -> modelMapper.map(collection, CollectionDTO.class)).collect(Collectors.toList());
@@ -70,6 +75,7 @@ public class CollectionController {
     }
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     public ResponseEntity<CollectionDTO> getCollection(@PathVariable Integer id) throws NotFoundException {
         Collection collection = service.getCollectionById(id);
         // Conversion sens Entité à DTO
@@ -78,6 +84,7 @@ public class CollectionController {
     }
 
     @GetMapping("/user/{user}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<CollectionDTO>> getCollectionsByUser(@PathVariable User user) throws NotFoundException, EmptyListException {
         List<CollectionDTO> collectionDTOList = service.findByUser(user).stream().map(item -> modelMapper.map(item, CollectionDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(collectionDTOList, HttpStatus.OK);

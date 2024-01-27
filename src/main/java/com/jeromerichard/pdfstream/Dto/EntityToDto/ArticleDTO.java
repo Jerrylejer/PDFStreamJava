@@ -1,14 +1,14 @@
 package com.jeromerichard.pdfstream.Dto.EntityToDto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 @Data
 public class ArticleDTO {
-    private Integer id;
-    private String title;
-    private String description;
-    private Integer order;
-    private Date createdAt;
-    private Date updateAt;
+    Integer id;
+    String title;
+    String description;
+    Integer order;
+    Date createdAt;
+    Date updateAt;
 }
