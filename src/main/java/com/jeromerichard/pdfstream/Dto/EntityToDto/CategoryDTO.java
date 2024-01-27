@@ -1,5 +1,6 @@
 package com.jeromerichard.pdfstream.Dto.EntityToDto;
 
+import com.jeromerichard.pdfstream.Entity.Category;
 import lombok.*;
 
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
 public class CategoryDTO {
     Integer id;
     String title;
-    Integer parent;
+    Category parent;
     Date createdAt;
     Date updateAt;
 }

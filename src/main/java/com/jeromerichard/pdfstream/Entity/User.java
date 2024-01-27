@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name="user", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
 })
 public class User {
     @Id
@@ -27,8 +28,7 @@ public class User {
     private String email;
     @Column(name="bio")
     private String bio;
-    @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at")
     private Date createdAt;
     @Column(name="updated_at")
     private Date updatedAt;

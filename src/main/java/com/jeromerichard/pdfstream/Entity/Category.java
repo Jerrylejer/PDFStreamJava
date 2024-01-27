@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="category")
+@Table(name="category", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "title")
+})
 public class Category {
     @Id
     @Column(name="id")
@@ -15,8 +17,11 @@ public class Category {
     private Integer id;
     @Column(name="title")
     private String title;
-    @Column(name="parent")
-    private Integer parent;
+    @OneToOne
+    @JoinColumn(name = "parent_id")
+    private Category parent;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private Set<Category> children = new HashSet<>();
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
@@ -26,11 +31,13 @@ public class Category {
     public Category() {
     }
 
-    public Category(String title, Integer parent, Date createdAt, Date updateAt) {
+    public Category(String title, Category parent, Set<Category> children, Date createdAt, Date updateAt, Set<Pdf> pdfList) {
         this.title = title;
         this.parent = parent;
+        this.children = children;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+        this.pdfList = pdfList;
     }
 
     public Integer getId() {
@@ -49,12 +56,20 @@ public class Category {
         this.title = title;
     }
 
-    public Integer getParent() {
+    public Category getParent() {
         return parent;
     }
 
-    public void setParent(Integer parent) {
+    public void setParent(Category parent) {
         this.parent = parent;
+    }
+
+    public Set<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Category> children) {
+        this.children = children;
     }
 
     public Date getCreatedAt() {
@@ -71,5 +86,13 @@ public class Category {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Set<Pdf> getPdfList() {
+        return pdfList;
+    }
+
+    public void setPdfList(Set<Pdf> pdfList) {
+        this.pdfList = pdfList;
     }
 }
