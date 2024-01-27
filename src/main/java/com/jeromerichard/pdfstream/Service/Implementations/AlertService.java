@@ -62,12 +62,18 @@ public class AlertService implements AlertServiceInt {
         Alert alertToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette alerte n'existe pas, reformulez votre demande.")
         );
+        if (alert.getTitle() != null) // On ne modifie que les propriétés nécessaires
         alertToUpdate.setTitle(alert.getTitle());
+        if (alert.getDescription() != null)
         alertToUpdate.setDescription(alert.getDescription());
+        if (alert.getState() != null)
         alertToUpdate.setState(alert.getState());
         alertToUpdate.setUpdatedAt(new Date());
+        if (alert.getUserId() != null)
         alertToUpdate.setUser(alert.getUserId());
+        if (alert.getArticleId() != null)
         alertToUpdate.setArticle(alert.getArticleId());
+        if (alert.getPdfId() != null)
         alertToUpdate.setPdf(alert.getPdfId());
         log.info("L'alerte id" + id + "à correctement été modifiée");
         repository.save(alertToUpdate);

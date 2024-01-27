@@ -60,11 +60,16 @@ public class EvaluationService implements EvaluationServiceInt {
                 Evaluation evaluationToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette évaluation n'existe pas, reformulez votre demande")
         );
+        if (evaluation.getTitle() != null) // On ne modifie que les propriétés nécessaires
         evaluationToUpdate.setTitle(evaluation.getTitle());
+        if (evaluation.getComment() != null)
         evaluationToUpdate.setComment(evaluation.getComment());
+        if (evaluation.getStar() != null)
         evaluationToUpdate.setStar(evaluation.getStar());
         evaluationToUpdate.setUpdatedAt(new Date());
+        if (evaluation.getPdfId() != null)
         evaluationToUpdate.setPdf(evaluation.getPdfId());
+        if (evaluation.getUserId() != null)
         evaluationToUpdate.setUser(evaluation.getUserId());
         log.info("L'évaluation " + evaluationToUpdate.getId() + "a correctement été modifiée");
         repository.save(evaluationToUpdate);

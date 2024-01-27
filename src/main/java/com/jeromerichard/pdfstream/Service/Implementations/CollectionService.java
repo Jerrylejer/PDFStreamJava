@@ -54,6 +54,7 @@ public class CollectionService implements CollectionServiceInt {
         Collection collectionToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette collection n'existe pas, reformulez votre demande")
         );
+        if (collection.getUserId() != null)
         collectionToUpdate.setUser(collection.getUserId());
         collectionToUpdate.setUpdatedAt(new Date());
         log.info("La collection " + collectionToUpdate.getUser().getUsername() + " a été modifiée");

@@ -55,8 +55,10 @@ public class CategoryService implements CategoryServiceInt {
         Category categoryToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cette catégorie n'existe pas, reformulez votre demande")
         );
+        if (category.getTitle() != null) // On ne modifie que les propriétés nécessaires
         categoryToUpdate.setTitle(category.getTitle());
-        categoryToUpdate.setParent(category.getParent());
+        if (category.getParent() != null)
+            categoryToUpdate.setParent(category.getParent());
         categoryToUpdate.setUpdateAt(new Date());
         log.info("Catégorie " + category.getTitle() + " modifiée");
         repository.save(categoryToUpdate);

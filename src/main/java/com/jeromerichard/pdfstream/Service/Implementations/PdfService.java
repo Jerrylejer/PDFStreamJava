@@ -60,12 +60,19 @@ public class PdfService implements PdfServiceInt {
         Pdf pdfToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
         );
+        if (pdf.getTitle() != null) // On ne modifie que les propriétés nécessaires
         pdfToUpdate.setTitle(pdf.getTitle());
-        pdfToUpdate.setSmallDescription(pdf.getSmallDescription());
-        pdfToUpdate.setDescription(pdf.getDescription());
+        if (pdf.getSmallDescription() != null)
+            pdfToUpdate.setSmallDescription(pdf.getSmallDescription());
+        if (pdf.getDescription() != null)
+            pdfToUpdate.setDescription(pdf.getDescription());
+        if (pdf.getImage() != null)
         pdfToUpdate.setImage(pdf.getImage());
+        if (pdf.getAuthor() != null)
         pdfToUpdate.setAuthor(pdf.getAuthor());
+//        if (pdf.getSize() != null)
 //        pdfToUpdate.setSize(pdf.getSize());
+//            if (pdf.getCounter() != null)
 //        pdfToUpdate.setCounter(pdf.getCounter());
         pdfToUpdate.setUpdateAt(new Date());
         log.info("Le PDF" + pdfToUpdate.getTitle() + "a correctement été modifié");

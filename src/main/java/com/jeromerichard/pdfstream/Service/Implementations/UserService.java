@@ -58,11 +58,17 @@ public class UserService implements UserServiceInt {
         User userToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce user n'existe pas, reformulez votre demande")
         );
+        if (user.getUsername() != null) // On ne modifie que les propriétés nécessaires
         userToUpdate.setUsername(user.getUsername());
+        if (user.getPassword() != null)
         userToUpdate.setPassword(user.getPassword());
+        if (user.getAvatar() != null)
         userToUpdate.setAvatar(user.getAvatar());
+        if (user.getEmail() != null)
         userToUpdate.setEmail(user.getEmail());
+        if (user.getBio() != null)
         userToUpdate.setBio(user.getBio());
+        if (user.getRoles() != null)
         userToUpdate.setRoles(user.getRoles());
         userToUpdate.setUpdatedAt(new Date());
         log.info("L'utilisateur " + userToUpdate.getUsername() + " a correctement été modifié");

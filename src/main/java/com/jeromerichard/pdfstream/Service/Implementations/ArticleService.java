@@ -56,9 +56,12 @@ public class ArticleService implements ArticleServiceInt {
         Article articleToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Cet article n'existe pas, reformulez votre demande.")
         );
+        if (article.getTitle() != null) // On ne modifie que les propriétés nécessaires
         articleToUpdate.setTitle(article.getTitle());
+        if (article.getDescription()!= null)
         articleToUpdate.setDescription(article.getDescription());
-        articleToUpdate.setOrder(article.getOrder());
+        if (article.getOrder() != null)
+            articleToUpdate.setOrder(article.getOrder());
         articleToUpdate.setUpdateAt(new Date());
         log.info("L'article id" + id + "à correctement été modifié");
         repository.save(articleToUpdate);
