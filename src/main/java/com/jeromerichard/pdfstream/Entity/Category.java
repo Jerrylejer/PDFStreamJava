@@ -21,12 +21,14 @@ public class Category {
     @JsonIgnore
     private Category parentId;
     @OneToMany(mappedBy = "parentId", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Category> children = new ArrayList<>(); // We use @OneToMany to refer a category to its children
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @ManyToMany(mappedBy = "categoriesList")
+    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
     private Set<Pdf> pdfList = new HashSet<>();
     public Category() {
     }

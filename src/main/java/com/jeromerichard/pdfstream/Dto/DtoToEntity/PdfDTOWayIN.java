@@ -12,14 +12,13 @@ public class PdfDTOWayIN {
     String smallDescription;
     String description;
     String image;
-    String author;
     Integer size;
     Integer counter;
     Date createdAt;
     Date updateAt;
-    Set<Category> CategoriesList;
+    Set<Category> categories;
 //    private Set<Collection> collectionList;
-    User userId;
+    User user;
 //    private Set<Evaluation> evaluationList;
 //    private Set<Alert> alertList;
 }

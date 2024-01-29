@@ -28,9 +28,8 @@ public class PdfService implements PdfServiceInt {
         pdfToSave.setSmallDescription(pdf.getSmallDescription());
         pdfToSave.setDescription(pdf.getDescription());
         pdfToSave.setImage(pdf.getImage());
-        pdfToSave.setAuthor(pdf.getAuthor());
-//        pdfToSave.setSize(pdf.getSize());
-//        pdfToSave.setCounter(pdf.getCounter());
+        pdfToSave.setUser(pdf.getUser());
+        pdfToSave.setCategories(pdf.getCategories());
         pdfToSave.setCreatedAt(new Date());
         log.info("Nouveau PDF " + pdf.getTitle() + " ajouté");
         repository.save(pdfToSave);
@@ -68,12 +67,10 @@ public class PdfService implements PdfServiceInt {
             pdfToUpdate.setDescription(pdf.getDescription());
         if (pdf.getImage() != null)
         pdfToUpdate.setImage(pdf.getImage());
-        if (pdf.getAuthor() != null)
-        pdfToUpdate.setAuthor(pdf.getAuthor());
-//        if (pdf.getSize() != null)
-//        pdfToUpdate.setSize(pdf.getSize());
-//            if (pdf.getCounter() != null)
-//        pdfToUpdate.setCounter(pdf.getCounter());
+        if (pdf.getUser() != null)
+        pdfToUpdate.setUser(pdf.getUser());
+        if (pdf.getCategories() != null)
+            pdfToUpdate.setCategories(pdf.getCategories());
         pdfToUpdate.setUpdateAt(new Date());
         log.info("Le PDF" + pdfToUpdate.getTitle() + "a correctement été modifié");
         repository.save(pdfToUpdate);

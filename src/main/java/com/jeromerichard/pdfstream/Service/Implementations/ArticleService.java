@@ -25,7 +25,7 @@ public class ArticleService implements ArticleServiceInt {
     public Article saveArticle(ArticleDTOWayIN article) {
         Article articleToSave = new Article();
         articleToSave.setTitle(article.getTitle());
-        articleToSave.setOrder(article.getOrder());
+        articleToSave.setOrdering(article.getOrdering());
         articleToSave.setDescription(article.getDescription());
         articleToSave.setCreatedAt(new Date());
         log.info("Nouvel article de Charte ajouté");
@@ -60,8 +60,8 @@ public class ArticleService implements ArticleServiceInt {
         articleToUpdate.setTitle(article.getTitle());
         if (article.getDescription()!= null)
         articleToUpdate.setDescription(article.getDescription());
-        if (article.getOrder() != null)
-            articleToUpdate.setOrder(article.getOrder());
+        if (article.getOrdering() != null)
+            articleToUpdate.setOrdering(article.getOrdering());
         articleToUpdate.setUpdateAt(new Date());
         log.info("L'article id" + id + "à correctement été modifié");
         repository.save(articleToUpdate);

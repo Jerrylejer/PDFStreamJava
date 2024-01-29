@@ -8,7 +8,7 @@ import java.util.Date;
 public class ArticleDTOWayIN {
     String title;
     String description;
-    Integer order;
+    Integer ordering;
     Date createdAt;
     Date updateAt;
 }

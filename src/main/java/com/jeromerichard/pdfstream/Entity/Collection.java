@@ -1,5 +1,6 @@
 package com.jeromerichard.pdfstream.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -21,6 +22,7 @@ public class Collection {
     @JoinColumn(name="collection_user_id") // user lié à la collection
     private User user;
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name="collection_pdf",
             joinColumns = @JoinColumn(name="collectionPDF_collection_id"),
             inverseJoinColumns = @JoinColumn(name="collectionPDF_pdf_id"))

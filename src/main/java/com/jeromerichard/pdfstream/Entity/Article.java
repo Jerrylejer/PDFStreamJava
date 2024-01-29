@@ -62,11 +62,11 @@ public class Article {
         this.description = description;
     }
 
-    public Integer getOrder() {
+    public Integer getOrdering() {
         return ordering;
     }
 
-    public void setOrder(Integer order) {
+    public void setOrdering(Integer order) {
         this.ordering = order;
     }
 

@@ -12,10 +12,10 @@ public class PdfDTO {
     String smallDescription;
     String description;
     String image;
-    String author;
     Integer size;
     Integer counter;
     Date createdAt;
     Date updateAt;
-    User userId;
+    Set<Category> categories;
+    User user;
 }

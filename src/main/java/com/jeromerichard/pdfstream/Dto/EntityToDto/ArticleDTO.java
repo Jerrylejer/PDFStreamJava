@@ -8,7 +8,7 @@ public class ArticleDTO {
     Integer id;
     String title;
     String description;
-    Integer order;
+    Integer ordering;
     Date createdAt;
     Date updateAt;
 }
