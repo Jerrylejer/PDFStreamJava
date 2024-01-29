@@ -25,7 +25,7 @@ public class CategoryService implements CategoryServiceInt {
     public Category saveCategory(CategoryDTOWayIN category) {
         Category categoryToSave = new Category();
         categoryToSave.setTitle(category.getTitle());
-        categoryToSave.setParent(category.getParent());
+        categoryToSave.setParentId(category.getParentId());
         categoryToSave.setCreatedAt(new Date());
         log.info("Nouvelle catégorie " + category.getTitle() + " ajoutée");
         repository.save(categoryToSave);
@@ -57,8 +57,8 @@ public class CategoryService implements CategoryServiceInt {
         );
         if (category.getTitle() != null) // On ne modifie que les propriétés nécessaires
         categoryToUpdate.setTitle(category.getTitle());
-        if (category.getParent() != null)
-            categoryToUpdate.setParent(category.getParent());
+        if (category.getParentId() != null)
+            categoryToUpdate.setParentId(category.getParentId());
         categoryToUpdate.setUpdateAt(new Date());
         log.info("Catégorie " + category.getTitle() + " modifiée");
         repository.save(categoryToUpdate);

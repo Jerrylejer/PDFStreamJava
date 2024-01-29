@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class CategoryDTOWayIN {
     String title;
-    Category parent;
+    Category parentId;
     Date createdAt;
     Date updateAt;
 }

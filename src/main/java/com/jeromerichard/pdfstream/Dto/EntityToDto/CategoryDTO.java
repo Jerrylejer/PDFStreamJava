@@ -9,7 +9,7 @@ import java.util.Date;
 public class CategoryDTO {
     Integer id;
     String title;
-    Category parent;
+    Category parentId;
     Date createdAt;
     Date updateAt;
 }

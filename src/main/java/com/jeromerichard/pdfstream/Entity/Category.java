@@ -1,10 +1,9 @@
 package com.jeromerichard.pdfstream.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="category", uniqueConstraints = {
@@ -18,10 +17,11 @@ public class Category {
     @Column(name="title")
     private String title;
     @OneToOne
-    @JoinColumn(name = "parent_id")
-    private Category parent;
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private Set<Category> children = new HashSet<>();
+    @JoinColumn(name = "parent_id") // We use @OneToOne annotation to refer a category to its parent
+    @JsonIgnore
+    private Category parentId;
+    @OneToMany(mappedBy = "parentId", cascade = CascadeType.ALL)
+    private List<Category> children = new ArrayList<>(); // We use @OneToMany to refer a category to its children
     @Column(name="created_at")
     private Date createdAt;
     @Column(name="updated_at")
@@ -31,9 +31,9 @@ public class Category {
     public Category() {
     }
 
-    public Category(String title, Category parent, Set<Category> children, Date createdAt, Date updateAt, Set<Pdf> pdfList) {
+    public Category(String title, Category parentId, List<Category> children, Date createdAt, Date updateAt, Set<Pdf> pdfList) {
         this.title = title;
-        this.parent = parent;
+        this.parentId = parentId;
         this.children = children;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
@@ -56,19 +56,19 @@ public class Category {
         this.title = title;
     }
 
-    public Category getParent() {
-        return parent;
+    public Category getParentId() {
+        return parentId;
     }
 
-    public void setParent(Category parent) {
-        this.parent = parent;
+    public void setParentId(Category parentId) {
+        this.parentId = parentId;
     }
 
-    public Set<Category> getChildren() {
+    public List<Category> getChildren() {
         return children;
     }
 
-    public void setChildren(Set<Category> children) {
+    public void setChildren(List<Category> children) {
         this.children = children;
     }
 
