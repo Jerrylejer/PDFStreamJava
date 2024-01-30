@@ -22,6 +22,7 @@ public class Pdf {
     private String description;
     @Column(name="image")
     private String image;
+
 //    @Lob
 //    @Column(name="file")
 //    https://www.bezkoder.com/spring-boot-upload-file-database/
@@ -50,16 +51,19 @@ public class Pdf {
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
     // liste des evaluations par pdf authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Evaluation> evaluationList = new HashSet<>();
+    private Set<Evaluation> evaluations = new HashSet<>();
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
     // liste des alerts par pdf authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Alert> alertList = new HashSet<>();
+    private Set<Alert> alerts = new HashSet<>();
+    @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
+    @JsonIgnore
+    // liste des alerts par pdf authentifié => update ou delete, modifie ou supprime la liste
+    private Set<Donation> donations = new HashSet<>();
 
     public Pdf() {
     }
-
-    public Pdf(String title, String smallDescription, String description, String image, Integer size, Integer counter, Date createdAt, Date updateAt, User user) {
+    public Pdf(String title, String smallDescription, String description, String image, Integer size, Integer counter, Date createdAt, Date updateAt, Set<Category> categories, Set<Collection> collectionList, User user, Set<Evaluation> evaluations, Set<Alert> alerts, Set<Donation> donations) {
         this.title = title;
         this.smallDescription = smallDescription;
         this.description = description;
@@ -68,9 +72,13 @@ public class Pdf {
         this.counter = counter;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+        this.categories = categories;
+        this.collectionList = collectionList;
         this.user = user;
+        this.evaluations = evaluations;
+        this.alerts = alerts;
+        this.donations = donations;
     }
-
     public Integer getId() {
         return id;
     }
@@ -167,19 +175,27 @@ public class Pdf {
         this.user = user;
     }
 
-    public Set<Evaluation> getEvaluationList() {
-        return evaluationList;
+    public Set<Evaluation> getEvaluations() {
+        return evaluations;
     }
 
-    public void setEvaluationList(Set<Evaluation> evaluationList) {
-        this.evaluationList = evaluationList;
+    public void setEvaluations(Set<Evaluation> evaluations) {
+        this.evaluations = evaluations;
     }
 
-    public Set<Alert> getAlertList() {
-        return alertList;
+    public Set<Alert> getAlerts() {
+        return alerts;
     }
 
-    public void setAlertList(Set<Alert> alertList) {
-        this.alertList = alertList;
+    public void setAlerts(Set<Alert> alerts) {
+        this.alerts = alerts;
+    }
+
+    public Set<Donation> getDonations() {
+        return donations;
+    }
+
+    public void setDonations(Set<Donation> donations) {
+        this.donations = donations;
     }
 }

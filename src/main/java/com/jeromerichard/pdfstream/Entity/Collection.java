@@ -29,10 +29,11 @@ public class Collection {
     private Set<Pdf> pdfList = new HashSet<>();
     public Collection() {
     }
-    public Collection(Date createdAt, Date updatedAt, User user) {
+    public Collection(Date createdAt, Date updatedAt, User user, Set<Pdf> pdfList ) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.user = user;
+        this.pdfList = pdfList;
     }
     public Integer getId() {
         return id;
@@ -64,5 +65,13 @@ public class Collection {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Pdf> getPdfList() {
+        return pdfList;
+    }
+
+    public void setPdfList(Set<Pdf> pdfList) {
+        this.pdfList = pdfList;
     }
 }

@@ -11,6 +11,6 @@ import java.util.Set;
 
 @Repository
 public interface DonationRepository extends JpaRepository<Donation, Integer> {
-    List<Donation> findByUser(User user);
+    List<Donation> findByDonor(User donor);
     List<Donation> findByPdf(Pdf pdf);
 }

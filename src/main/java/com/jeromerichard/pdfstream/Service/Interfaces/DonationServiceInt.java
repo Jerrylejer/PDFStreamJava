@@ -16,6 +16,6 @@ public interface DonationServiceInt {
     public Donation getDonationById(Integer id) throws NotFoundException;
     public void deleteDonation(Integer id) throws NotFoundException;
     // FOREIGN KEY
-    public List<Donation> findByUser(User userId) throws EmptyListException;
+    public List<Donation> findByDonor(User donor) throws EmptyListException;
     public List<Donation> findByPdf(Pdf pdfId) throws EmptyListException;
 }

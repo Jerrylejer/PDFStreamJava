@@ -9,8 +9,8 @@ import java.util.Date;
 public class DonationDTOWayIN {
     Integer amount;
     String message;
-    String beneficiary;
+    User beneficiary;
     Date createdAt;
-    User userId;
+    User donor;
     Pdf pdfId;
 }

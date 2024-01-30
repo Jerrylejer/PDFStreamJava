@@ -28,10 +28,10 @@ public class DonationService implements DonationServiceInt {
         donationToSave.setAmount(donation.getAmount());
         donationToSave.setMessage(donation.getMessage());
         donationToSave.setBeneficiary(donation.getBeneficiary());
-        donationToSave.setCreatedAt(new Date());
-        donationToSave.setUser(donation.getUserId());
+        donationToSave.setDonor(donation.getDonor());
         donationToSave.setPdf(donation.getPdfId());
-        log.info("Nouveau don fait à l'auteur-trice " + donationToSave.getUser().getUsername() + " confirmé");
+        donationToSave.setCreatedAt(new Date());
+        log.info("Nouveau don fait à l'auteur-trice " + donationToSave.getDonor().getUsername() + " confirmé");
         repository.save(donationToSave);
         return donationToSave;
     }
@@ -64,8 +64,8 @@ public class DonationService implements DonationServiceInt {
     }
 
     @Override
-    public List<Donation> findByUser(User user) throws EmptyListException {
-        List<Donation> donationsList = repository.findByUser(user);
+    public List<Donation> findByDonor(User donor) throws EmptyListException {
+        List<Donation> donationsList = repository.findByDonor(donor);
         if(donationsList == null) {
             throw new EmptyListException("Aucune liste ne correspond à votre demande");
         };

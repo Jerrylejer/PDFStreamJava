@@ -2,6 +2,7 @@ package com.jeromerichard.pdfstream.Controller;
 
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.SearchDTOWayIN;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.SearchDTO;
+import com.jeromerichard.pdfstream.Dto.EntityToDto.UserDTO;
 import com.jeromerichard.pdfstream.Entity.*;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -60,5 +61,12 @@ public class SearchController {
         // Conversion sens Entité à DTO
         SearchDTO searchDTO = modelMapper.map(search, SearchDTO.class);
         return new ResponseEntity<SearchDTO>(searchDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{user}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<SearchDTO>> getSearchesByUser(@PathVariable User user) throws NotFoundException, EmptyListException {
+        List<SearchDTO> searchDTOList = service.findByUser(user).stream().map(item -> modelMapper.map(item, SearchDTO.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(searchDTOList, HttpStatus.OK);
     }
 }

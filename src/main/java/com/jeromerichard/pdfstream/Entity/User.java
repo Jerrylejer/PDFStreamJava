@@ -38,19 +38,27 @@ public class User {
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles = new HashSet<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    // liste des donations par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Donation> donationList = new HashSet<>();
+    @OneToMany(mappedBy = "donor", cascade = CascadeType.ALL)
+    @JsonIgnore
+    // liste des donations par donneur authentifié
+    private Set<Donation> donor = new HashSet<>();
+    @OneToMany(mappedBy = "beneficiary", cascade = CascadeType.ALL)
+    @JsonIgnore
+    // liste des donations par bénéficiaire
+    private Set<Donation> beneficiary = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // liste des evaluations par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Evaluation> evaluationList = new HashSet<>();
+    private Set<Evaluation> evaluations = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     // Liste des pdfs par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Pdf> pdfList = new HashSet<>();
+    private Set<Pdf> pdfs = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     // liste des recherches par user authentifié => update ou delete, modifie ou supprime la liste
-    private Set<Search> searchList = new HashSet<>();
+    private Set<Search> searches = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     // liste alerts par user authentifié => update ou delete, modifie ou supprime la liste
     private Set<Alert> alertList = new HashSet<>();
 
@@ -68,7 +76,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updatedAt) {
+    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updatedAt, Set<Role> roles, Set<Donation> donor, Set<Donation> beneficiary, Set<Evaluation> evaluations, Set<Pdf> pdfs, Set<Search> searches, Set<Alert> alertList) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -76,6 +84,13 @@ public class User {
         this.bio = bio;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.roles = roles;
+        this.donor = donor;
+        this.beneficiary = beneficiary;
+        this.evaluations = evaluations;
+        this.pdfs = pdfs;
+        this.searches = searches;
+        this.alertList = alertList;
     }
 
     public Long getId() {
@@ -150,36 +165,44 @@ public class User {
         this.roles = roles;
     }
 
-    public Set<Donation> getDonationList() {
-        return donationList;
+    public Set<Donation> getDonor() {
+        return donor;
     }
 
-    public void setDonationList(Set<Donation> donationList) {
-        this.donationList = donationList;
+    public void setDonor(Set<Donation> donor) {
+        this.donor = donor;
     }
 
-    public Set<Evaluation> getEvaluationList() {
-        return evaluationList;
+    public Set<Donation> getBeneficiary() {
+        return beneficiary;
     }
 
-    public void setEvaluationList(Set<Evaluation> evaluationList) {
-        this.evaluationList = evaluationList;
+    public void setBeneficiary(Set<Donation> beneficiary) {
+        this.beneficiary = beneficiary;
     }
 
-    public Set<Pdf> getPdfList() {
-        return pdfList;
+    public Set<Evaluation> getEvaluations() {
+        return evaluations;
     }
 
-    public void setPdfList(Set<Pdf> pdfList) {
-        this.pdfList = pdfList;
+    public void setEvaluations(Set<Evaluation> evaluations) {
+        this.evaluations = evaluations;
     }
 
-    public Set<Search> getSearchList() {
-        return searchList;
+    public Set<Pdf> getPdfs() {
+        return pdfs;
     }
 
-    public void setSearchList(Set<Search> searchList) {
-        this.searchList = searchList;
+    public void setPdfs(Set<Pdf> pdfs) {
+        this.pdfs = pdfs;
+    }
+
+    public Set<Search> getSearches() {
+        return searches;
+    }
+
+    public void setSearches(Set<Search> searches) {
+        this.searches = searches;
     }
 
     public Set<Alert> getAlertList() {

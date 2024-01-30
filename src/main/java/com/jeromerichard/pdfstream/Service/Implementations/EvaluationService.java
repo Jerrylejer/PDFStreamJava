@@ -61,17 +61,17 @@ public class EvaluationService implements EvaluationServiceInt {
                 ()-> new NotFoundException("Cette évaluation n'existe pas, reformulez votre demande")
         );
         if (evaluation.getTitle() != null) // On ne modifie que les propriétés nécessaires
-        evaluationToUpdate.setTitle(evaluation.getTitle());
+            evaluationToUpdate.setTitle(evaluation.getTitle());
         if (evaluation.getComment() != null)
-        evaluationToUpdate.setComment(evaluation.getComment());
+            evaluationToUpdate.setComment(evaluation.getComment());
         if (evaluation.getStar() != null)
-        evaluationToUpdate.setStar(evaluation.getStar());
-        evaluationToUpdate.setUpdatedAt(new Date());
+            evaluationToUpdate.setStar(evaluation.getStar());
         if (evaluation.getPdfId() != null)
-        evaluationToUpdate.setPdf(evaluation.getPdfId());
+            evaluationToUpdate.setPdf(evaluation.getPdfId());
         if (evaluation.getUserId() != null)
-        evaluationToUpdate.setUser(evaluation.getUserId());
-        log.info("L'évaluation " + evaluationToUpdate.getId() + "a correctement été modifiée");
+            evaluationToUpdate.setUser(evaluation.getUserId());
+        evaluationToUpdate.setUpdatedAt(new Date());
+        log.info("L'évaluation " + evaluationToUpdate.getId() + " a correctement été modifiée");
         repository.save(evaluationToUpdate);
         return evaluationToUpdate;
     }

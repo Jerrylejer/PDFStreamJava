@@ -44,7 +44,7 @@ public class EvaluationController {
     @PutMapping("/update/{id}")
     @ResponseBody
     @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
-    public ResponseEntity<EvaluationDTO> updateEvaluation(@PathVariable Integer id, @RequestBody UserDTOWayIN clientDatas) throws NotFoundException {
+    public ResponseEntity<EvaluationDTO> updateEvaluation(@PathVariable Integer id, @RequestBody EvaluationDTOWayIN clientDatas) throws NotFoundException {
         // Conversion des datas front en DTOWayIN
         EvaluationDTOWayIN evaluationDTOWayIN = modelMapper.map(clientDatas, EvaluationDTOWayIN.class);
         // Conversion sens DTOWayIN à Entité

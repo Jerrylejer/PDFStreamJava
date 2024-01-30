@@ -57,9 +57,9 @@ public class ArticleService implements ArticleServiceInt {
                 ()-> new NotFoundException("Cet article n'existe pas, reformulez votre demande.")
         );
         if (article.getTitle() != null) // On ne modifie que les propriétés nécessaires
-        articleToUpdate.setTitle(article.getTitle());
+            articleToUpdate.setTitle(article.getTitle());
         if (article.getDescription()!= null)
-        articleToUpdate.setDescription(article.getDescription());
+            articleToUpdate.setDescription(article.getDescription());
         if (article.getOrdering() != null)
             articleToUpdate.setOrdering(article.getOrdering());
         articleToUpdate.setUpdateAt(new Date());

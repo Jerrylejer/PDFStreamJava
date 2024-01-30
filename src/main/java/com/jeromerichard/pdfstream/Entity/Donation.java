@@ -1,5 +1,6 @@
 package com.jeromerichard.pdfstream.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -15,25 +16,30 @@ public class Donation {
     private Integer amount;
     @Column(name="message")
     private String message;
-    @Column(name="beneficiary")
-    private String beneficiary;
     @Column(name="created_at")
     private Date createdAt;
     @ManyToOne
-    @JoinColumn(name="donation_user_id") // user lié à la donation
-    private User user;
+    @JsonIgnore
+    @JoinColumn(name="donation_beneficiary_id") // user recevant la donation
+    private User beneficiary;
     @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="donation_donor_id") // user faisant la donation
+    private User donor;
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="donation_pdf_id") // pdf lié à la donation
     private Pdf pdf;
 
     public Donation() {
     }
-    public Donation(Integer amount, String message, String beneficiary, Date createdAt, User user, Pdf pdf) {
+
+    public Donation(Integer amount, String message, Date createdAt, User beneficiary, User donor, Pdf pdf) {
         this.amount = amount;
         this.message = message;
-        this.beneficiary = beneficiary;
         this.createdAt = createdAt;
-        this.user = user;
+        this.beneficiary = beneficiary;
+        this.donor = donor;
         this.pdf = pdf;
     }
 
@@ -61,14 +67,6 @@ public class Donation {
         this.message = message;
     }
 
-    public String getBeneficiary() {
-        return beneficiary;
-    }
-
-    public void setBeneficiary(String beneficiary) {
-        this.beneficiary = beneficiary;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -77,12 +75,20 @@ public class Donation {
         this.createdAt = createdAt;
     }
 
-    public User getUser() {
-        return user;
+    public User getBeneficiary() {
+        return beneficiary;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setBeneficiary(User beneficiary) {
+        this.beneficiary = beneficiary;
+    }
+
+    public User getDonor() {
+        return donor;
+    }
+
+    public void setDonor(User donor) {
+        this.donor = donor;
     }
 
     public Pdf getPdf() {
