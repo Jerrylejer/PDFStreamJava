@@ -20,15 +20,15 @@ public class Donation {
     private Date createdAt;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="beneficiary_id") // user recevant la donation
+    @JoinColumn(name="donation_beneficiary_id") // user recevant la donation
     private User beneficiary;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="donor_id") // user faisant la donation
+    @JoinColumn(name="donation_donor_id") // user faisant la donation
     private User donor;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="pdf_id") // pdf lié à la donation
+    @JoinColumn(name="donation_pdf_id") // pdf lié à la donation
     private Pdf pdf;
 
     public Donation() {

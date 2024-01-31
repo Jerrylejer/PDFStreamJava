@@ -12,6 +12,6 @@ public class EvaluationDTOWayIN {
     Byte star;
     Date createdAt;
     Date updatedAt;
-    Pdf pdfId;
-    User userId;
+    Pdf pdf;
+    User user;
 }

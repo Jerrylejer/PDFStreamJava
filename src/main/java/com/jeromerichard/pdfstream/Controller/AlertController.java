@@ -81,14 +81,14 @@ public class AlertController {
 
     @GetMapping("/user/{user}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<AlertDTO>> getAlertsByUser(@PathVariable User user) throws NotFoundException, EmptyListException {
-        List<AlertDTO> dtosUserList = service.findByUser(user).stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
+    public ResponseEntity<List<AlertDTO>> getAlertsByUser(@PathVariable User alertLauncher) throws NotFoundException, EmptyListException {
+        List<AlertDTO> dtosUserList = service.findByAlertLauncher(alertLauncher).stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<List<AlertDTO>>(dtosUserList, HttpStatus.OK);
     }
     @GetMapping("/article/{article}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<AlertDTO>> getAlertsByArticle(@PathVariable Article article) throws NotFoundException, EmptyListException {
-        List<AlertDTO> dtosArticleList = service.findByArticle(article).stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
+    public ResponseEntity<List<AlertDTO>> getAlertsByArticle(@PathVariable Article charteArticle) throws NotFoundException, EmptyListException {
+        List<AlertDTO> dtosArticleList = service.findByCharteArticle(charteArticle).stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<List<AlertDTO>>(dtosArticleList, HttpStatus.OK);
     }
     @GetMapping("/pdf/{pdf}")

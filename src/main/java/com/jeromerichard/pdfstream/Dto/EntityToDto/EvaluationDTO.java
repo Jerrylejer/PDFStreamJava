@@ -13,6 +13,6 @@ public class EvaluationDTO {
     Byte star;
     Date createdAt;
     Date updatedAt;
-    Pdf pdfId;
-    User userId;
+    Pdf pdf;
+    User user;
 }

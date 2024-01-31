@@ -13,6 +13,6 @@ public class CollectionDTO {
     Integer id;
     Date createdAt;
     Date updateAt;
-    User userId;
+    User user;
     Set<Pdf> pdfList;
 }

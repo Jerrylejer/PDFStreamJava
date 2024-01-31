@@ -23,7 +23,7 @@ public class Article {
     private Date createdAt;
     @Column(name="updated_at")
     private Date updateAt;
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "charteArticle", cascade = CascadeType.ALL)
     // Liste des alerts pour un article authentifié => update ou delete, modifie ou supprime la liste
     private Set<Alert> alertList = new HashSet<>();
 

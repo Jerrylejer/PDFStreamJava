@@ -49,7 +49,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // liste des evaluations par user
     private Set<Evaluation> evaluations = new HashSet<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @JsonIgnore
     // Liste des pdfs par user
     private Set<Pdf> pdfs = new HashSet<>();
@@ -57,7 +57,7 @@ public class User {
     @JsonIgnore
     // liste des recherches par user
     private Set<Search> searches = new HashSet<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "alertLauncher", cascade = CascadeType.ALL)
     @JsonIgnore
     // liste alerts par user
     private Set<Alert> alertList = new HashSet<>();

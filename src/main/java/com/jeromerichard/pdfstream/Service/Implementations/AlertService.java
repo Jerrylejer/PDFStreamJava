@@ -31,8 +31,8 @@ public class AlertService implements AlertServiceInt {
         alertToSave.setDescription(alert.getDescription());
         alertToSave.setState(alert.getState());
         alertToSave.setCreatedAt(new Date());
-        alertToSave.setUser(alert.getUserId());
-        alertToSave.setArticle(alert.getArticleId());
+        alertToSave.setAlertLauncher(alert.getAlertLauncher());
+        alertToSave.setCharteArticle(alert.getCharteArticle());
         alertToSave.setPdf(alert.getPdfId());
         log.info("Nouvelle alerte ajoutée");
         repository.save(alertToSave);
@@ -63,18 +63,18 @@ public class AlertService implements AlertServiceInt {
                 ()-> new NotFoundException("Cette alerte n'existe pas, reformulez votre demande.")
         );
         if (alert.getTitle() != null) // On ne modifie que les propriétés nécessaires
-        alertToUpdate.setTitle(alert.getTitle());
+            alertToUpdate.setTitle(alert.getTitle());
         if (alert.getDescription() != null)
-        alertToUpdate.setDescription(alert.getDescription());
+            alertToUpdate.setDescription(alert.getDescription());
         if (alert.getState() != null)
-        alertToUpdate.setState(alert.getState());
-        alertToUpdate.setUpdatedAt(new Date());
-        if (alert.getUserId() != null)
-        alertToUpdate.setUser(alert.getUserId());
-        if (alert.getArticleId() != null)
-        alertToUpdate.setArticle(alert.getArticleId());
+            alertToUpdate.setState(alert.getState());
+            alertToUpdate.setUpdatedAt(new Date());
+        if (alert.getAlertLauncher() != null)
+            alertToUpdate.setAlertLauncher(alert.getAlertLauncher());
+        if (alert.getCharteArticle() != null)
+            alertToUpdate.setCharteArticle(alert.getCharteArticle());
         if (alert.getPdfId() != null)
-        alertToUpdate.setPdf(alert.getPdfId());
+            alertToUpdate.setPdf(alert.getPdfId());
         log.info("L'alerte id" + id + "à correctement été modifiée");
         repository.save(alertToUpdate);
         return alertToUpdate;
@@ -90,8 +90,8 @@ public class AlertService implements AlertServiceInt {
     }
 
     @Override
-    public List<Alert> findByUser(User user) throws EmptyListException {
-        List<Alert> alertsList = repository.findByUser(user);
+    public List<Alert> findByAlertLauncher(User alertLauncher) throws EmptyListException {
+        List<Alert> alertsList = repository.findByAlertLauncher(alertLauncher);
         if(alertsList ==null) {
             throw new EmptyListException("Aucune liste ne correspond à votre demande");
         }
@@ -99,8 +99,8 @@ public class AlertService implements AlertServiceInt {
     }
 
     @Override
-    public List<Alert> findByArticle(Article article) throws EmptyListException {
-        List<Alert> alertsList = repository.findByArticle(article);
+    public List<Alert> findByCharteArticle(Article charteArticle) throws EmptyListException {
+        List<Alert> alertsList = repository.findByCharteArticle(charteArticle);
         if(alertsList ==null) {
             throw new EmptyListException("Aucune liste ne correspond à votre demande");
         }

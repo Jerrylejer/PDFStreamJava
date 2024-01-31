@@ -1,5 +1,6 @@
 package com.jeromerichard.pdfstream.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -22,16 +23,18 @@ public class Evaluation {
     @Column(name="updated_at")
     private Date updatedAt;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="evaluation_pdf_id") // pdf lié à l'évaluation
     private Pdf pdf;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="evaluation_user_id") // user lié à l'évaluation
     private User user;
 
     public Evaluation() {
     }
 
-    public Evaluation(String title, String comment, Byte star, Date createdAt, Date updateAt, User user, Pdf pdf) {
+    public Evaluation(String title, String comment, Byte star, Date createdAt, Date updatedAt, User user, Pdf pdf) {
         this.title = title;
         this.comment = comment;
         this.star = star;

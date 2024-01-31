@@ -19,13 +19,10 @@ public class Collection {
     @Column(name="updated_at")
     private Date updatedAt;
     @OneToOne
-    @JoinColumn(name="collection_user_id") // user lié à la collection
+    @JoinColumn(name="user_id") // user lié à la collection
     private User user;
-    @ManyToMany
+    @ManyToMany(mappedBy = "collections")
     @JsonIgnore
-    @JoinTable(name="collection_pdf",
-            joinColumns = @JoinColumn(name="collectionPDF_collection_id"),
-            inverseJoinColumns = @JoinColumn(name="collectionPDF_pdf_id"))
     private Set<Pdf> pdfList = new HashSet<>();
     public Collection() {
     }

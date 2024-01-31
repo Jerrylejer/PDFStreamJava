@@ -17,8 +17,9 @@ public class PdfDTOWayIN {
     Date createdAt;
     Date updateAt;
     Set<Category> categories;
-//    private Set<Collection> collectionList;
-    User user;
-//    private Set<Evaluation> evaluationList;
-//    private Set<Alert> alertList;
+    Set<Collection> collections;
+    Set<Evaluation> evaluations;
+    Set<Alert> alerts;
+    Set<Donation> donations;
+    User author;
 }

@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Repository
 public interface AlertRepository extends JpaRepository<Alert, Integer> {
-    List<Alert> findByUser(User user);
-    List<Alert> findByArticle(Article article);
+    List<Alert> findByAlertLauncher(User alertLauncher);
+    List<Alert> findByCharteArticle(Article charteArticle);
     List<Alert> findByPdf(Pdf pdf);
 }

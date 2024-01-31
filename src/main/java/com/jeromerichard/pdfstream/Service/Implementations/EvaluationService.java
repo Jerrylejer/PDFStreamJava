@@ -30,8 +30,8 @@ public class EvaluationService implements EvaluationServiceInt {
         evaluationToSave.setComment(evaluation.getComment());
         evaluationToSave.setStar(evaluation.getStar());
         evaluationToSave.setCreatedAt(new Date());
-        evaluationToSave.setPdf(evaluation.getPdfId());
-        evaluationToSave.setUser(evaluation.getUserId());
+        evaluationToSave.setPdf(evaluation.getPdf());
+        evaluationToSave.setUser(evaluation.getUser());
         log.info("Nouvelle évaluation du PDF " + evaluationToSave.getPdf() + " ajoutée");
         repository.save(evaluationToSave);
         return evaluationToSave;
@@ -66,10 +66,10 @@ public class EvaluationService implements EvaluationServiceInt {
             evaluationToUpdate.setComment(evaluation.getComment());
         if (evaluation.getStar() != null)
             evaluationToUpdate.setStar(evaluation.getStar());
-        if (evaluation.getPdfId() != null)
-            evaluationToUpdate.setPdf(evaluation.getPdfId());
-        if (evaluation.getUserId() != null)
-            evaluationToUpdate.setUser(evaluation.getUserId());
+        if (evaluation.getPdf() != null)
+            evaluationToUpdate.setPdf(evaluation.getPdf());
+        if (evaluation.getUser() != null)
+            evaluationToUpdate.setUser(evaluation.getUser());
         evaluationToUpdate.setUpdatedAt(new Date());
         log.info("L'évaluation " + evaluationToUpdate.getId() + " a correctement été modifiée");
         repository.save(evaluationToUpdate);

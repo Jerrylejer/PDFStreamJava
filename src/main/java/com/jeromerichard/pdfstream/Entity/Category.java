@@ -30,7 +30,6 @@ public class Category {
     private Set<Pdf> pdfList = new HashSet<>();
     public Category() {
     }
-
     public Category(String title, Category parentId, List<Category> children, Date createdAt, Date updateAt, Set<Pdf> pdfList) {
         this.title = title;
         this.parentId = parentId;

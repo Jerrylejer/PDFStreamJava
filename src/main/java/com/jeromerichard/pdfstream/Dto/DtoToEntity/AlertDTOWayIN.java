@@ -13,7 +13,7 @@ public class AlertDTOWayIN {
     String state;
     Date createdAt;
     Date updateAt;
-    User userId;
-    Article articleId;
+    User alertLauncher;
+    Article charteArticle;
     Pdf pdfId;
 }

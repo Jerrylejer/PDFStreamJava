@@ -28,7 +28,7 @@ public class PdfService implements PdfServiceInt {
         pdfToSave.setSmallDescription(pdf.getSmallDescription());
         pdfToSave.setDescription(pdf.getDescription());
         pdfToSave.setImage(pdf.getImage());
-        pdfToSave.setUser(pdf.getUser());
+        pdfToSave.setAuthor(pdf.getAuthor());
         pdfToSave.setCategories(pdf.getCategories());
         pdfToSave.setCreatedAt(new Date());
         log.info("Nouveau PDF " + pdf.getTitle() + " ajouté");
@@ -60,18 +60,18 @@ public class PdfService implements PdfServiceInt {
                 ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
         );
         if (pdf.getTitle() != null) // On ne modifie que les propriétés nécessaires
-        pdfToUpdate.setTitle(pdf.getTitle());
+            pdfToUpdate.setTitle(pdf.getTitle());
         if (pdf.getSmallDescription() != null)
             pdfToUpdate.setSmallDescription(pdf.getSmallDescription());
         if (pdf.getDescription() != null)
             pdfToUpdate.setDescription(pdf.getDescription());
         if (pdf.getImage() != null)
-        pdfToUpdate.setImage(pdf.getImage());
-        if (pdf.getUser() != null)
-        pdfToUpdate.setUser(pdf.getUser());
+            pdfToUpdate.setImage(pdf.getImage());
+        if (pdf.getAuthor() != null)
+            pdfToUpdate.setAuthor(pdf.getAuthor());
         if (pdf.getCategories() != null)
             pdfToUpdate.setCategories(pdf.getCategories());
-        pdfToUpdate.setUpdateAt(new Date());
+            pdfToUpdate.setUpdateAt(new Date());
         log.info("Le PDF" + pdfToUpdate.getTitle() + "a correctement été modifié");
         repository.save(pdfToUpdate);
         return pdfToUpdate;

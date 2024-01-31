@@ -1,5 +1,6 @@
 package com.jeromerichard.pdfstream.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -23,25 +24,26 @@ public class Alert {
     private Date updatedAt;
     @ManyToOne // user lié à l'alert
     @JoinColumn(name="alert_user_id")
-    private User user;
+    private User alertLauncher;
     @ManyToOne // article lié à l'alert
     @JoinColumn(name="alert_article_id")
-    private Article article;
+    private Article charteArticle;
     @ManyToOne // pdf lié à l'alert
+    @JsonIgnore
     @JoinColumn(name="alert_pdf_id")
     private Pdf pdf;
 
     public Alert() {
     }
 
-    public Alert(String title, String description, String state, Date createdAt, Date updatedAt, User user, Article article, Pdf pdf) {
+    public Alert(String title, String description, String state, Date createdAt, Date updatedAt, User alertLauncher, Article charteArticle, Pdf pdf) {
         this.title = title;
         this.description = description;
         this.state = state;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.user = user;
-        this.article = article;
+        this.alertLauncher = alertLauncher;
+        this.charteArticle = charteArticle;
         this.pdf = pdf;
     }
 
@@ -93,20 +95,20 @@ public class Alert {
         this.updatedAt = updatedAt;
     }
 
-    public User getUser() {
-        return user;
+    public User getAlertLauncher() {
+        return alertLauncher;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAlertLauncher(User alertLauncher) {
+        this.alertLauncher = alertLauncher;
     }
 
-    public Article getArticle() {
-        return article;
+    public Article getCharteArticle() {
+        return charteArticle;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setCharteArticle(Article charteArticle) {
+        this.charteArticle = charteArticle;
     }
 
     public Pdf getPdf() {

@@ -41,29 +41,35 @@ public class Pdf {
             joinColumns = @JoinColumn(name="pdf_id"),
             inverseJoinColumns = @JoinColumn(name="category_id"))
     private Set<Category> categories = new HashSet<>();
-    @ManyToMany(mappedBy = "pdfList")
+    // Je récupère un tableau d'objets des catégories qui incluent ce pdf
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Collection> collectionList = new HashSet<>();
+    @JoinTable(name="pdf_collection",
+            joinColumns = @JoinColumn(name="pdf_id"),
+            inverseJoinColumns = @JoinColumn(name="collection_id"))
+    private Set<Collection> collections = new HashSet<>();
+    // Je "devrais" récupèrer un tableau d'objets des collections qui incluent ce pdf
     @ManyToOne
-    @JoinColumn(name="pdf_user_id") // user lié au pdf
+    @JoinColumn(name="user_id") // user lié au pdf
     @JsonIgnore
-    private User user;
+    private User author;
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
     // liste des evaluations par pdf
     private Set<Evaluation> evaluations = new HashSet<>();
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste des alerts par pdf
+    // liste des alerts par pdf ok
     private Set<Alert> alerts = new HashSet<>();
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste des alerts par pdf
+    // liste des alerts par pdf ok
     private Set<Donation> donations = new HashSet<>();
 
     public Pdf() {
     }
-    public Pdf(String title, String smallDescription, String description, String image, Integer size, Integer counter, Date createdAt, Date updateAt, Set<Category> categories, Set<Collection> collectionList, User user, Set<Evaluation> evaluations, Set<Alert> alerts, Set<Donation> donations) {
+    public Pdf(String title, String smallDescription, String description, String image, Integer size, Integer counter, Date createdAt, Date updateAt, Set<Category> categories, Set<Collection> collections, User author, Set<Evaluation> evaluations, Set<Alert> alerts, Set<Donation> donations) {
         this.title = title;
         this.smallDescription = smallDescription;
         this.description = description;
@@ -73,8 +79,8 @@ public class Pdf {
         this.createdAt = createdAt;
         this.updateAt = updateAt;
         this.categories = categories;
-        this.collectionList = collectionList;
-        this.user = user;
+        this.collections = collections;
+        this.author = author;
         this.evaluations = evaluations;
         this.alerts = alerts;
         this.donations = donations;
@@ -159,20 +165,20 @@ public class Pdf {
         this.categories = categories;
     }
 
-    public Set<Collection> getCollectionList() {
-        return collectionList;
+    public Set<Collection> getCollections() {
+        return collections;
     }
 
-    public void setCollectionList(Set<Collection> collectionList) {
-        this.collectionList = collectionList;
+    public void setCollections(Set<Collection> collections) {
+        this.collections = collections;
     }
 
-    public User getUser() {
-        return user;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public Set<Evaluation> getEvaluations() {

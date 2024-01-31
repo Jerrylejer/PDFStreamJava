@@ -18,7 +18,7 @@ public interface AlertServiceInt {
     public Alert updateAlert(Integer id, AlertDTOWayIN alert) throws NotFoundException;
     public void deleteAlert(Integer id) throws NotFoundException;
     // FOREIGN KEY
-    public List<Alert> findByUser(User user) throws EmptyListException;
-    public List<Alert> findByArticle(Article articleId) throws EmptyListException;
+    public List<Alert> findByAlertLauncher(User alertLauncher) throws EmptyListException;
+    public List<Alert> findByCharteArticle(Article CharteArticle) throws EmptyListException;
     public List<Alert> findByPdf(Pdf pdfId) throws EmptyListException;
 }
