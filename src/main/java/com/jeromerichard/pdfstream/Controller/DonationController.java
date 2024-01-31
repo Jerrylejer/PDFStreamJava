@@ -1,5 +1,6 @@
 package com.jeromerichard.pdfstream.Controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.DonationDTOWayIN;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.DonationDTO;
 import com.jeromerichard.pdfstream.Entity.Donation;
@@ -56,7 +57,7 @@ public class DonationController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     public ResponseEntity<DonationDTO> getDonation(@PathVariable Integer id) throws NotFoundException {
         Donation donation = service.getDonationById(id);
         // Conversion sens Entité à DTO
@@ -64,15 +65,21 @@ public class DonationController {
         return new ResponseEntity<DonationDTO>(donationDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/user/{user}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<DonationDTO>> getDonationByUser(@PathVariable User donor) throws NotFoundException, EmptyListException {
+    @GetMapping("/donor/{donor}")
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    public ResponseEntity<List<DonationDTO>> getDonationsByDonor(@PathVariable User donor) throws EmptyListException {
         List<DonationDTO> donationDTOList = service.findByDonor(donor).stream().map(item -> modelMapper.map(item, DonationDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(donationDTOList, HttpStatus.OK);
     }
+    @GetMapping("/beneficiary/{beneficiary}")
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    public ResponseEntity<List<DonationDTO>> getDonationsByBeneficiary(@PathVariable User beneficiary) throws EmptyListException {
+        List<DonationDTO> donationDTOList = service.findByBeneficiary(beneficiary).stream().map(item -> modelMapper.map(item, DonationDTO.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(donationDTOList, HttpStatus.OK);
+    }
     @GetMapping("/pdf/{pdf}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<DonationDTO>> getDonationsByPdf(@PathVariable Pdf pdf) throws NotFoundException, EmptyListException {
+    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    public ResponseEntity<List<DonationDTO>> getDonationsByPdf(@PathVariable Pdf pdf) throws EmptyListException {
         List<DonationDTO> donationDTOList = service.findByPdf(pdf).stream().map(item -> modelMapper.map(item, DonationDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(donationDTOList, HttpStatus.OK);
     }

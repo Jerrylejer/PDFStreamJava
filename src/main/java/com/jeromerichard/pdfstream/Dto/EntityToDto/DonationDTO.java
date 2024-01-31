@@ -14,5 +14,5 @@ public class DonationDTO {
     User beneficiary;
     Date createdAt;
     User donor;
-    Pdf pdfId;
+    Pdf pdf;
 }

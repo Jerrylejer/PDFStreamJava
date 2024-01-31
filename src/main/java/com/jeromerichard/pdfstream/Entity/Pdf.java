@@ -50,15 +50,15 @@ public class Pdf {
     private User user;
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste des evaluations par pdf authentifié => update ou delete, modifie ou supprime la liste
+    // liste des evaluations par pdf
     private Set<Evaluation> evaluations = new HashSet<>();
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste des alerts par pdf authentifié => update ou delete, modifie ou supprime la liste
+    // liste des alerts par pdf
     private Set<Alert> alerts = new HashSet<>();
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste des alerts par pdf authentifié => update ou delete, modifie ou supprime la liste
+    // liste des alerts par pdf
     private Set<Donation> donations = new HashSet<>();
 
     public Pdf() {

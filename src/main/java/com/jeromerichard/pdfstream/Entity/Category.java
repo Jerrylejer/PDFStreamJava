@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name="category", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "title")
-})
+@Table(name="category")
 public class Category {
     @Id
     @Column(name="id")
@@ -16,7 +14,7 @@ public class Category {
     private Integer id;
     @Column(name="title")
     private String title;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "parent_id") // We use @OneToOne annotation to refer a category to its parent
     @JsonIgnore
     private Category parentId;

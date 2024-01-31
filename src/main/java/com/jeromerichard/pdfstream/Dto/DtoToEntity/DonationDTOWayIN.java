@@ -12,5 +12,5 @@ public class DonationDTOWayIN {
     User beneficiary;
     Date createdAt;
     User donor;
-    Pdf pdfId;
+    Pdf pdf;
 }

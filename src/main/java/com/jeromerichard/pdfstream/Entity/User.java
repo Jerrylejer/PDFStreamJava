@@ -40,26 +40,26 @@ public class User {
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "donor", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste des donations par donneur authentifié
-    private Set<Donation> donor = new HashSet<>();
+    // liste des donations par donateurs
+    private Set<Donation> donationsByDonor = new HashSet<>();
     @OneToMany(mappedBy = "beneficiary", cascade = CascadeType.ALL)
     @JsonIgnore
     // liste des donations par bénéficiaire
-    private Set<Donation> beneficiary = new HashSet<>();
+    private Set<Donation> donationsByBeneficiary = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    // liste des evaluations par user authentifié => update ou delete, modifie ou supprime la liste
+    // liste des evaluations par user
     private Set<Evaluation> evaluations = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
-    // Liste des pdfs par user authentifié => update ou delete, modifie ou supprime la liste
+    // Liste des pdfs par user
     private Set<Pdf> pdfs = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste des recherches par user authentifié => update ou delete, modifie ou supprime la liste
+    // liste des recherches par user
     private Set<Search> searches = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
-    // liste alerts par user authentifié => update ou delete, modifie ou supprime la liste
+    // liste alerts par user
     private Set<Alert> alertList = new HashSet<>();
 
     public User() {
@@ -76,7 +76,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updatedAt, Set<Role> roles, Set<Donation> donor, Set<Donation> beneficiary, Set<Evaluation> evaluations, Set<Pdf> pdfs, Set<Search> searches, Set<Alert> alertList) {
+    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updatedAt, Set<Role> roles, Set<Donation> donationsByBeneficiary, Set<Donation> donationsByDonor, Set<Evaluation> evaluations, Set<Pdf> pdfs, Set<Search> searches, Set<Alert> alertList) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -85,8 +85,8 @@ public class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.roles = roles;
-        this.donor = donor;
-        this.beneficiary = beneficiary;
+        this.donationsByBeneficiary = donationsByBeneficiary;
+        this.donationsByDonor = donationsByDonor;
         this.evaluations = evaluations;
         this.pdfs = pdfs;
         this.searches = searches;
@@ -165,20 +165,20 @@ public class User {
         this.roles = roles;
     }
 
-    public Set<Donation> getDonor() {
-        return donor;
+    public Set<Donation> getDonationsByDonor() {
+        return donationsByDonor;
     }
 
-    public void setDonor(Set<Donation> donor) {
-        this.donor = donor;
+    public void setDonationsByDonor(Set<Donation> donationsByDonor) {
+        this.donationsByDonor = donationsByDonor;
     }
 
-    public Set<Donation> getBeneficiary() {
-        return beneficiary;
+    public Set<Donation> getDonationsByBeneficiary() {
+        return donationsByBeneficiary;
     }
 
-    public void setBeneficiary(Set<Donation> beneficiary) {
-        this.beneficiary = beneficiary;
+    public void setDonationsByBeneficiary(Set<Donation> donationsByBeneficiary) {
+        this.donationsByBeneficiary = donationsByBeneficiary;
     }
 
     public Set<Evaluation> getEvaluations() {
