@@ -9,10 +9,16 @@ import com.jeromerichard.pdfstream.Service.Implementations.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +30,26 @@ public class UserController {
     private UserService service;
     @Autowired
     private ModelMapper modelMapper;
-    @PostMapping("/new")
+    public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/webapp/avatars/";
+
+/*    @PostMapping("/new")
+    //@PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
+    public ResponseEntity<UserDTO> saveUser(@ModelAttribute UserDTOWayIN clientDatas, @RequestParam("file")MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+        Path fileNameAndPath= Paths.get(uploadDirectory, originalFilename);
+        Files.write(fileNameAndPath, file.getBytes());
+        clientDatas.setAvatar(originalFilename);
+        // Conversion des datas front en DTOWayIN
+        UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
+        // Conversion sens DTOWayIN à Entité
+        User user = service.saveUser(userDTOWayIN);
+        // Conversion sens Entité à DTO
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
+    }*/
+
+/*    @PostMapping("/new")
     @ResponseBody
     @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
@@ -36,12 +61,25 @@ public class UserController {
         // Conversion sens Entité à DTO
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
-    }
+    }*/
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTOWayIN clientDatas) throws NotFoundException {
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @ModelAttribute UserDTOWayIN clientDatas, @RequestParam("file")MultipartFile file) throws NotFoundException, IOException {
+        if(!file.isEmpty()){
+            String originalFilename = file.getOriginalFilename();
+            Path fileNameAndPath= Paths.get(uploadDirectory, originalFilename);
+            Files.write(fileNameAndPath, file.getBytes());
+            clientDatas.setAvatar(originalFilename);
+            // Conversion des datas front en DTOWayIN
+            UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
+            // Conversion sens DTOWayIN à Entité
+            User user = service.updateUser(id, userDTOWayIN);
+            // Conversion sens Entité à DTO
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
+        } else {
         // Conversion des datas front en DTOWayIN
         UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
         // Conversion sens DTOWayIN à Entité
@@ -49,6 +87,7 @@ public class UserController {
         // Conversion sens Entité à DTO
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
+    }
     }
 
     @DeleteMapping("/delete/{id}")

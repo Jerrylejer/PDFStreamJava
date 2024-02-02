@@ -10,7 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class UserService implements UserServiceInt {
         userToSave.setRoles(user.getRoles());
         userToSave.setCreatedAt(new Date());
         log.info("Nouvel utilisateur " + userToSave.getUsername() + " ajouté");
-        repository.saveAndFlush(userToSave);
+        repository.save(userToSave);
         return userToSave;
     }
 
@@ -59,20 +62,20 @@ public class UserService implements UserServiceInt {
                 ()-> new NotFoundException("Ce user n'existe pas, reformulez votre demande")
         );
         if (user.getUsername() != null) // On ne modifie que les propriétés nécessaires
-        userToUpdate.setUsername(user.getUsername());
+            userToUpdate.setUsername(user.getUsername());
         if (user.getPassword() != null)
-        userToUpdate.setPassword(user.getPassword());
+            userToUpdate.setPassword(user.getPassword());
         if (user.getAvatar() != null)
-        userToUpdate.setAvatar(user.getAvatar());
+            userToUpdate.setAvatar(user.getAvatar());
         if (user.getEmail() != null)
-        userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setEmail(user.getEmail());
         if (user.getBio() != null)
-        userToUpdate.setBio(user.getBio());
+            userToUpdate.setBio(user.getBio());
         if (user.getRoles() != null)
-        userToUpdate.setRoles(user.getRoles());
+            userToUpdate.setRoles(user.getRoles());
         userToUpdate.setUpdatedAt(new Date());
         log.info("L'utilisateur " + userToUpdate.getUsername() + " a correctement été modifié");
-        repository.saveAndFlush(userToUpdate);
+        repository.save(userToUpdate);
         return userToUpdate;
     }
 
