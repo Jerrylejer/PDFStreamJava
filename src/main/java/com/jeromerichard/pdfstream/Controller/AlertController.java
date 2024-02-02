@@ -29,7 +29,7 @@ public class AlertController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<AlertDTO> saveAlert(@RequestBody AlertDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
         AlertDTOWayIN alertDTOWayIN = modelMapper.map(clientDatas, AlertDTOWayIN.class);
@@ -42,7 +42,7 @@ public class AlertController {
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<AlertDTO> updateAlert(@PathVariable Integer id, @RequestBody AlertDTOWayIN clientDatas) throws NotFoundException {
         // Conversion des datas front en DTOWayIN
         AlertDTOWayIN alertDTOWayIN = modelMapper.map(clientDatas, AlertDTOWayIN.class);
@@ -54,14 +54,14 @@ public class AlertController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteAlert(@PathVariable Integer id) throws NotFoundException {
         service.deleteAlert(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<AlertDTO>> getAlertsList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<AlertDTO> alertDTOList = service.getAllAlerts().stream().map(alert -> modelMapper.map(alert, AlertDTO.class)).collect(Collectors.toList());
@@ -69,7 +69,7 @@ public class AlertController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<AlertDTO> getAlert(@PathVariable Integer id) throws NotFoundException {
         Alert alert = service.getAlertById(id);
         // Conversion sens Entité à DTO

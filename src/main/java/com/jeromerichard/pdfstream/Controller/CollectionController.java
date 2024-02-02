@@ -60,14 +60,14 @@ public class CollectionController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCollection(@PathVariable Integer id) throws NotFoundException {
         service.deleteCollection(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<CollectionDTO>> getCollectionsList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<CollectionDTO> collectionDTOList = service.getAllCollections().stream().map(collection -> modelMapper.map(collection, CollectionDTO.class)).collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class CollectionController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<CollectionDTO> getCollection(@PathVariable Integer id) throws NotFoundException {
         Collection collection = service.getCollectionById(id);
         // Conversion sens Entité à DTO

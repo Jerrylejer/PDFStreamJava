@@ -9,7 +9,6 @@ import com.jeromerichard.pdfstream.Service.Implementations.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -91,7 +90,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) throws NotFoundException {
         service.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -106,7 +105,7 @@ public class UserController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) throws NotFoundException {
         User user = service.getUserById(id);
         // Conversion sens Entité à DTO

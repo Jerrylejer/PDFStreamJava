@@ -66,7 +66,7 @@ public class CategoryController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<List<CategoryDTO>> getCategoriesList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<CategoryDTO> categoryDTOList = service.getAllCategories().stream().map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
@@ -74,7 +74,7 @@ public class CategoryController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<CategoryDTO> getCategory(@PathVariable Integer id) throws NotFoundException {
         Category category = service.getCategoryById(id);
         // Conversion sens Entité à DTO

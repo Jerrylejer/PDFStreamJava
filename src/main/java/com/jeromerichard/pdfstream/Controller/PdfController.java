@@ -26,7 +26,7 @@ public class PdfController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
     public ResponseEntity<PdfDTO> savePdf(@RequestBody PdfDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
@@ -40,7 +40,7 @@ public class PdfController {
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<PdfDTO> updatePdf(@PathVariable Integer id, @RequestBody PdfDTOWayIN clientDatas) throws NotFoundException {
         // Conversion des datas front en DTOWayIN
         PdfDTOWayIN pdfDTOWayIN = modelMapper.map(clientDatas, PdfDTOWayIN.class);
@@ -52,14 +52,14 @@ public class PdfController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<?> deletePdf(@PathVariable Integer id) throws NotFoundException {
         service.deletePdf(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<List<PdfDTO>> getPdfsList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<PdfDTO> pdfDTOList = service.getAllPdfs().stream().map(pdf -> modelMapper.map(pdf, PdfDTO.class)).collect(Collectors.toList());
@@ -67,7 +67,7 @@ public class PdfController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<PdfDTO> getPdf(@PathVariable Integer id) throws NotFoundException {
         Pdf pdf = service.getPdfById(id);
         // Conversion sens Entité à DTO

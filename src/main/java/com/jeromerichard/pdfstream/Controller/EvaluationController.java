@@ -29,7 +29,7 @@ public class EvaluationController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
     public ResponseEntity<EvaluationDTO> saveEvaluation(@RequestBody EvaluationDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
@@ -43,7 +43,7 @@ public class EvaluationController {
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<EvaluationDTO> updateEvaluation(@PathVariable Integer id, @RequestBody EvaluationDTOWayIN clientDatas) throws NotFoundException {
         // Conversion des datas front en DTOWayIN
         EvaluationDTOWayIN evaluationDTOWayIN = modelMapper.map(clientDatas, EvaluationDTOWayIN.class);
@@ -70,7 +70,7 @@ public class EvaluationController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<EvaluationDTO> getEvaluation(@PathVariable Integer id) throws NotFoundException {
         Evaluation evaluation = service.getEvaluationById(id);
         // Conversion sens Entité à DTO

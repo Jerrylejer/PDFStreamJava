@@ -27,7 +27,7 @@ public class SearchController {
     private ModelMapper modelMapper;
     @PostMapping("/new")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
     public ResponseEntity<SearchDTO> saveSearch(@RequestBody SearchDTOWayIN clientDatas) {
         // Conversion des datas front en DTOWayIN
@@ -40,7 +40,7 @@ public class SearchController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteSearch(@PathVariable Integer id) throws NotFoundException {
         service.deleteSearch(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -55,7 +55,7 @@ public class SearchController {
     }
 
     @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<SearchDTO> getSearch(@PathVariable Integer id) throws NotFoundException {
         Search search = service.getSearchById(id);
         // Conversion sens Entité à DTO
