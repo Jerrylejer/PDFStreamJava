@@ -4,6 +4,7 @@ import com.jeromerichard.pdfstream.Dto.DtoToEntity.PdfDTOWayIN;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.PdfDTO;
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
+import com.jeromerichard.pdfstream.Exception.FileUploadExceptionAdvice;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
 import com.jeromerichard.pdfstream.Service.Implementations.PdfService;
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.Document;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +28,9 @@ public class PdfController {
     private PdfService service;
     @Autowired
     private ModelMapper modelMapper;
-    @PostMapping("/new")
+
+
+/*    @PostMapping("/new")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
@@ -36,6 +42,13 @@ public class PdfController {
         // Conversion sens Entité à DTO
         PdfDTO pdfDTO = modelMapper.map(pdf, PdfDTO.class);
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.CREATED);
+    }*/
+
+    @PostMapping("/new")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
+    public Pdf savePdf(@RequestParam("file")MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+        return service.store(file);
     }
 
     @PutMapping("/update/{id}")

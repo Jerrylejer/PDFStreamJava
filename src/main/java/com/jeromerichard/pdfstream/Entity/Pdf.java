@@ -22,13 +22,13 @@ public class Pdf {
     private String description;
     @Column(name="image")
     private String image;
-
-//    @Lob
-//    @Column(name="file")
-//    https://www.bezkoder.com/spring-boot-upload-file-database/
-//    private byte[] file;
+    @Column(name="type")
+    private String type;
+    @Lob
+    @Column(name="file", length = 65555)
+    private byte[] file;
     @Column(name="size")
-    private Integer size;
+    private long size;
     @Column(name="counter")
     private Integer counter;
     @Column(name="created_at")
@@ -69,11 +69,13 @@ public class Pdf {
 
     public Pdf() {
     }
-    public Pdf(String title, String smallDescription, String description, String image, Integer size, Integer counter, Date createdAt, Date updateAt, Set<Category> categories, Set<Collection> collections, User author, Set<Evaluation> evaluations, Set<Alert> alerts, Set<Donation> donations) {
+    public Pdf(String title, String smallDescription, String description, String image, String type, byte[] file, long size, Integer counter, Date createdAt, Date updateAt, Set<Category> categories, Set<Collection> collections, User author, Set<Evaluation> evaluations, Set<Alert> alerts, Set<Donation> donations) {
         this.title = title;
         this.smallDescription = smallDescription;
         this.description = description;
         this.image = image;
+        this.type = type;
+        this.file = file;
         this.size = size;
         this.counter = counter;
         this.createdAt = createdAt;
@@ -85,6 +87,10 @@ public class Pdf {
         this.alerts = alerts;
         this.donations = donations;
     }
+
+    public Pdf(String title, String contentType, byte[] bytes) {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -125,11 +131,27 @@ public class Pdf {
         this.image = image;
     }
 
-    public Integer getSize() {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public long getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(long size) {
         this.size = size;
     }
 

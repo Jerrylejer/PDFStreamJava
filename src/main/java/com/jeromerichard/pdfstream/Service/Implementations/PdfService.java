@@ -3,6 +3,7 @@ package com.jeromerichard.pdfstream.Service.Implementations;
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.PdfDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
+import com.jeromerichard.pdfstream.Exception.FileUploadExceptionAdvice;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
 import com.jeromerichard.pdfstream.Repository.PdfRepository;
 import com.jeromerichard.pdfstream.Service.Interfaces.PdfServiceInt;
@@ -10,7 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +25,20 @@ public class PdfService implements PdfServiceInt {
     @Autowired
     private PdfRepository repository;
 
-    @Override
+    public Pdf store(MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+        String title = file.getOriginalFilename();
+        Pdf pdfToSave = new Pdf();
+        pdfToSave.setTitle(title);
+//        pdfToSave.setSmallDescription(clientDatas.getSmallDescription());
+//        pdfToSave.setDescription(clientDatas.getDescription());
+        pdfToSave.setFile(file.getBytes());
+        pdfToSave.setSize(file.getSize());
+        pdfToSave.setType(file.getContentType());
+        pdfToSave.setCreatedAt(new Date());
+        return repository.save(pdfToSave);
+    }
+
+/*    @Override
     public Pdf savePdf(PdfDTOWayIN pdf) {
         Pdf pdfToSave = new Pdf();
         pdfToSave.setTitle(pdf.getTitle());
@@ -32,9 +49,9 @@ public class PdfService implements PdfServiceInt {
         pdfToSave.setCategories(pdf.getCategories());
         pdfToSave.setCreatedAt(new Date());
         log.info("Nouveau PDF " + pdf.getTitle() + " ajouté");
-        repository.save(pdfToSave);
-        return pdfToSave;
-    }
+        return repository.save(pdfToSave);
+    }*/
+
 
     @Override
     public List<Pdf> getAllPdfs() throws EmptyListException {

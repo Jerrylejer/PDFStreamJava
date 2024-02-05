@@ -12,6 +12,7 @@ public class PdfDTOWayIN {
     String smallDescription;
     String description;
     String image;
+    byte[] file;
     Integer size;
     Integer counter;
     Date createdAt;

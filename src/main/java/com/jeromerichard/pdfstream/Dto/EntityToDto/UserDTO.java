@@ -1,6 +1,5 @@
 package com.jeromerichard.pdfstream.Dto.EntityToDto;
 
-import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.Role;
 import lombok.*;
 
