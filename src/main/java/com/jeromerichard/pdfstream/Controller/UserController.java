@@ -29,7 +29,9 @@ public class UserController {
     private UserService service;
     @Autowired
     private ModelMapper modelMapper;
-    public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/webapp/avatars/";
+
+    // Si je veux stocker les images dans un folder de l'appli ...
+    //public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/webapp/avatars/";
 
 /*    @PostMapping("/new")
     //@PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
@@ -65,12 +67,19 @@ public class UserController {
     @PutMapping("/update/{id}")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @ModelAttribute UserDTOWayIN clientDatas, @RequestParam("file")MultipartFile file) throws NotFoundException, IOException {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @ModelAttribute UserDTOWayIN clientDatas, @RequestParam("image")MultipartFile file) throws NotFoundException, IOException {
         if(!file.isEmpty()){
-            String originalFilename = file.getOriginalFilename();
-            Path fileNameAndPath= Paths.get(uploadDirectory, originalFilename);
-            Files.write(fileNameAndPath, file.getBytes());
-            clientDatas.setAvatar(originalFilename);
+
+            // #################################################################
+            // Si je veux stocker les images dans un folder de l'appli ...
+//            String originalFilename = file.getOriginalFilename();
+//            Path fileNameAndPath= Paths.get(uploadDirectory, originalFilename);
+//            Files.write(fileNameAndPath, file.getBytes());
+//            clientDatas.setAvatar(originalFilename);
+            // #################################################################
+
+            // ... mais J'enregistre directement l'image dans la BDD
+            clientDatas.setAvatar(file.getBytes());
             // Conversion des datas front en DTOWayIN
             UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
             // Conversion sens DTOWayIN à Entité

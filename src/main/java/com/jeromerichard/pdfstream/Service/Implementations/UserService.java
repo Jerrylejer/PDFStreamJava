@@ -8,6 +8,9 @@ import com.jeromerichard.pdfstream.Repository.UserRepository;
 import com.jeromerichard.pdfstream.Service.Interfaces.UserServiceInt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +26,10 @@ import java.util.List;
 public class UserService implements UserServiceInt {
     @Autowired
     private UserRepository repository;
+    @Autowired
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     @Override
     public User saveUser(UserDTOWayIN user) {
         User userToSave = new User();
@@ -64,7 +71,7 @@ public class UserService implements UserServiceInt {
         if (user.getUsername() != null) // On ne modifie que les propriétés nécessaires
             userToUpdate.setUsername(user.getUsername());
         if (user.getPassword() != null)
-            userToUpdate.setPassword(user.getPassword());
+            userToUpdate.setPassword(passwordEncoder().encode(user.getPassword()));
         if (user.getAvatar() != null)
             userToUpdate.setAvatar(user.getAvatar());
         if (user.getEmail() != null)

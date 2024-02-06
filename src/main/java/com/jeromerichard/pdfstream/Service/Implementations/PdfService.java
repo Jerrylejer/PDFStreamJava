@@ -25,12 +25,10 @@ public class PdfService implements PdfServiceInt {
     @Autowired
     private PdfRepository repository;
 
-    public Pdf store(MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+    public Pdf fileStorage(MultipartFile file) throws IOException, FileUploadExceptionAdvice {
         String title = file.getOriginalFilename();
         Pdf pdfToSave = new Pdf();
         pdfToSave.setTitle(title);
-//        pdfToSave.setSmallDescription(clientDatas.getSmallDescription());
-//        pdfToSave.setDescription(clientDatas.getDescription());
         pdfToSave.setFile(file.getBytes());
         pdfToSave.setSize(file.getSize());
         pdfToSave.setType(file.getContentType());
@@ -39,16 +37,16 @@ public class PdfService implements PdfServiceInt {
     }
 
 /*    @Override
-    public Pdf savePdf(PdfDTOWayIN pdf) {
+    public Pdf savePdf(PdfDTOWayIN data) {
         Pdf pdfToSave = new Pdf();
-        pdfToSave.setTitle(pdf.getTitle());
-        pdfToSave.setSmallDescription(pdf.getSmallDescription());
-        pdfToSave.setDescription(pdf.getDescription());
-        pdfToSave.setImage(pdf.getImage());
-        pdfToSave.setAuthor(pdf.getAuthor());
-        pdfToSave.setCategories(pdf.getCategories());
+        pdfToSave.setTitle(data.getTitle());
+        pdfToSave.setSmallDescription(data.getSmallDescription());
+        pdfToSave.setDescription(data.getDescription());
+        pdfToSave.setImage(data.getImage());
+        pdfToSave.setAuthor(data.getAuthor());
+        pdfToSave.setCategories(data.getCategories());
         pdfToSave.setCreatedAt(new Date());
-        log.info("Nouveau PDF " + pdf.getTitle() + " ajouté");
+        log.info("Nouveau PDF " + data.getTitle() + " ajouté");
         return repository.save(pdfToSave);
     }*/
 

@@ -22,8 +22,9 @@ public class User {
     private String username;
     @Column(name="password")
     private String password;
-    @Column(name="avatar")
-    private String avatar;
+    @Lob
+    @Column(name="avatar", length = 65555)
+    private byte[] avatar;
     @Column(name="email")
     private String email;
     @Column(name="bio")
@@ -76,7 +77,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String password, String avatar, String email, String bio, Date createdAt, Date updatedAt, Set<Role> roles, Set<Donation> donationsByBeneficiary, Set<Donation> donationsByDonor, Set<Evaluation> evaluations, Set<Pdf> pdfs, Set<Search> searches, Set<Alert> alertList) {
+    public User(String username, String password, byte[] avatar, String email, String bio, Date createdAt, Date updatedAt, Set<Role> roles, Set<Donation> donationsByBeneficiary, Set<Donation> donationsByDonor, Set<Evaluation> evaluations, Set<Pdf> pdfs, Set<Search> searches, Set<Alert> alertList) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -117,11 +118,11 @@ public class User {
         this.password = password;
     }
 
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 

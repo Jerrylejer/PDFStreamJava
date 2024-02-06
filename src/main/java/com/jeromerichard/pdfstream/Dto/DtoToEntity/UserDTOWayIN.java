@@ -10,7 +10,7 @@ import java.util.Set;
 public class UserDTOWayIN {
     String username;
     String password;
-    String avatar;
+    byte[] avatar;
     String email;
     String bio;
     Date createdAt;

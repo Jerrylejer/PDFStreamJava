@@ -44,11 +44,26 @@ public class PdfController {
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.CREATED);
     }*/
 
-    @PostMapping("/new")
+/*    @PostMapping("/new")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
-    public Pdf savePdf(@RequestParam("file")MultipartFile file) throws IOException, FileUploadExceptionAdvice {
-        return service.store(file);
+    public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN data, @RequestParam("file")MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+        // Conversion des datas front en DTOWayIN
+        PdfDTOWayIN pdfDTOWayIN = modelMapper.map(data, PdfDTOWayIN.class);
+        // Conversion sens DTOWayIN à Entité
+        Pdf pdf = service.savePdf(pdfDTOWayIN);
+        service.store(file);
+        // Conversion sens Entité à DTO
+        PdfDTO pdfDTO = modelMapper.map(pdf, PdfDTO.class);
+        return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.OK);
+    }*/
+
+    @PostMapping("/upload")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
+    public ResponseEntity<Pdf> uploadPdf(@RequestParam("file")MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+        Pdf pdf = service.fileStorage(file);
+        return new ResponseEntity<Pdf>(pdf, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
