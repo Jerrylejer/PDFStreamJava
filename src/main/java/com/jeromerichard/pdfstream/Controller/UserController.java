@@ -15,13 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -63,6 +59,8 @@ public class UserController {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
     }*/
+
+    // Pas de endpoint "/new" car mon controller AuthController gère la création d'un nouveau user avec le endpoint '/inscription"
 
     @PutMapping("/update/{id}")
     @ResponseBody

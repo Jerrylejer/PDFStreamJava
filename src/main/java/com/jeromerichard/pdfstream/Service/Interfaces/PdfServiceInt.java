@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PdfServiceInt {
     // CRUD JPA
-    // public Pdf savePdf(PdfDTOWayIN data) throws IOException;
+    // public Pdf savePdf(PdfDTOWayIN pdf);
     public Pdf fileStorage(MultipartFile file) throws IOException, FileUploadExceptionAdvice;
     public List<Pdf> getAllPdfs() throws EmptyListException;
     public Pdf getPdfById(Integer id) throws NotFoundException;

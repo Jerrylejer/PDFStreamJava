@@ -37,16 +37,17 @@ public class PdfService implements PdfServiceInt {
     }
 
 /*    @Override
-    public Pdf savePdf(PdfDTOWayIN data) {
+    public Pdf savePdf(PdfDTOWayIN pdf) {
         Pdf pdfToSave = new Pdf();
-        pdfToSave.setTitle(data.getTitle());
-        pdfToSave.setSmallDescription(data.getSmallDescription());
-        pdfToSave.setDescription(data.getDescription());
-        pdfToSave.setImage(data.getImage());
-        pdfToSave.setAuthor(data.getAuthor());
-        pdfToSave.setCategories(data.getCategories());
+        pdfToSave.setTitle(pdf.getTitle());
+        pdfToSave.setSmallDescription(pdf.getSmallDescription());
+        pdfToSave.setDescription(pdf.getDescription());
+        pdfToSave.setImage(pdf.getImage());
+        pdfToSave.setFile(pdf.getFile());
+        pdfToSave.setAuthor(pdf.getAuthor());
+        pdfToSave.setCategories(pdf.getCategories());
         pdfToSave.setCreatedAt(new Date());
-        log.info("Nouveau PDF " + data.getTitle() + " ajouté");
+        log.info("Nouveau PDF " + pdf.getTitle() + " ajouté");
         return repository.save(pdfToSave);
     }*/
 

@@ -63,7 +63,10 @@ public class WebSecurityConfig {
                         auth.requestMatchers("/auth/**", "test/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .logout((logout) -> logout.logoutUrl("/auth/deconnexion"));
+                // Cas déconnexion sans endpoint dédié => .logout((logout) -> logout.logoutUrl("/"));
+                // Redirection autre page, "Home" par exemple => // Cela me provoquait un conflit CORS sur ma requête logout() dans mon front
+                // Ici, je me sers de mon endpoint "/auth/deconnexion"
+                .logout((logout) -> logout.logoutSuccessUrl("/auth/deconnexion"));
 
         http.authenticationProvider(authenticationProvider());
 

@@ -35,23 +35,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @Slf4j
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
-
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     RoleRepository roleRepository;
-
     @Autowired
     PasswordEncoder encoder;
-
     @Autowired
     JwtUtils jwtUtils;
 
@@ -132,7 +127,7 @@ public class AuthController {
     @PostMapping("/deconnexion")
     public ResponseEntity<?> logoutUser(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info(String.valueOf(authentication.getPrincipal()));
+        //log.info(String.valueOf(authentication.getPrincipal()));
 
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
@@ -143,6 +138,7 @@ public class AuthController {
         log.warn("Aucun utilisateur n'est actuellement connecté");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("No user is currently logged in"));
     }
+
 }
 
 
