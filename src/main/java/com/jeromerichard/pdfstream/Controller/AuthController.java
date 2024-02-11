@@ -25,17 +25,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -138,6 +137,29 @@ public class AuthController {
         log.warn("Aucun utilisateur n'est actuellement connecté");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("No user is currently logged in"));
     }
+
+    @GetMapping("/connectedUsers")
+    @ResponseBody
+    public List<String> getConnectedUsers() {
+        List<String> connectedUsers = new ArrayList<>();
+        // Accès au contexte de sécurité
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Vérifier si l'utilisateur est authentifié
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Obtenir les détails d'authentification de l'utilisateur
+            Object principal = authentication.getPrincipal();
+            // Si les détails d'authentification sont UserDetails, obtenir le nom d'utilisateur
+            if (principal instanceof UserDetails) {
+                String username = ((UserDetails) principal).getUsername();
+                connectedUsers.add(username);
+            } else {
+                // Si les détails d'authentification ne sont pas UserDetails, obtenir les informations de l'objet principal
+                connectedUsers.add(principal.toString());
+            }
+        }
+        return connectedUsers;
+    }
+    // Méthode GET temporaire pour voir mes users qui sont connectés (vérification persistence de l'état)
 
 }
 

@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-@Import(WebConfig.class)
+//@Import(WebConfig.class)
 public class PdfstreamApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PdfstreamApplication.class, args);

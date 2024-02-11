@@ -96,12 +96,12 @@ public class UserService implements UserServiceInt {
     }
 
 
-/*    @Override
-    public List<User> findByUser(String username) throws EmptyListException {
-        List<User> userList = repository.findByUser(username);
-        if(userList == null) {
-            throw new EmptyListException("Aucun utilisateur ne correspond à cette recherche par profile, reformulez votre demande");
+    @Override
+    public User findByUsername(String username) throws NotFoundException {
+        User userByUsername = repository.findByUsername(username);
+        if(userByUsername == null) {
+            throw new NotFoundException("Aucun utilisateur ne correspond à cette recherche par profile, reformulez votre demande");
         }
-        return userList;
-    }*/
+        return userByUsername;
+    }
 }

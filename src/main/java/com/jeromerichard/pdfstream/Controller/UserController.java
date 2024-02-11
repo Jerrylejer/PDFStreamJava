@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -111,19 +111,21 @@ public class UserController {
         return new ResponseEntity<>(userDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/id/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @GetMapping("/single/{id}")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) throws NotFoundException {
-        User user = service.getUserById(id);
+        User userById = service.getUserById(id);
         // Conversion sens Entité à DTO
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+        UserDTO userDTO = modelMapper.map(userById, UserDTO.class);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-/*    @GetMapping("/user/{username}")
-    public ResponseEntity<List<UserDTO>> getUserByUsername(@PathVariable String username) throws NotFoundException, EmptyListException {
-        List<UserDTO> userDTOList = service.findByUser(username).stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
-        return new ResponseEntity<>(userDTOList, HttpStatus.OK);
-    }*/
+    @GetMapping("/user/{username}")
+    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username) throws NotFoundException, EmptyListException {
+        User user = service.findByUsername(username);
+        // Conversion sens Entité à DTO
+        UserDTO userByUsername = modelMapper.map(user, UserDTO.class);
+        return new ResponseEntity<>(userByUsername, HttpStatus.OK);
+    }
 
 }

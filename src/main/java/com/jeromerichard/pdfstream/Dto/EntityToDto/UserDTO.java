@@ -9,6 +9,9 @@ import java.util.Set;
 public class UserDTO {
      Long Id;
      String username;
+     String password;
+     byte[] avatar;
+     String email;
      String bio;
      Date createdAt;
      Date updatedAt;

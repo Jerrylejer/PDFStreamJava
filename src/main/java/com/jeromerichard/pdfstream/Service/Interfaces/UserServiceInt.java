@@ -14,4 +14,6 @@ public interface UserServiceInt {
     public User getUserById(Long id) throws NotFoundException;
     public User updateUser(Long id, UserDTOWayIN user) throws NotFoundException;
     public void deleteUser(Long id) throws NotFoundException;
+
+    public User findByUsername(String username) throws NotFoundException;
 }
