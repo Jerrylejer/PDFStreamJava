@@ -6,16 +6,21 @@ import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
 import com.jeromerichard.pdfstream.Service.Implementations.UserService;
+import jakarta.servlet.MultipartConfigElement;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartResolver;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 @CrossOrigin("*")
 @RestController
@@ -29,44 +34,12 @@ public class UserController {
     // Si je veux stocker les images dans un folder de l'appli ...
     //public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/webapp/avatars/";
 
-/*    @PostMapping("/new")
-    //@PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
-    // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
-    public ResponseEntity<UserDTO> saveUser(@ModelAttribute UserDTOWayIN clientDatas, @RequestParam("file")MultipartFile file) throws IOException {
-        String originalFilename = file.getOriginalFilename();
-        Path fileNameAndPath= Paths.get(uploadDirectory, originalFilename);
-        Files.write(fileNameAndPath, file.getBytes());
-        clientDatas.setAvatar(originalFilename);
-        // Conversion des datas front en DTOWayIN
-        UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
-        // Conversion sens DTOWayIN à Entité
-        User user = service.saveUser(userDTOWayIN);
-        // Conversion sens Entité à DTO
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
-    }*/
-
-/*    @PostMapping("/new")
-    @ResponseBody
-    @PreAuthorize("hasRole('ADMIN'), hasRole('USER')")
-    // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTOWayIN clientDatas) {
-        // Conversion des datas front en DTOWayIN
-        UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
-        // Conversion sens DTOWayIN à Entité
-        User user = service.saveUser(userDTOWayIN);
-        // Conversion sens Entité à DTO
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
-    }*/
-
     // Pas de endpoint "/new" car mon controller AuthController gère la création d'un nouveau user avec le endpoint '/inscription"
 
     @PutMapping("/update/{id}")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @ModelAttribute UserDTOWayIN clientDatas, @RequestParam("image")MultipartFile file) throws NotFoundException, IOException {
-        if(!file.isEmpty()){
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @ModelAttribute UserDTOWayIN clientDatas, @RequestParam(value = "avatar", required = false)MultipartFile avatar) throws NotFoundException, IOException {
 
             // #################################################################
             // Si je veux stocker les images dans un folder de l'appli ...
@@ -77,24 +50,58 @@ public class UserController {
             // #################################################################
 
             // ... mais J'enregistre directement l'image dans la BDD
-            clientDatas.setAvatar(file.getBytes());
+            if (avatar != null && !avatar.isEmpty()) {
+                // Handle file upload
+                byte[] avatarBytes = avatar.getBytes();
+                clientDatas.setAvatar(avatarBytes);
+            }
+
             // Conversion des datas front en DTOWayIN
             UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
             // Conversion sens DTOWayIN à Entité
             User user = service.updateUser(id, userDTOWayIN);
             // Conversion sens Entité à DTO
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-            return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
-        } else {
-        // Conversion des datas front en DTOWayIN
-        UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
-        // Conversion sens DTOWayIN à Entité
+
+            return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+    }
+
+/*    @PutMapping("/update/{id}")
+    @ResponseBody
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
+                                              @RequestParam Map<String, String> requestParams,
+                                              @RequestParam(value = "updatedAvatar", required = false) MultipartFile updatedAvatar)
+            throws NotFoundException, IOException {
+        UserDTOWayIN clientDatas = null;
+
+        if (!requestParams.isEmpty()) {
+            clientDatas = new UserDTOWayIN();
+            if(requestParams.get("username") != null)
+                clientDatas.setUsername(requestParams.get("username"));
+            if(requestParams.get("email") != null)
+                clientDatas.setEmail(requestParams.get("email"));
+            if(requestParams.get("password") != null)
+                clientDatas.setPassword(requestParams.get("password"));
+            if(requestParams.get("bio") != null)
+                clientDatas.setBio(requestParams.get("bio"));
+        }
+
+        if (updatedAvatar != null && !updatedAvatar.isEmpty()) {
+            byte[] avatarBytes = updatedAvatar.getBytes();
+            clientDatas.setAvatar(avatarBytes);
+        }
+
+        UserDTOWayIN userDTOWayIN = clientDatas;
+        if (clientDatas != null) {
+            userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
+        }
+
         User user = service.updateUser(id, userDTOWayIN);
-        // Conversion sens Entité à DTO
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
-    }
-    }
+
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+    }*/
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
