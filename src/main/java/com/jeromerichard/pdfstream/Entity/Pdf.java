@@ -25,8 +25,8 @@ public class Pdf {
     @Column(name="type")
     private String type;
     @Lob
-    @Column(name="file", length = 65555)
-    private byte[] file;
+    @Column(name="pdf_file", length = 65555)
+    private byte[] pdfFile;
     @Column(name="size")
     private long size;
     @Column(name="counter")
@@ -52,10 +52,10 @@ public class Pdf {
     // Je "devrais" récupèrer un tableau d'objets des collections qui incluent ce pdf
     @ManyToOne
     @JoinColumn(name="user_id") // user lié au pdf
-    @JsonIgnore
+    //@JsonIgnore
     private User author;
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
-    @JsonIgnore
+    //@JsonIgnore
     // liste des evaluations par pdf
     private Set<Evaluation> evaluations = new HashSet<>();
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
@@ -69,13 +69,13 @@ public class Pdf {
 
     public Pdf() {
     }
-    public Pdf(String title, String smallDescription, String description, String image, String type, byte[] file, long size, Integer counter, Date createdAt, Date updateAt, Set<Category> categories, Set<Collection> collections, User author, Set<Evaluation> evaluations, Set<Alert> alerts, Set<Donation> donations) {
+    public Pdf(String title, String smallDescription, String description, String image, String type, byte[] pdfFile, long size, Integer counter, Date createdAt, Date updateAt, Set<Category> categories, Set<Collection> collections, User author, Set<Evaluation> evaluations, Set<Alert> alerts, Set<Donation> donations) {
         this.title = title;
         this.smallDescription = smallDescription;
         this.description = description;
         this.image = image;
         this.type = type;
-        this.file = file;
+        this.pdfFile = pdfFile;
         this.size = size;
         this.counter = counter;
         this.createdAt = createdAt;
@@ -88,8 +88,8 @@ public class Pdf {
         this.donations = donations;
     }
 
-    public Pdf(String title, String contentType, byte[] bytes) {
-    }
+/*    public Pdf(String title, String contentType, byte[] bytes) {
+    }*/
 
     public Integer getId() {
         return id;
@@ -139,12 +139,12 @@ public class Pdf {
         this.type = type;
     }
 
-    public byte[] getFile() {
-        return file;
+    public byte[] getPdfFile() {
+        return pdfFile;
     }
 
-    public void setFile(byte[] file) {
-        this.file = file;
+    public void setPdfFile(byte[] pdfFile) {
+        this.pdfFile = pdfFile;
     }
 
     public long getSize() {

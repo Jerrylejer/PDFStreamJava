@@ -13,7 +13,7 @@ public class PdfDTO {
     String description;
     String image;
     Integer size;
-    byte[] file;
+    byte[] pdfFile;
     Integer counter;
     Date createdAt;
     Date updateAt;

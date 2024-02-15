@@ -2,6 +2,7 @@ package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import com.jeromerichard.pdfstream.Entity.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.Set;
@@ -13,7 +14,7 @@ public class PdfDTOWayIN {
     String description;
     String image;
     Integer size;
-    byte[] file;
+    MultipartFile pdfFile;
     Integer counter;
     Date createdAt;
     Date updateAt;

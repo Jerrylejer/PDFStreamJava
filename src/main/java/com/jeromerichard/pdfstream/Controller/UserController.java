@@ -6,21 +6,16 @@ import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
 import com.jeromerichard.pdfstream.Service.Implementations.UserService;
-import jakarta.servlet.MultipartConfigElement;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartResolver;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 @CrossOrigin("*")
 @RestController
@@ -104,7 +99,7 @@ public class UserController {
     }*/
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) throws NotFoundException {
         service.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -119,7 +114,7 @@ public class UserController {
     }
 
     @GetMapping("/single/{id}")
-//    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) throws NotFoundException {
         User userById = service.getUserById(id);
         // Conversion sens Entité à DTO

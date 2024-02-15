@@ -31,7 +31,6 @@ public class PdfController {
     @Autowired
     private ModelMapper modelMapper;
 
-
 /*    @PostMapping("/new")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
@@ -46,29 +45,43 @@ public class PdfController {
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.CREATED);
     }*/
 
-/*    @PostMapping("/upload")
+    @PostMapping("/upload")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
-    public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN clientDatas, @RequestParam("file")MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+    public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN clientDatas, @RequestParam("pdfFile")MultipartFile pdfFile) throws IOException, FileUploadExceptionAdvice {
         // ... mais J'enregistre directement l'image dans la BDD
-        clientDatas.setFile(file.getBytes());
         // Conversion des datas front en DTOWayIN
         PdfDTOWayIN pdfDTOWayIN = modelMapper.map(clientDatas, PdfDTOWayIN.class);
         // Conversion sens DTOWayIN à Entité
-        Pdf pdf = service.savePdf(pdfDTOWayIN);
+        Pdf pdf = service.savePdf(pdfDTOWayIN, pdfFile);
         // Conversion sens Entité à DTO
         PdfDTO pdfDTO = modelMapper.map(pdf, PdfDTO.class);
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.CREATED);
         // => [Field error in object 'pdfDTOWayIN' on field 'file': rejected value
-    }*/
+    }
 
-    @PostMapping("/upload")
+/*    @PostMapping("/upload")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
-    public ResponseEntity<Pdf> uploadPdf(@RequestParam("file")MultipartFile file) throws IOException, FileUploadExceptionAdvice {
-        Pdf pdf = service.fileStorage(file);
-        return new ResponseEntity<Pdf>(pdf, HttpStatus.OK);
-    }
+    public ResponseEntity<Pdf> savePdf(@ModelAttribute Pdf clientDatas, @RequestParam("file")MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+        // ... mais J'enregistre directement l'image dans la BDD
+        if (file != null && !file.isEmpty()) {
+            // Handle file upload
+            byte[] fileBytes = file.getBytes();
+            clientDatas.setFile(fileBytes);
+        }
+        Pdf pdf = service.savePdf(clientDatas, file);
+        return new ResponseEntity<Pdf>(pdf, HttpStatus.CREATED);
+    }*/
+
+/*    @PostMapping("/upload")
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    // les datas seront placées dans le corps de la réponse HTTP sans être interprétées comme une vue HTML.
+    public ResponseEntity<Pdf> uploadPdf(@RequestParam("file")MultipartFile file) throws IOException {
+        Pdf pdf = service.savePdf(file);
+        return new ResponseEntity<>(pdf, HttpStatus.OK);
+    }*/
 
     @PutMapping("/update/{id}")
     @ResponseBody
@@ -105,5 +118,11 @@ public class PdfController {
         // Conversion sens Entité à DTO
         PdfDTO pdfDTO = modelMapper.map(pdf, PdfDTO.class);
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.OK);
+    }
+    @GetMapping("/author/{author}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public ResponseEntity<List<PdfDTO>> getPdfsListByAuthor(@PathVariable User author) throws NotFoundException, EmptyListException {
+        List<PdfDTO> pdfDTOList = service.findByAuthor(author).stream().map(user -> modelMapper.map(user, PdfDTO.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(pdfDTOList, HttpStatus.OK);
     }
 }

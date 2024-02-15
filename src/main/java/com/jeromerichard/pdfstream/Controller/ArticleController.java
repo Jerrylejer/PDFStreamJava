@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
@@ -62,7 +62,7 @@ public class ArticleController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<List<ArticleDTO>> getArticlesList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<ArticleDTO> articleDTOList = service.getAllArticles().stream().map(article -> modelMapper.map(article, ArticleDTO.class)).collect(Collectors.toList());

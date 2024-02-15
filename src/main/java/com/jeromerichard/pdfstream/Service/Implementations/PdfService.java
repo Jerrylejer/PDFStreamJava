@@ -2,6 +2,7 @@ package com.jeromerichard.pdfstream.Service.Implementations;
 
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.PdfDTOWayIN;
 import com.jeromerichard.pdfstream.Entity.Pdf;
+import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.FileUploadExceptionAdvice;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -24,15 +25,35 @@ import java.util.List;
 public class PdfService implements PdfServiceInt {
     @Autowired
     private PdfRepository repository;
-
-    public Pdf fileStorage(MultipartFile file) throws IOException, FileUploadExceptionAdvice {
+/*    @Override
+    public Pdf savePdf(PdfDTOWayIN pdf, MultipartFile file) throws IOException {
         String title = file.getOriginalFilename();
         Pdf pdfToSave = new Pdf();
         pdfToSave.setTitle(title);
         pdfToSave.setFile(file.getBytes());
         pdfToSave.setSize(file.getSize());
         pdfToSave.setType(file.getContentType());
+        pdfToSave.setAuthor(pdf.getAuthor());
         pdfToSave.setCreatedAt(new Date());
+        log.info("Nouveau pdf " + pdfToSave.getTitle() + " ajouté");
+        return repository.save(pdfToSave);
+    }*/
+
+    @Override
+    public Pdf savePdf(PdfDTOWayIN pdf, MultipartFile file) throws IOException {
+        String title = file.getOriginalFilename();
+        Pdf pdfToSave = new Pdf();
+        pdfToSave.setTitle(title);
+
+        pdfToSave.setSmallDescription(pdf.getSmallDescription());
+        pdfToSave.setDescription(pdf.getDescription());
+        pdfToSave.setImage(pdf.getImage());
+        pdfToSave.setType(file.getContentType());
+        pdfToSave.setPdfFile(file.getBytes()); // Affecter directement le tableau de bytes
+        pdfToSave.setSize(file.getSize());
+        pdfToSave.setAuthor(pdf.getAuthor());
+        pdfToSave.setCreatedAt(new Date());
+
         return repository.save(pdfToSave);
     }
 
@@ -100,5 +121,17 @@ public class PdfService implements PdfServiceInt {
         );
         log.info("Le PDF " + pdfToDelete.getTitle() + "à correctement été supprimée");
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Pdf> findByAuthor(User author) throws NotFoundException, EmptyListException {
+        List<Pdf> pdfsList = repository.findByAuthor(author);
+        if(author == null) {
+            throw new NotFoundException("L'auteur renseigné n'existe pas.");
+        }
+        if(pdfsList == null) {
+            throw new EmptyListException("Aucune liste ne correspond à votre demande");
+        }
+        return pdfsList;
     }
 }
