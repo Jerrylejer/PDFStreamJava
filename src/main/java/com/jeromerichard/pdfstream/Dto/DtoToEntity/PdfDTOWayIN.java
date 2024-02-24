@@ -9,10 +9,11 @@ import java.util.Set;
 
 @Data
 public class PdfDTOWayIN {
+    Integer id;
     String title;
     String smallDescription;
     String description;
-    String image;
+    MultipartFile image;
     Integer size;
     MultipartFile pdfFile;
     Integer counter;

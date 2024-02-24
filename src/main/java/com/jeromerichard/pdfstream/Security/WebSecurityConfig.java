@@ -57,12 +57,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults())
-//                cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/**", "/test/**", "/user/**", "/article/**", "/pdf/**").permitAll()
+                        auth.requestMatchers("/auth/**", "/test/**", "/user/**", "/article/**", "/pdf/**", "/category/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .anyRequest().authenticated()
                 )
@@ -70,10 +69,13 @@ public class WebSecurityConfig {
                 // Redirection autre page, "Home" par exemple => // Cela me provoquait un conflit CORS sur ma requête logout() dans mon front
                 // Ici, je me sers de mon endpoint "/auth/deconnexion"
                 .logout((logout) -> logout.logoutSuccessUrl("/auth/deconnexion"));
-//        http.headers(header -> header.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*")));
+       // http.headers(header -> header.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*")));
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 }
+
+//                cors(cors -> cors.configurationSource(corsConfigurationSource()))
+

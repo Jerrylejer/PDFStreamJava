@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface PdfRepository extends JpaRepository<Pdf, Integer> {
-    List<Pdf> findByAuthor(User author);
+    // List<Pdf> findByAuthorId(Integer id);
+    List<Pdf> findByAuthor(User id);
 }

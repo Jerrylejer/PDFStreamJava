@@ -11,7 +11,7 @@ public class PdfDTO {
     String title;
     String smallDescription;
     String description;
-    String image;
+    byte[] image;
     Integer size;
     byte[] pdfFile;
     Integer counter;

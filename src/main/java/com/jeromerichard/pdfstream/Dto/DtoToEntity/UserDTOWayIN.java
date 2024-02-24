@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Data
 public class UserDTOWayIN {
+    Long id;
     String username;
     String password;
     byte[] avatar;

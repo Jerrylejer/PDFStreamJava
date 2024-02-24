@@ -40,11 +40,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "donor", cascade = CascadeType.ALL)
-    @JsonIgnore
+    //@JsonIgnore
     // liste des donations par donateurs
     private Set<Donation> donationsByDonor = new HashSet<>();
     @OneToMany(mappedBy = "beneficiary", cascade = CascadeType.ALL)
-    @JsonIgnore
+    //@JsonIgnore
     // liste des donations par bénéficiaire
     private Set<Donation> donationsByBeneficiary = new HashSet<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

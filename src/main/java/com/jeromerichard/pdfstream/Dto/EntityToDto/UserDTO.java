@@ -1,6 +1,6 @@
 package com.jeromerichard.pdfstream.Dto.EntityToDto;
 
-import com.jeromerichard.pdfstream.Entity.Role;
+import com.jeromerichard.pdfstream.Entity.*;
 import lombok.*;
 
 import java.util.Date;
@@ -16,4 +16,10 @@ public class UserDTO {
      Date createdAt;
      Date updatedAt;
      Set<Role> roles;
+     Set<Pdf> pdfs;
+     Set<Evaluation> evaluations;
+     Set<Donation> donationsByBeneficiary;
+     Set<Donation> donationsByDonor;
+     Set<Search> searches;
+     Set<Alert> alertList;
 }

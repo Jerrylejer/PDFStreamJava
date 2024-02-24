@@ -25,53 +25,23 @@ import java.util.List;
 public class PdfService implements PdfServiceInt {
     @Autowired
     private PdfRepository repository;
-/*    @Override
-    public Pdf savePdf(PdfDTOWayIN pdf, MultipartFile file) throws IOException {
-        String title = file.getOriginalFilename();
-        Pdf pdfToSave = new Pdf();
-        pdfToSave.setTitle(title);
-        pdfToSave.setFile(file.getBytes());
-        pdfToSave.setSize(file.getSize());
-        pdfToSave.setType(file.getContentType());
-        pdfToSave.setAuthor(pdf.getAuthor());
-        pdfToSave.setCreatedAt(new Date());
-        log.info("Nouveau pdf " + pdfToSave.getTitle() + " ajouté");
-        return repository.save(pdfToSave);
-    }*/
-
     @Override
-    public Pdf savePdf(PdfDTOWayIN pdf, MultipartFile file) throws IOException {
-        String title = file.getOriginalFilename();
-        Pdf pdfToSave = new Pdf();
-        pdfToSave.setTitle(title);
-
-        pdfToSave.setSmallDescription(pdf.getSmallDescription());
-        pdfToSave.setDescription(pdf.getDescription());
-        pdfToSave.setImage(pdf.getImage());
-        pdfToSave.setType(file.getContentType());
-        pdfToSave.setPdfFile(file.getBytes()); // Affecter directement le tableau de bytes
-        pdfToSave.setSize(file.getSize());
-        pdfToSave.setAuthor(pdf.getAuthor());
-        pdfToSave.setCreatedAt(new Date());
-
-        return repository.save(pdfToSave);
+    public Pdf savePdf(PdfDTOWayIN pdf, MultipartFile pdfFile, MultipartFile image) throws IOException {
+    Pdf pdfToSave = Pdf.builder()
+            .title(pdfFile.getOriginalFilename())
+            .pdfFile(pdfFile.getBytes())
+            .size(pdfFile.getSize())
+            .type(pdfFile.getContentType())
+            .image(image.getBytes())
+            .author(pdf.getAuthor())
+            .smallDescription(pdf.getSmallDescription())
+            .description(pdf.getDescription())
+            .categories(pdf.getCategories())
+            .createdAt(new Date())
+            .build();
+            log.info("Nouveau pdf " + pdfToSave.getTitle() + " ajouté");
+            return repository.save(pdfToSave);
     }
-
-/*    @Override
-    public Pdf savePdf(PdfDTOWayIN pdf) {
-        Pdf pdfToSave = new Pdf();
-        pdfToSave.setTitle(pdf.getTitle());
-        pdfToSave.setSmallDescription(pdf.getSmallDescription());
-        pdfToSave.setDescription(pdf.getDescription());
-        pdfToSave.setImage(pdf.getImage());
-        pdfToSave.setFile(pdf.getFile());
-        pdfToSave.setAuthor(pdf.getAuthor());
-        pdfToSave.setCategories(pdf.getCategories());
-        pdfToSave.setCreatedAt(new Date());
-        log.info("Nouveau PDF " + pdf.getTitle() + " ajouté");
-        return repository.save(pdfToSave);
-    }*/
-
 
     @Override
     public List<Pdf> getAllPdfs() throws EmptyListException {
@@ -92,20 +62,18 @@ public class PdfService implements PdfServiceInt {
     }
 
     @Override
-    public Pdf updatePdf(Integer id, PdfDTOWayIN pdf) throws NotFoundException {
+    public Pdf updatePdf(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile) throws NotFoundException, IOException {
         Pdf pdfToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
         );
-        if (pdf.getTitle() != null) // On ne modifie que les propriétés nécessaires
-            pdfToUpdate.setTitle(pdf.getTitle());
+        String title = pdfFile.getOriginalFilename();
         if (pdf.getSmallDescription() != null)
             pdfToUpdate.setSmallDescription(pdf.getSmallDescription());
         if (pdf.getDescription() != null)
             pdfToUpdate.setDescription(pdf.getDescription());
-        if (pdf.getImage() != null)
-            pdfToUpdate.setImage(pdf.getImage());
-        if (pdf.getAuthor() != null)
-            pdfToUpdate.setAuthor(pdf.getAuthor());
+        if (pdf.getPdfFile() != null)
+            pdfToUpdate.setPdfFile(pdfFile.getBytes());
+            pdfToUpdate.setTitle(title);
         if (pdf.getCategories() != null)
             pdfToUpdate.setCategories(pdf.getCategories());
             pdfToUpdate.setUpdateAt(new Date());
@@ -123,13 +91,22 @@ public class PdfService implements PdfServiceInt {
         repository.deleteById(id);
     }
 
-    @Override
-    public List<Pdf> findByAuthor(User author) throws NotFoundException, EmptyListException {
-        List<Pdf> pdfsList = repository.findByAuthor(author);
-        if(author == null) {
-            throw new NotFoundException("L'auteur renseigné n'existe pas.");
+/*    @Override
+    public List<Pdf> findByAuthorId(Integer id) throws NotFoundException, EmptyListException {
+        if(id == null) {
+            throw new NotFoundException("Aucun auteur ne correspond à votre demande");
         }
-        if(pdfsList == null) {
+        List<Pdf> pdfsList = repository.findByAuthorId(id);
+        if(pdfsList.isEmpty()) {
+            throw new EmptyListException("Aucune liste ne correspond à votre demande");
+        }
+        return pdfsList;
+    }*/
+
+    @Override
+    public List<Pdf> findByAuthor(User id) throws EmptyListException {
+        List<Pdf> pdfsList = repository.findByAuthor(id);
+        if(pdfsList.isEmpty()) {
             throw new EmptyListException("Aucune liste ne correspond à votre demande");
         }
         return pdfsList;

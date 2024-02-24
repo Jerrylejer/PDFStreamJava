@@ -33,7 +33,7 @@ public class UserController {
 
     @PutMapping("/update/{id}")
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @ModelAttribute UserDTOWayIN clientDatas, @RequestParam(value = "avatar", required = false)MultipartFile avatar) throws NotFoundException, IOException {
 
             // #################################################################
@@ -50,11 +50,8 @@ public class UserController {
                 byte[] avatarBytes = avatar.getBytes();
                 clientDatas.setAvatar(avatarBytes);
             }
-
-            // Conversion des datas front en DTOWayIN
-            UserDTOWayIN userDTOWayIN = modelMapper.map(clientDatas, UserDTOWayIN.class);
             // Conversion sens DTOWayIN à Entité
-            User user = service.updateUser(id, userDTOWayIN);
+            User user = service.updateUser(id, clientDatas);
             // Conversion sens Entité à DTO
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
@@ -99,14 +96,14 @@ public class UserController {
     }*/
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) throws NotFoundException {
         service.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDTO>> getUsersList() throws EmptyListException {
         // Le flux de datas retourné par getAllAlerts() est traité pour que chaque data soit convertie en class AlertDTO et retournée sous forme de List
         List<UserDTO> userDTOList = service.getAllUsers().stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
@@ -114,7 +111,7 @@ public class UserController {
     }
 
     @GetMapping("/single/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) throws NotFoundException {
         User userById = service.getUserById(id);
         // Conversion sens Entité à DTO
