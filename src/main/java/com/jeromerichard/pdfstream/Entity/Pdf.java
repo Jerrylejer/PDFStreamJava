@@ -32,14 +32,14 @@ public class Pdf {
     private String description;
 
     @Lob
-    @Column(name="image", length = 65555)
+    @Column(name="image", length = 65555, nullable = true)
     private byte[] image;
 
     @Column(name="type")
     private String type;
 
     @Lob
-    @Column(name="pdf_file", length = 65555)
+    @Column(name="pdf_file", length = 65555, nullable = true)
     private byte[] pdfFile;
 
     @Column(name="size")

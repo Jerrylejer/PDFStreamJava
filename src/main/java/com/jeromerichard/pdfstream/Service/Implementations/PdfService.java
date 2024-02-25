@@ -62,7 +62,49 @@ public class PdfService implements PdfServiceInt {
     }
 
     @Override
-    public Pdf updatePdf(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile) throws NotFoundException, IOException {
+    public Pdf updatePdf(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile, MultipartFile image) throws NotFoundException, IOException {
+        Pdf pdfToUpdate = repository.findById(id).orElseThrow(
+                ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
+        );
+        String title = pdfFile.getOriginalFilename();
+        if (pdf.getSmallDescription() != null)
+            pdfToUpdate.setSmallDescription(pdf.getSmallDescription());
+        if (pdf.getDescription() != null)
+            pdfToUpdate.setDescription(pdf.getDescription());
+        if (pdf.getImage() != null)
+            pdfToUpdate.setImage(image.getBytes());
+        if (pdf.getPdfFile() != null)
+            pdfToUpdate.setPdfFile(pdfFile.getBytes());
+            pdfToUpdate.setTitle(title);
+        if (pdf.getCategories() != null)
+            pdfToUpdate.setCategories(pdf.getCategories());
+            pdfToUpdate.setUpdateAt(new Date());
+        log.info("Le PDF" + pdfToUpdate.getTitle() + "a correctement été modifié");
+        repository.save(pdfToUpdate);
+        return pdfToUpdate;
+    }
+
+    @Override
+    public Pdf updatePdfExceptPdfFile(Integer id, PdfDTOWayIN pdf, MultipartFile image) throws NotFoundException, IOException {
+        Pdf pdfToUpdate = repository.findById(id).orElseThrow(
+                ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
+        );
+        if (pdf.getSmallDescription() != null)
+            pdfToUpdate.setSmallDescription(pdf.getSmallDescription());
+        if (pdf.getDescription() != null)
+            pdfToUpdate.setDescription(pdf.getDescription());
+        if (pdf.getImage() != null)
+            pdfToUpdate.setImage(image.getBytes());
+        if (pdf.getCategories() != null)
+            pdfToUpdate.setCategories(pdf.getCategories());
+        pdfToUpdate.setUpdateAt(new Date());
+        log.info("Le PDF" + pdfToUpdate.getTitle() + "a correctement été modifié");
+        repository.save(pdfToUpdate);
+        return pdfToUpdate;
+    }
+
+    @Override
+    public Pdf updatePdfExceptImage(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile) throws NotFoundException, IOException {
         Pdf pdfToUpdate = repository.findById(id).orElseThrow(
                 ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
         );
@@ -73,10 +115,27 @@ public class PdfService implements PdfServiceInt {
             pdfToUpdate.setDescription(pdf.getDescription());
         if (pdf.getPdfFile() != null)
             pdfToUpdate.setPdfFile(pdfFile.getBytes());
-            pdfToUpdate.setTitle(title);
+        pdfToUpdate.setTitle(title);
         if (pdf.getCategories() != null)
             pdfToUpdate.setCategories(pdf.getCategories());
-            pdfToUpdate.setUpdateAt(new Date());
+        pdfToUpdate.setUpdateAt(new Date());
+        log.info("Le PDF" + pdfToUpdate.getTitle() + "a correctement été modifié");
+        repository.save(pdfToUpdate);
+        return pdfToUpdate;
+    }
+
+    @Override
+    public Pdf updatePdflight(Integer id, PdfDTOWayIN pdf) throws NotFoundException, IOException {
+        Pdf pdfToUpdate = repository.findById(id).orElseThrow(
+                ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
+        );
+        if (pdf.getSmallDescription() != null)
+            pdfToUpdate.setSmallDescription(pdf.getSmallDescription());
+        if (pdf.getDescription() != null)
+            pdfToUpdate.setDescription(pdf.getDescription());
+        if (pdf.getCategories() != null)
+            pdfToUpdate.setCategories(pdf.getCategories());
+        pdfToUpdate.setUpdateAt(new Date());
         log.info("Le PDF" + pdfToUpdate.getTitle() + "a correctement été modifié");
         repository.save(pdfToUpdate);
         return pdfToUpdate;

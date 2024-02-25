@@ -65,11 +65,25 @@ public class PdfController {
     //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<PdfDTO> updatePdf(@PathVariable Integer id,
                                             @ModelAttribute PdfDTOWayIN clientDatas,
-                                            @RequestParam(value = "pdfFile", required = false)MultipartFile pdfFile) throws NotFoundException, IOException {
+                                            @RequestParam(value = "pdfFile", required = false)MultipartFile pdfFile, @RequestPart(value = "image", required = false) MultipartFile image) throws NotFoundException, IOException {
         // Conversion des datas front en DTOWayIN
         PdfDTOWayIN pdfDTOWayIN = modelMapper.map(clientDatas, PdfDTOWayIN.class);
+
+        Pdf pdf = null;
+        if (pdfFile != null && image != null) {
+            pdf = service.updatePdf(id, pdfDTOWayIN, pdfFile, image);
+        }
+        if (pdfFile == null && image != null) {
+            pdf = service.updatePdfExceptPdfFile(id, pdfDTOWayIN, image);
+        }
+        if (pdfFile != null && image == null) {
+            pdf = service.updatePdfExceptImage(id, pdfDTOWayIN, pdfFile);
+        }
+        if (pdfFile == null && image == null){
+            pdf = service.updatePdflight(id, pdfDTOWayIN);
+        }
         // Conversion sens DTOWayIN à Entité
-        Pdf pdf = service.updatePdf(id, pdfDTOWayIN, pdfFile);
+        //Pdf pdf = service.updatePdf(id, pdfDTOWayIN, pdfFile, image);
         // Conversion sens Entité à DTO
         PdfDTO pdfDTO = modelMapper.map(pdf, PdfDTO.class);
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.CREATED);

@@ -15,7 +15,10 @@ public interface PdfServiceInt {
     public Pdf savePdf(PdfDTOWayIN clientDatas, MultipartFile pdfFile, MultipartFile image) throws IOException;
     public List<Pdf> getAllPdfs() throws EmptyListException;
     public Pdf getPdfById(Integer id) throws NotFoundException;
-    public Pdf updatePdf(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile) throws NotFoundException, IOException;
+    public Pdf updatePdf(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile, MultipartFile image) throws NotFoundException, IOException;
+    public Pdf updatePdfExceptPdfFile(Integer id, PdfDTOWayIN pdf, MultipartFile image) throws NotFoundException, IOException;
+    public Pdf updatePdfExceptImage(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile) throws NotFoundException, IOException;
+    public Pdf updatePdflight(Integer id, PdfDTOWayIN pdf) throws NotFoundException, IOException;
     public void deletePdf(Integer id) throws NotFoundException;
     public List<Pdf> findByAuthor(User id) throws NotFoundException, EmptyListException;
 }
