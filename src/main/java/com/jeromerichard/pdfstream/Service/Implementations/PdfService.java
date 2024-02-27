@@ -44,6 +44,33 @@ public class PdfService implements PdfServiceInt {
     }
 
     @Override
+    public Pdf savePdfWithDefaultImage(PdfDTOWayIN pdf, MultipartFile pdfFile, MultipartFile defaultImageMultipartFile) throws IOException {
+        Pdf pdfToSave = new Pdf();
+        try {
+            byte[] defaultImageBytes = defaultImageMultipartFile.getBytes();
+            log.info("### defaultImageBytes.length in service ### : " + defaultImageBytes.length);
+            pdfToSave.setImage(defaultImageBytes);
+            log.info("### pdfToSave.setImage(defaultImageBytes) ### : " + pdfToSave.getImage());
+        } catch (IOException e) {
+            //Si erreur
+            log.error("byte[] vide", e);
+            return null;
+        }
+        pdfToSave.setTitle(pdfFile.getOriginalFilename());
+        pdfToSave.setPdfFile(pdfFile.getBytes());
+        pdfToSave.setSize(pdfFile.getSize());
+        pdfToSave.setType(pdfFile.getContentType());
+        pdfToSave.setAuthor(pdf.getAuthor());
+        pdfToSave.setSmallDescription(pdf.getSmallDescription());
+        pdfToSave.setDescription(pdf.getDescription());
+        pdfToSave.setCategories((pdf.getCategories()));
+        pdfToSave.setCreatedAt(new Date());
+
+        log.info("Nouveau pdf " + pdfToSave.getTitle() + " ajouté");
+        return repository.save(pdfToSave);
+    }
+
+    @Override
     public List<Pdf> getAllPdfs() throws EmptyListException {
         List<Pdf> pdfsList = repository.findAll();
         if(pdfsList == null) {

@@ -13,6 +13,7 @@ import java.util.List;
 public interface PdfServiceInt {
     // CRUD JPA
     public Pdf savePdf(PdfDTOWayIN clientDatas, MultipartFile pdfFile, MultipartFile image) throws IOException;
+    public Pdf savePdfWithDefaultImage(PdfDTOWayIN clientDatas, MultipartFile pdfFile, MultipartFile defaultImageMultipartFile) throws IOException;
     public List<Pdf> getAllPdfs() throws EmptyListException;
     public Pdf getPdfById(Integer id) throws NotFoundException;
     public Pdf updatePdf(Integer id, PdfDTOWayIN pdf, MultipartFile pdfFile, MultipartFile image) throws NotFoundException, IOException;
