@@ -73,4 +73,13 @@ public class CategoryService implements CategoryServiceInt {
         log.info("La catégorie " + categoryToDelete.getTitle() + "à correctement été supprimée");
         repository.deleteById(id);
     }
+
+    @Override
+    public List<Category> findCategoriesByParentId(Category id) throws EmptyListException {
+        List<Category> categoriesList = repository.findCategoriesByParentId(id);
+        if(categoriesList == null) {
+            throw new EmptyListException("Aucune liste ne correspond à votre demande");
+        }
+        return categoriesList;
+    }
 }

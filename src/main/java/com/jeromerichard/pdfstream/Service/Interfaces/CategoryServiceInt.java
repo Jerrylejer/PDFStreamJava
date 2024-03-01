@@ -14,4 +14,5 @@ public interface CategoryServiceInt {
     public Category getCategoryById(Integer id) throws NotFoundException;
     public Category updateCategory(Integer id, CategoryDTOWayIN category) throws NotFoundException;
     public void deleteCategory(Integer id) throws NotFoundException;
+    public List<Category> findCategoriesByParentId(Category id) throws EmptyListException;
 }

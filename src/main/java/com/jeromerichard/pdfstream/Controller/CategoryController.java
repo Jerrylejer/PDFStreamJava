@@ -5,9 +5,11 @@ import com.jeromerichard.pdfstream.Dto.DtoToEntity.CollectionDTOWayIN;
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.SearchDTOWayIN;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.CategoryDTO;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.CollectionDTO;
+import com.jeromerichard.pdfstream.Dto.EntityToDto.PdfDTO;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.SearchDTO;
 import com.jeromerichard.pdfstream.Entity.Category;
 import com.jeromerichard.pdfstream.Entity.Collection;
+import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.Search;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
@@ -79,5 +81,13 @@ public class CategoryController {
         // Conversion sens Entité à DTO
         CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
         return new ResponseEntity<CategoryDTO>(categoryDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/parentCategoryId/{id}")
+    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public ResponseEntity<List<CategoryDTO>> getCategoriesByParentId(@PathVariable Category id) throws EmptyListException {
+        List<Category> categoryList = service.findCategoriesByParentId(id);
+        List<CategoryDTO> categoryDTOList = categoryList.stream().map(cat -> modelMapper.map(cat, CategoryDTO.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(categoryDTOList, HttpStatus.OK);
     }
 }
