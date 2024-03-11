@@ -2,7 +2,6 @@ package com.jeromerichard.pdfstream.Controller;
 
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.PdfDTOWayIN;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.PdfDTO;
-import com.jeromerichard.pdfstream.Dto.EntityToDto.UserDTO;
 import com.jeromerichard.pdfstream.Entity.Pdf;
 import com.jeromerichard.pdfstream.Entity.User;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
@@ -10,27 +9,19 @@ import com.jeromerichard.pdfstream.Exception.NotFoundException;
 import com.jeromerichard.pdfstream.Service.Implementations.PdfService;
 import com.jeromerichard.pdfstream.Service.Implementations.UserService;
 import com.jeromerichard.pdfstream.Utils.DefaultMultipartFile;
-import com.jeromerichard.pdfstream.message.ResponseMessage;
-import jakarta.validation.Valid;
+import com.jeromerichard.pdfstream.Utils.ResizedMultipartFile;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 @CrossOrigin("*")
@@ -45,7 +36,49 @@ public class PdfController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/upload")
+    private MultipartFile resizeImage(MultipartFile image) throws IOException {
+        // Lecture des datas du fichier original
+        InputStream inputStream = image.getInputStream();
+
+        // Dimensions maximales acceptées pour les cards (category & pdf)
+        int maxWidth = 240;
+        int maxHeight = 291;
+
+        // Fichier byte[] temporaire pour stocker l'image resizée
+        // ajuster selon la nécessité
+        byte[] resizedImageData = new byte[1024 * 1024];
+
+        // 2 variables qui vont stocker les bytes et la taille du fichier
+        int bytesRead, totalSize = 0;
+
+        // Temporarily store resized image data
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try (inputStream) {
+            // Resize on the fly (adjust filtering as needed)
+            while ((bytesRead = inputStream.read(resizedImageData)) != -1) {
+                BufferedImage resizedBufferedImage = ImageIO.read(new ByteArrayInputStream(resizedImageData, 0, bytesRead));
+                BufferedImage resizedImage = new BufferedImage(maxWidth, maxHeight, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g = resizedImage.createGraphics();
+                g.drawImage(resizedBufferedImage.getScaledInstance(maxWidth, maxHeight, Image.SCALE_SMOOTH), 0, 0, null);
+                g.dispose();
+                ImageIO.write(resizedImage, "jpg", baos); // Assuming JPEG format, adjust as needed
+                totalSize += bytesRead;
+            }
+        }
+
+        // Create a new ResizedMultipartFile object for the resized image
+        MultipartFile resizedMultipartFile = new ResizedMultipartFile(
+                "resized_image.jpg",
+                "resized_image.jpg",
+                image.getContentType(),
+                baos.toByteArray()
+        );
+
+        return resizedMultipartFile;
+    }
+
+/*    @PostMapping("/upload")
     public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN clientDatas,
                                                    @RequestPart(value = "pdfFile") MultipartFile pdfFile,
                                           @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
@@ -68,7 +101,7 @@ public class PdfController {
                     log.info("### defaultImageBytes.length in controller ### : " + defaultImageBytes.length);
                     Pdf pdf = service.savePdfWithDefaultImage(clientDatas, pdfFile, defaultImageMultipartFile);
                     PdfDTO pdfDto = modelMapper.map(pdf, PdfDTO.class);
-                    log.info("passé par ici !");
+                    log.info("passé par image par défaut !");
 
                     return new ResponseEntity<>(pdfDto, HttpStatus.CREATED);
 
@@ -77,10 +110,54 @@ public class PdfController {
                     e.printStackTrace();
                 }
         } else {
-            // Enregistrer le PDF avec l'image fournie ou l'image par défaut (ternaire) => dans les 2 cas je transmets un type MultipartFile
+            // Enregistrer le PDF avec l'image fournie par l'utilisateur
             Pdf pdf = service.savePdf(clientDatas, pdfFile, image);
             PdfDTO pdfDto = modelMapper.map(pdf, PdfDTO.class);
-            System.out.println("passé par là ?");
+            System.out.println("passé par image de l'utilisateur ?");
+            return new ResponseEntity<>(pdfDto, HttpStatus.CREATED);
+        }
+        return null;
+    }*/
+
+    @PostMapping("/upload")
+    public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN clientDatas,
+                                                   @RequestPart(value = "pdfFile") MultipartFile pdfFile,
+                                          @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+
+        if(image == null || image.isEmpty()) {
+            // Convertir l'image par défaut en MultipartFile
+            DefaultMultipartFile defaultImageMultipartFile;
+            InputStream inputStream = getClass().getResourceAsStream("/defaultImage.jpg");
+            assert inputStream != null;
+            log.info("### inputStream: ###" + inputStream);
+            try {
+                byte[] defaultImageBytes = inputStream.readAllBytes();
+                log.info("### defaultImageBytes: ###" + defaultImageBytes);
+                defaultImageMultipartFile = new DefaultMultipartFile(
+                        "defaultImage.jpg",
+                        "defaultImage.jpg",
+                        "image/jpg",
+                        defaultImageBytes
+                );
+                // defaultImageBytes est un tableau de byte[] remplie = ok
+                log.info("### defaultImageBytes.length in controller ### : " + defaultImageBytes.length);
+                Pdf pdf = service.savePdfWithDefaultImage(clientDatas, pdfFile, defaultImageMultipartFile);
+                PdfDTO pdfDto = modelMapper.map(pdf, PdfDTO.class);
+                log.info("passé par image par défaut !");
+
+                return new ResponseEntity<>(pdfDto, HttpStatus.CREATED);
+
+            } catch (IOException e) {
+                // Handle the exception, e.g., log the error
+                e.printStackTrace();
+            }
+        } else {
+            // Resize the user-uploaded image (without converting to BufferedImage)
+            MultipartFile resizedImage = resizeImage(image);
+
+            // Use the resized MultipartFile in service method
+            Pdf pdf = service.savePdf(clientDatas, pdfFile, resizedImage);
+            PdfDTO pdfDto = modelMapper.map(pdf, PdfDTO.class);
             return new ResponseEntity<>(pdfDto, HttpStatus.CREATED);
         }
         return null;
