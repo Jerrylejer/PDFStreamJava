@@ -24,11 +24,11 @@ public class Evaluation {
     private Date updatedAt;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="evaluation_pdf_id") // pdf lié à l'évaluation
+    @JoinColumn(name="pdf_id") // pdf lié à l'évaluation
     private Pdf pdf;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="evaluation_user_id") // user lié à l'évaluation
+    @JoinColumn(name="user_id") // user lié à l'évaluation
     private User user;
 
     public Evaluation() {

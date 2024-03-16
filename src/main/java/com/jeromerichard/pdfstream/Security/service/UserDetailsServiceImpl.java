@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
+    // UserDetailsService permet d’accéder aux utilisateurs.
     @Autowired
     UserRepository userRepository;
 

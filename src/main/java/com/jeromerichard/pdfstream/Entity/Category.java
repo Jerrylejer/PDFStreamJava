@@ -15,7 +15,7 @@ public class Category {
     @Column(name="title")
     private String title;
     @ManyToOne
-    @JoinColumn(name = "parent_id") // We use @OneToOne annotation to refer a category to its parent
+    @JoinColumn(name = "parent_id") // pouvoir déclarer une catégorie parent
     @JsonIgnore
     private Category parentId;
     @OneToMany(mappedBy = "parentId", cascade = CascadeType.ALL)

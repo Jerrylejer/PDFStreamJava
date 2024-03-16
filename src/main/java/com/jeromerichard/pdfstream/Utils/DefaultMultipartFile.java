@@ -16,6 +16,7 @@ public class DefaultMultipartFile implements MultipartFile {
     @Lob
     private final byte[] bytes;
 
+    // Class permettant d'instancier un objet de type MultipartFile (ici utilisé pour ma photo par défaut)
     public DefaultMultipartFile(String filename, String originalFilename, String contentType, byte[] bytes) {
         this.filename = filename;
         this.originalFilename = originalFilename;

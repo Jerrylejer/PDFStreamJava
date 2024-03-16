@@ -23,14 +23,14 @@ public class Alert {
     @Column(name="updated_at")
     private Date updatedAt;
     @ManyToOne // user lié à l'alert
-    @JoinColumn(name="alert_user_id")
+    @JoinColumn(name="user_id")
     private User alertLauncher;
     @ManyToOne // article lié à l'alert
-    @JoinColumn(name="alert_article_id")
+    @JoinColumn(name="article_id")
     private Article charteArticle;
     @ManyToOne // pdf lié à l'alert
     @JsonIgnore
-    @JoinColumn(name="alert_pdf_id")
+    @JoinColumn(name="pdf_id")
     private Pdf pdf;
 
     public Alert() {

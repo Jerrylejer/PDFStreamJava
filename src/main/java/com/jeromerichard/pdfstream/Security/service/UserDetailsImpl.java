@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
+    // UserDetails permet de modéliser un utilisateur.
     private static final long serialVersionUID = 1L;
     private Long id;
 
