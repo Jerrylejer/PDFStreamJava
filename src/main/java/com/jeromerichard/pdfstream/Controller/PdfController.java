@@ -13,8 +13,8 @@ import com.jeromerichard.pdfstream.Utils.ResizedMultipartFile;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -174,7 +174,6 @@ public class PdfController {
         return null;
     }
 
-
     @PutMapping("/update/{id}")
     @ResponseBody
     //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
@@ -225,6 +224,25 @@ public class PdfController {
         // Conversion sens Entité à DTO
         PdfDTO pdfDTO = modelMapper.map(pdf, PdfDTO.class);
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/download/{id}")
+    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public ResponseEntity<?> downloadPdf(@PathVariable Integer id) throws NotFoundException {
+        Pdf pdf = service.getPdfById(id);
+        if (pdf != null) {
+            HttpHeaders headers = new HttpHeaders();
+            // Je renseigne le header de ma réponse avec le type + nom du fichier
+            headers.setContentType(MediaType.parseMediaType(pdf.getType()));
+            headers.setContentDisposition(ContentDisposition.attachment().filename(pdf.getTitle()).build());
+            // je créé un tableau de bytes avec les datas du pdf
+            ByteArrayResource resource = new ByteArrayResource(pdf.getPdfFile());
+            // Je retourne le header + le body contenant les datas du fichier
+            return ResponseEntity.ok().headers(headers).body(resource);
+        } else {
+            // Si pdf n'existe pas, je renvoie une erreur notFound
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/author/{id}")
