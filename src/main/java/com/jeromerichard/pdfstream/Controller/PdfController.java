@@ -226,15 +226,30 @@ public class PdfController {
         return new ResponseEntity<PdfDTO>(pdfDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/preview/{id}")
+    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public ResponseEntity<byte[]> getPdfPreview(@PathVariable Integer id) throws NotFoundException {
+        try {
+            byte[] pdfPreview = service.getPdfPreview(id);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+            return new ResponseEntity<>(pdfPreview, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/download/{id}")
     //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<?> downloadPdf(@PathVariable Integer id) throws NotFoundException {
         Pdf pdf = service.getPdfById(id);
         if (pdf != null) {
+//            String reformatedTitle = pdf.getTitle().replaceAll("[^a-zA-Z0-9_.-]", "_");
             HttpHeaders headers = new HttpHeaders();
             // Je renseigne le header de ma réponse avec le type + nom du fichier
             headers.setContentType(MediaType.parseMediaType(pdf.getType()));
-            headers.setContentDisposition(ContentDisposition.attachment().filename(pdf.getTitle()).build());
+            headers.setContentDisposition(ContentDisposition.inline().filename(pdf.getTitle()).build());
+            System.out.println(pdf.getTitle());
             // je créé un tableau de bytes avec les datas du pdf
             ByteArrayResource resource = new ByteArrayResource(pdf.getPdfFile());
             // Je retourne le header + le body contenant les datas du fichier

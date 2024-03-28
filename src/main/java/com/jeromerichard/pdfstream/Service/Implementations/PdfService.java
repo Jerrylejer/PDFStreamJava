@@ -9,12 +9,23 @@ import com.jeromerichard.pdfstream.Exception.NotFoundException;
 import com.jeromerichard.pdfstream.Repository.PdfRepository;
 import com.jeromerichard.pdfstream.Service.Interfaces.PdfServiceInt;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -68,6 +79,32 @@ public class PdfService implements PdfServiceInt {
 
         log.info("Nouveau pdf " + pdfToSave.getTitle() + " ajouté");
         return repository.save(pdfToSave);
+    }
+
+    @Override
+    public byte[] getPdfPreview(Integer id) throws NotFoundException, IOException {
+        Pdf pdfPreview = repository.findById(id).orElseThrow(
+                ()-> new NotFoundException("Ce PDF n'existe pas, reformulez votre demande")
+        );
+        if(pdfPreview != null) {
+            // PDDocument.load est deprecated => Loader.loadPDF
+            PDDocument document = Loader.loadPDF(pdfPreview.getPdfFile());
+            PDFRenderer pdfRenderer = new PDFRenderer(document);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            int pages  = document.getNumberOfPages();
+            System.out.println("nombre de pages :" + pages);
+
+            // J'extrais la première page et la formate en image png
+            for (int page = 0; page <= 1 && page < pages; ++page) {
+                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 100, ImageType.RGB);
+                ImageIO.write(bim, "PNG", outputStream);
+            }
+            document.close();
+            return outputStream.toByteArray();
+        } else {
+            throw new FileNotFoundException("Fichier PDF avec l'id  " + id + " n'existe pas");
+        }
     }
 
     @Override
