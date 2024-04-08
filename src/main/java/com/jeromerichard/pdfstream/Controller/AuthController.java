@@ -125,10 +125,11 @@ public class AuthController {
 
     @PostMapping("/deconnexion")
     public ResponseEntity<?> logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        // Permet de récupérer les datas du user connecté
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //log.info(String.valueOf(authentication.getPrincipal()));
 
         if (authentication != null) {
+            // permet de vider le contexte de sécurité et de déconnecter l'utilisateur actuellement authentifié.
             new SecurityContextLogoutHandler().logout(request, response, authentication);
             log.info("Utilisateur déconnecté avec succès");
             return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));

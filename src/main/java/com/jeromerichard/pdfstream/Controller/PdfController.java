@@ -133,6 +133,7 @@ public class PdfController {
                                                    @RequestPart(value = "pdfFile") MultipartFile pdfFile,
                                           @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
+        // 1 - Si pas d'image, j'associe une image par défaut au pdf
         if(image == null || image.isEmpty()) {
             // Convertir l'image par défaut en MultipartFile
             DefaultMultipartFile defaultImageMultipartFile;
@@ -142,7 +143,7 @@ public class PdfController {
             try {
                 byte[] defaultImageBytes = inputStream.readAllBytes();
                 log.info("### defaultImageBytes: ###" + defaultImageBytes);
-                // Je créé un multipartFile et y enregistre les données de l'image
+                // Je créé un multipartFile et y enregistre les données de l'image par défaut
                 defaultImageMultipartFile = new DefaultMultipartFile(
                         "defaultImage.jpg",
                         "defaultImage.jpg",
@@ -162,10 +163,10 @@ public class PdfController {
                 // Si erreur, je la retourne
                 e.printStackTrace();
             }
+            // 2 - Si image fournie par le user
         } else {
             // L'image utilisateur est redimenssionnée et est stockée dans une variable de type MultipartFile
             MultipartFile resizedImage = resizeImage(image);
-
             // J'utilise mon service savePdf de base
             Pdf pdf = service.savePdf(clientDatas, pdfFile, resizedImage);
             PdfDTO pdfDto = modelMapper.map(pdf, PdfDTO.class);
