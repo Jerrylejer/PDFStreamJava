@@ -9,14 +9,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name="pdf")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Builder
+@Entity @Table(name="pdf") @NoArgsConstructor @AllArgsConstructor @Getter @Setter @Builder
 public class Pdf {
+
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +56,6 @@ public class Pdf {
             inverseJoinColumns = @JoinColumn(name="category_id"))
     private Set<Category> categories = new HashSet<>();
     // Je récupère un tableau d'objets des catégories qui incluent ce pdf
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinTable(name="pdf_collection",
@@ -69,7 +63,6 @@ public class Pdf {
             inverseJoinColumns = @JoinColumn(name="collection_id"))
     private Set<Collection> collections = new HashSet<>();
     // Je "devrais" récupèrer un tableau d'objets des collections qui incluent ce pdf
-
     @ManyToOne
     @JoinColumn(name="user_id") // user lié au pdf
     //@JsonIgnore

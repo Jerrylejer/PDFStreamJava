@@ -27,12 +27,10 @@ public class DefaultMultipartFile implements MultipartFile {
     public String getName() {
         return null;
     }
-
     @Override
     public String getOriginalFilename() {
         return null;
     }
-
     @Override
     public String getContentType() {
         return null;
@@ -46,23 +44,15 @@ public class DefaultMultipartFile implements MultipartFile {
         return 0;
     }
     @Override
-    public byte[] getBytes() throws IOException {
-        return bytes;
-    }
+    public byte[] getBytes() throws IOException {return bytes;}
     @Override
-    public InputStream getInputStream() throws IOException {
-        return null;
-    }
+    public InputStream getInputStream() throws IOException {return null;}
     @Override
     public Resource getResource() {
         return MultipartFile.super.getResource();
     }
     @Override
-    public void transferTo(File dest) throws IOException, IllegalStateException {
-
-    }
+    public void transferTo(File dest) throws IOException, IllegalStateException {}
     @Override
-    public void transferTo(Path dest) throws IOException, IllegalStateException {
-        MultipartFile.super.transferTo(dest);
-    }
+    public void transferTo(Path dest) throws IOException, IllegalStateException {MultipartFile.super.transferTo(dest);}
 }
