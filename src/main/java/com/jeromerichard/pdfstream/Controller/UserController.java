@@ -34,7 +34,9 @@ public class UserController {
     @PutMapping("/update/{id}")
     @ResponseBody
     //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @ModelAttribute UserDTOWayIN clientDatas, @RequestParam(value = "avatar", required = false)MultipartFile avatar) throws NotFoundException, IOException {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
+                                              @ModelAttribute UserDTOWayIN clientDatas,
+                                              @RequestParam(value = "avatar", required = false)MultipartFile avatar) throws NotFoundException, IOException {
 
             // #################################################################
             // Si je veux stocker les images dans un folder de l'appli ...
@@ -44,7 +46,7 @@ public class UserController {
 //            clientDatas.setAvatar(originalFilename);
             // #################################################################
 
-            // ... mais J'enregistre directement l'image dans la BDD
+            // ... mais J'enregistre directement mes images dans la BDD
             if (avatar != null && !avatar.isEmpty()) {
                 // Handle file upload
                 byte[] avatarBytes = avatar.getBytes();

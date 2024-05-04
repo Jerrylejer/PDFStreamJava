@@ -130,7 +130,7 @@ public class PdfController {
 
     @PostMapping("/upload")
     public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN clientDatas,
-                                                   @RequestPart(value = "pdfFile") MultipartFile pdfFile,
+                                          @RequestPart(value = "pdfFile") MultipartFile pdfFile,
                                           @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
         // 1 - Si pas d'image, j'associe une image par défaut au pdf
@@ -141,6 +141,7 @@ public class PdfController {
             /*assert inputStream != null;*/
             log.info("### inputStream: ###" + inputStream);
             try {
+                assert inputStream != null;
                 byte[] defaultImageBytes = inputStream.readAllBytes();
                 log.info("### defaultImageBytes: ###" + defaultImageBytes);
                 // Je créé un multipartFile et y enregistre les données de l'image par défaut
@@ -180,17 +181,25 @@ public class PdfController {
     //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<PdfDTO> updatePdf(@PathVariable Integer id,
                                             @ModelAttribute PdfDTOWayIN clientDatas,
-                                            @RequestParam(value = "pdfFile", required = false)MultipartFile pdfFile, @RequestPart(value = "image", required = false) MultipartFile image) throws NotFoundException, IOException {
+                                            @RequestParam(value = "pdfFile", required = false)MultipartFile pdfFile,
+                                            @RequestPart(value = "image", required = false) MultipartFile image) throws NotFoundException, IOException {
         // Conversion des datas front en DTOWayIN
         PdfDTOWayIN pdfDTOWayIN = modelMapper.map(clientDatas, PdfDTOWayIN.class);
 
         // Si je ne précise pas que chacune des MultipartFile peut ne pas présente = erreur back "null" à la réception de la requête front
         Pdf pdf = null;
         if (pdfFile != null && image != null) {
-            pdf = service.updatePdf(id, pdfDTOWayIN, pdfFile, image);
+            // L'image utilisateur est redimenssionnée et est stockée dans une variable de type MultipartFile
+            MultipartFile resizedImage = resizeImage(image);
+            // J'utilise mon service savePdf de base
+            pdf = service.updatePdf(id, pdfDTOWayIN, pdfFile, resizedImage);
+            // pdf = service.updatePdf(id, pdfDTOWayIN, pdfFile, image);
         }
         if (pdfFile == null && image != null) {
-            pdf = service.updatePdfExceptPdfFile(id, pdfDTOWayIN, image);
+            MultipartFile resizedImage = resizeImage(image);
+            // J'utilise mon service savePdf de base
+            pdf = service.updatePdfExceptPdfFile(id, pdfDTOWayIN, resizedImage);
+            // pdf = service.updatePdfExceptPdfFile(id, pdfDTOWayIN, image);
         }
         if (pdfFile != null && image == null) {
             pdf = service.updatePdfExceptImage(id, pdfDTOWayIN, pdfFile);
@@ -241,16 +250,16 @@ public class PdfController {
     }
 
     @GetMapping("/download/{id}")
-    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<?> downloadPdf(@PathVariable Integer id) throws NotFoundException {
         Pdf pdf = service.getPdfById(id);
         if (pdf != null) {
-//            String reformatedTitle = pdf.getTitle().replaceAll("[^a-zA-Z0-9_.-]", "_");
+            // Je créé un nouveau header pour y stocker mes datas
             HttpHeaders headers = new HttpHeaders();
             // Je renseigne le header de ma réponse avec le type + nom du fichier
             headers.setContentType(MediaType.parseMediaType(pdf.getType()));
             headers.setContentDisposition(ContentDisposition.inline().filename(pdf.getTitle()).build());
             System.out.println(pdf.getTitle());
+            System.out.println(headers);
             // je créé un tableau de bytes avec les datas du pdf
             ByteArrayResource resource = new ByteArrayResource(pdf.getPdfFile());
             // Je retourne le header + le body contenant les datas du fichier

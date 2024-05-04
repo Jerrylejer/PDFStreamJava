@@ -1,9 +1,11 @@
 package com.jeromerichard.pdfstream.Dto.DtoToEntity;
 
 import com.jeromerichard.pdfstream.Entity.Role;
+import jakarta.annotation.Nullable;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
 
 @Data

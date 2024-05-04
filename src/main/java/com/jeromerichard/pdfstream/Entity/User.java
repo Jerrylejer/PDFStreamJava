@@ -1,6 +1,7 @@
 package com.jeromerichard.pdfstream.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 
