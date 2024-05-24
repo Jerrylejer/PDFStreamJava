@@ -133,6 +133,7 @@ public class PdfController {
                                           @RequestPart(value = "pdfFile") MultipartFile pdfFile,
                                           @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
+        System.out.println(clientDatas);
         // 1 - Si pas d'image, j'associe une image par défaut au pdf
         if(image == null || image.isEmpty()) {
             // Convertir l'image par défaut en MultipartFile

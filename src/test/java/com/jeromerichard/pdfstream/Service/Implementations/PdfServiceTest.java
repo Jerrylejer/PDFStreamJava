@@ -7,6 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class PdfServiceTest {
 
     @Test
+    void savePdf() {
+    }
+
+    @Test
+    void savePdfWithDefaultImage() {
+    }
+
+    @Test
     void getPdfById() {
     }
 }
