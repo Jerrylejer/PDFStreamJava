@@ -57,6 +57,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults())
+                // Utilisation de JWT -> pas de cookies de session
+                // Si session -> Etat renseigné dans le back  -> CSRF indispensable
+                // Si JWT -> délai d'expiration
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -66,10 +69,8 @@ public class WebSecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 // Cas déconnexion sans endpoint dédié => .logout((logout) -> logout.logoutUrl("/"));
-                // Redirection autre page, "Home" par exemple => // Cela me provoquait un conflit CORS sur ma requête logout() dans mon front
-                // Ici, je me sers de mon endpoint "/auth/deconnexion"
+                // Redirection autre page, "Home" par exemple => // conflit CORS sur ma requête logout() dans mon front
                 .logout((logout) -> logout.logoutSuccessUrl("/auth/deconnexion"));
-       // http.headers(header -> header.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*")));
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
@@ -77,5 +78,4 @@ public class WebSecurityConfig {
     }
 }
 
-//                cors(cors -> cors.configurationSource(corsConfigurationSource()))
 

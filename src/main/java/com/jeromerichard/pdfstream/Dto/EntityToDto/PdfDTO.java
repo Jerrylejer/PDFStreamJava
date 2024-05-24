@@ -18,7 +18,6 @@ public class PdfDTO {
     Date createdAt;
     Date updateAt;
     Set<Category> categories;
-    Set<Collection> collections;
     Set<Evaluation> evaluations;
     Set<Alert> alerts;
     Set<Donation> donations;

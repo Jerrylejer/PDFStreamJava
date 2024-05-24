@@ -56,13 +56,7 @@ public class Pdf {
             inverseJoinColumns = @JoinColumn(name="category_id"))
     private Set<Category> categories = new HashSet<>();
     // Je récupère un tableau d'objets des catégories qui incluent ce pdf
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name="pdf_collection",
-            joinColumns = @JoinColumn(name="pdf_id"),
-            inverseJoinColumns = @JoinColumn(name="collection_id"))
-    private Set<Collection> collections = new HashSet<>();
-    // Je "devrais" récupèrer un tableau d'objets des collections qui incluent ce pdf
+
     @ManyToOne
     @JoinColumn(name="user_id") // user lié au pdf
     //@JsonIgnore

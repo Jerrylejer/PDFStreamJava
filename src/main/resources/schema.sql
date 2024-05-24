@@ -78,14 +78,6 @@ CREATE TABLE category (
   CONSTRAINT FK_parent FOREIGN KEY (parent_id) REFERENCES category (id)
 );
 
-CREATE TABLE collection (
-  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  created_at datetime(6) DEFAULT NULL,
-  updated_at datetime(6) DEFAULT NULL,
-  user_id bigint UNIQUE DEFAULT NULL,
-  CONSTRAINT FK_collection_user FOREIGN KEY (user_id) REFERENCES `user` (id)
-);
-
 CREATE TABLE donation (
   id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   amount int DEFAULT NULL,
@@ -118,14 +110,6 @@ CREATE TABLE pdf_category (
   PRIMARY KEY (category_id, pdf_id),
   CONSTRAINT FK_pdf_category_pdf FOREIGN KEY (pdf_id) REFERENCES pdf (id),
   CONSTRAINT FK_pdf_category_category FOREIGN KEY (category_id) REFERENCES category (id)
-);
-
-CREATE TABLE pdf_collection (
-  collection_id int NOT NULL,
-  pdf_id int NOT NULL,
-  PRIMARY KEY (collection_id, pdf_id),
-  CONSTRAINT FK_pdf_collection_pdf FOREIGN KEY (pdf_id) REFERENCES pdf (id),
-  CONSTRAINT FK_pdf_collection_collection FOREIGN KEY (collection_id) REFERENCES collection (id)
 );
 
 CREATE TABLE user_role (

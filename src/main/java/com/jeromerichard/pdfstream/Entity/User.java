@@ -55,10 +55,7 @@ public class User {
     @JsonIgnore
     // Liste des pdfs par user
     private Set<Pdf> pdfs = new HashSet<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
-    // liste des recherches par user
-    private Set<Search> searches = new HashSet<>();
+
     @OneToMany(mappedBy = "alertLauncher", cascade = CascadeType.ALL)
     @JsonIgnore
     // liste alerts par user
@@ -78,7 +75,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String password, byte[] avatar, String email, String bio, Date createdAt, Date updatedAt, Set<Role> roles, Set<Donation> donationsByBeneficiary, Set<Donation> donationsByDonor, Set<Evaluation> evaluations, Set<Pdf> pdfs, Set<Search> searches, Set<Alert> alertList) {
+    public User(String username, String password, byte[] avatar, String email, String bio, Date createdAt, Date updatedAt, Set<Role> roles, Set<Donation> donationsByBeneficiary, Set<Donation> donationsByDonor, Set<Evaluation> evaluations, Set<Pdf> pdfs, Set<Alert> alertList) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -91,7 +88,6 @@ public class User {
         this.donationsByDonor = donationsByDonor;
         this.evaluations = evaluations;
         this.pdfs = pdfs;
-        this.searches = searches;
         this.alertList = alertList;
     }
 
@@ -197,14 +193,6 @@ public class User {
 
     public void setPdfs(Set<Pdf> pdfs) {
         this.pdfs = pdfs;
-    }
-
-    public Set<Search> getSearches() {
-        return searches;
-    }
-
-    public void setSearches(Set<Search> searches) {
-        this.searches = searches;
     }
 
     public Set<Alert> getAlertList() {

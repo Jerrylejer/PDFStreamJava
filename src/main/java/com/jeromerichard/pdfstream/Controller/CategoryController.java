@@ -1,20 +1,11 @@
 package com.jeromerichard.pdfstream.Controller;
 
 import com.jeromerichard.pdfstream.Dto.DtoToEntity.CategoryDTOWayIN;
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.CollectionDTOWayIN;
-import com.jeromerichard.pdfstream.Dto.DtoToEntity.SearchDTOWayIN;
 import com.jeromerichard.pdfstream.Dto.EntityToDto.CategoryDTO;
-import com.jeromerichard.pdfstream.Dto.EntityToDto.CollectionDTO;
-import com.jeromerichard.pdfstream.Dto.EntityToDto.PdfDTO;
-import com.jeromerichard.pdfstream.Dto.EntityToDto.SearchDTO;
 import com.jeromerichard.pdfstream.Entity.Category;
-import com.jeromerichard.pdfstream.Entity.Collection;
-import com.jeromerichard.pdfstream.Entity.Pdf;
-import com.jeromerichard.pdfstream.Entity.Search;
 import com.jeromerichard.pdfstream.Exception.EmptyListException;
 import com.jeromerichard.pdfstream.Exception.NotFoundException;
 import com.jeromerichard.pdfstream.Service.Implementations.CategoryService;
-import com.jeromerichard.pdfstream.Service.Implementations.SearchService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

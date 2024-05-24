@@ -20,6 +20,5 @@ public class UserDTO {
      Set<Evaluation> evaluations;
      Set<Donation> donationsByBeneficiary;
      Set<Donation> donationsByDonor;
-     Set<Search> searches;
      Set<Alert> alertList;
 }
