@@ -129,7 +129,7 @@ public class PdfController {
     }*/
 
     @PostMapping("/upload")
-    public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN clientDatas,
+    public ResponseEntity<PdfDTO> savePdf(@ModelAttribute(value="clientDatas") PdfDTOWayIN clientDatas,
                                           @RequestPart(value = "pdfFile") MultipartFile pdfFile,
                                           @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 

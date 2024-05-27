@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PdfDTOWayIN {
     Integer id;
     String title;

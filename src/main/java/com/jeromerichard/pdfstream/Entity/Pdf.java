@@ -8,8 +8,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-@Entity @Table(name="pdf") @NoArgsConstructor @AllArgsConstructor @Getter @Setter @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+@Entity
+@Table(name="pdf")
 public class Pdf {
 
     @Id

@@ -2,9 +2,14 @@ package com.jeromerichard.pdfstream.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.*;
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name="category")
 public class Category {
@@ -28,70 +33,4 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     @JsonIgnore
     private Set<Pdf> pdfList = new HashSet<>();
-    public Category() {
-    }
-    public Category(String title, Category parentId, List<Category> children, Date createdAt, Date updateAt, Set<Pdf> pdfList) {
-        this.title = title;
-        this.parentId = parentId;
-        this.children = children;
-        this.createdAt = createdAt;
-        this.updateAt = updateAt;
-        this.pdfList = pdfList;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Category getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Category parentId) {
-        this.parentId = parentId;
-    }
-
-    public List<Category> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Category> children) {
-        this.children = children;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public Set<Pdf> getPdfList() {
-        return pdfList;
-    }
-
-    public void setPdfList(Set<Pdf> pdfList) {
-        this.pdfList = pdfList;
-    }
 }
