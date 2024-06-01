@@ -17,8 +17,10 @@ public class Category {
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(name="title")
     private String title;
+
     @ManyToOne
     @JoinColumn(name = "parent_id") // pouvoir déclarer une catégorie parent
     @JsonIgnore
