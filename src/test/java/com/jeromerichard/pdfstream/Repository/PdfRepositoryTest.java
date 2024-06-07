@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-// Je n'utilise pas la BDD H2 mais celle en production
 class PdfRepositoryTest {
     @Autowired
     PdfRepository pdfRepository;

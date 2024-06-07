@@ -34,9 +34,6 @@ class PdfServiceTest {
         pdf.setTitle("pdfTemplate");
         return pdf;
     }
-    @Test
-    void save_should_create_pdf() {
-    }
 
     @Test
     void findById_should_return_pdf() throws NotFoundException {
@@ -48,5 +45,9 @@ class PdfServiceTest {
         // Then
         assertEquals(pdf.getId(), returnedPdf.getId());
         verify(this.testPdfRepository).findById(1);
+    }
+
+    @Test
+    void save_should_create_pdf() {
     }
 }

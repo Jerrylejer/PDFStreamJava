@@ -38,43 +38,36 @@ public class PdfController {
 
     // méthode Java qui prend en entrée un fichier image MultipartFile et retourne une image redimenssionnée
     private MultipartFile resizeImage(MultipartFile image) throws IOException {
-        // Cette ligne extrait un flux d'entrée à partir du fichier image d'origine
-        // getInputStream() est une méthode de cette interface qui permet d'obtenir
-        // un flux d'entrée pour lire les données du fichier.
+        // getInputStream() est une méthode de la Class MultipartFile qui permet d'obtenir
+        // un flux pour lire les données du fichier image.
         InputStream inputStream = image.getInputStream();
         // Dimensions maximales acceptées pour les cards (category & pdf)
         int maxWidth = 240;
         int maxHeight = 291;
-        // stocke temporairement les données de l'image redimensionnée pendant le processus
-        // de redimensionnement (buffer de 1MB).
+        // stocke temporairement les données de l'image redimensionnée (buffer de 1MB).
         byte[] resizedImageData = new byte[1024 * 1024];
-        // Variables qui vont stocker les bytes et la taille du fichier
-        int bytesRead, totalSize = 0;
-        // Crée un flux de sortie dans lequel les données de la nouvelle image sont finalement stockées.
+        // Crée un flux de sortie dans lequel les données de la nouvelle image seront finalement stockées.
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        try (inputStream) {
-            // Lecture des données de inputStream à partir des itérations d'enregistrement successives et temporaires de resizedImageData
-            // bytesRead correspond à ce nombre d'octets lus à chaque itération
-            // Cette lecture s'effectue jusqu'à ce qu'il n'y ait plus rien à lire (!= -1)
-            while ((bytesRead = inputStream.read(resizedImageData)) != -1) {
-                // La class BufferedImage est utilisée pour stocker temporairement l'image redimensionnée avant de l'écrire dans un flux
-                // de sortie pour la transformer en MultipartFile
-                // Cette ligne crée une instance de BufferedImage à partir des octets lus dans le tableau resizedImageData.
-                BufferedImage resizedBufferedImage = ImageIO.read(new ByteArrayInputStream(resizedImageData, 0, bytesRead));
-                // Crée une nouvelle instance de BufferedImage avec les dimensions maximales spécifiées.
-                BufferedImage resizedImage = new BufferedImage(maxWidth, maxHeight, BufferedImage.TYPE_INT_RGB);
-                // Cette ligne créé un objet Graphics2D à partir de l'image redimensionnée, ce qui permet de dessiner sur cette image
-                Graphics2D g = resizedImage.createGraphics();
-                // Cette ligne redimensionne l'image originale et la dessine sur l'image redimensionnée en utilisant un algorithme de
-                // mise à l'échelle en douceur.
-                g.drawImage(resizedBufferedImage.getScaledInstance(maxWidth, maxHeight, Image.SCALE_SMOOTH), 0, 0, null);
-                g.dispose();
-                // Cette ligne écrit l'image redimensionnée dans le flux de sortie baos sous forme de fichier JPG.
-                ImageIO.write(resizedImage, "jpg", baos);
-                // Cette ligne met à jour la taille totale de l'image redimensionnée.
-                totalSize += bytesRead;
+        try (inputStream; baos) {
+            // Lire l'image d'origine depuis le flux d'entrée
+            BufferedImage originalImage = ImageIO.read(inputStream);
+            if (originalImage == null) {
+                throw new IOException("L'image fournie n'est pas valide.");
             }
+            // Crée une nouvelle instance de BufferedImage avec les dimensions maximales spécifiées.
+            BufferedImage resizedImage = new BufferedImage(maxWidth, maxHeight, BufferedImage.TYPE_INT_RGB);
+            // Crée un objet Graphics2D à partir de l'image redimensionnée, ce qui permet de dessiner sur cette image
+            Graphics2D g = resizedImage.createGraphics();
+            // Redimensionne l'image originale et la dessine sur l'image redimensionnée en utilisant un algorithme de mise à l'échelle en douceur
+            g.drawImage(originalImage.getScaledInstance(maxWidth, maxHeight, Image.SCALE_SMOOTH), 0, 0, maxWidth, maxHeight, null);
+            g.dispose();
+            // Écrit l'image redimensionnée dans le flux de sortie baos sous forme de fichier JPG
+            ImageIO.write(resizedImage, "jpg", baos);
+
+        } catch (IOException e) {
+            // Si erreur, je la retourne
+            e.printStackTrace();
         }
         // Nouvel objet MultipartFile contenant les données de l'image redimensionnée et le retourne
         // MultipartFile est une interface qui représente un fichier téléchargé dans un contrôleur
@@ -86,47 +79,6 @@ public class PdfController {
         );
         return resizedMultipartFile;
     }
-
-/*    @PostMapping("/upload")
-    public ResponseEntity<PdfDTO> savePdf(@ModelAttribute PdfDTOWayIN clientDatas,
-                                                   @RequestPart(value = "pdfFile") MultipartFile pdfFile,
-                                          @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
-        if(image == null || image.isEmpty()) {
-            // Convertir l'image par défaut en MultipartFile
-            DefaultMultipartFile defaultImageMultipartFile;
-            InputStream inputStream = getClass().getResourceAsStream("/defaultImage.jpg");
-                assert inputStream != null;
-                log.info("### inputStream: ###" + inputStream);
-                try {
-                    byte[] defaultImageBytes = inputStream.readAllBytes();
-                    log.info("### defaultImageBytes: ###" + defaultImageBytes);
-                    defaultImageMultipartFile = new DefaultMultipartFile(
-                            "defaultImage.jpg",
-                            "defaultImage.jpg",
-                            "image/jpg",
-                            defaultImageBytes
-                    );
-                    // defaultImageBytes est un tableau de byte[] remplie = ok
-                    log.info("### defaultImageBytes.length in controller ### : " + defaultImageBytes.length);
-                    Pdf pdf = service.savePdfWithDefaultImage(clientDatas, pdfFile, defaultImageMultipartFile);
-                    PdfDTO pdfDto = modelMapper.map(pdf, PdfDTO.class);
-                    log.info("passé par image par défaut !");
-
-                    return new ResponseEntity<>(pdfDto, HttpStatus.CREATED);
-
-                } catch (IOException e) {
-                    // Handle the exception, e.g., log the error
-                    e.printStackTrace();
-                }
-        } else {
-            // Enregistrer le PDF avec l'image fournie par l'utilisateur
-            Pdf pdf = service.savePdf(clientDatas, pdfFile, image);
-            PdfDTO pdfDto = modelMapper.map(pdf, PdfDTO.class);
-            System.out.println("passé par image de l'utilisateur ?");
-            return new ResponseEntity<>(pdfDto, HttpStatus.CREATED);
-        }
-        return null;
-    }*/
 
     @PostMapping("/upload")
     public ResponseEntity<PdfDTO> savePdf(@ModelAttribute(value="clientDatas") PdfDTOWayIN clientDatas,

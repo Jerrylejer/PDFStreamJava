@@ -64,7 +64,6 @@ public class Pdf {
 
     @ManyToOne
     @JoinColumn(name="user_id") // user lié au pdf
-    //@JsonIgnore
     private User author;
 
     @OneToMany(mappedBy = "pdf", cascade = CascadeType.ALL)
