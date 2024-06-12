@@ -38,22 +38,22 @@ public class PdfController {
 
     // méthode Java qui prend en entrée un fichier image MultipartFile et retourne une image redimenssionnée
     private MultipartFile resizeImage(MultipartFile image) throws IOException {
+        // MultipartFile est une interface qui représente un fichier téléchargé dans un contrôleur
         // getInputStream() est une méthode de la Class MultipartFile qui permet d'obtenir
         // un flux pour lire les données du fichier image.
         InputStream inputStream = image.getInputStream();
-        // Dimensions maximales acceptées pour les cards (category & pdf)
+        // Dimensions maximales acceptées pour mes cards (category & pdf)
         int maxWidth = 240;
         int maxHeight = 291;
-        // stocke temporairement les données de l'image redimensionnée (buffer de 1MB).
-        byte[] resizedImageData = new byte[1024 * 1024];
-        // Crée un flux de sortie dans lequel les données de la nouvelle image seront finalement stockées.
+        // Crée un flux dans lequel les données de la nouvelle image seront finalement stockées.
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try (inputStream; baos) {
-            // Lire l'image d'origine depuis le flux d'entrée
+            // Lire l'image d'origine depuis le flux inputStream
+            // BufferedImage permet d'accéder à des méthodes de manipulation d'image en termes de pixels
             BufferedImage originalImage = ImageIO.read(inputStream);
             if (originalImage == null) {
-                throw new IOException("L'image fournie n'est pas valide.");
+                throw new IOException("L'image fournie n'est pas valide ou absente.");
             }
             // Crée une nouvelle instance de BufferedImage avec les dimensions maximales spécifiées.
             BufferedImage resizedImage = new BufferedImage(maxWidth, maxHeight, BufferedImage.TYPE_INT_RGB);
@@ -62,15 +62,14 @@ public class PdfController {
             // Redimensionne l'image originale et la dessine sur l'image redimensionnée en utilisant un algorithme de mise à l'échelle en douceur
             g.drawImage(originalImage.getScaledInstance(maxWidth, maxHeight, Image.SCALE_SMOOTH), 0, 0, maxWidth, maxHeight, null);
             g.dispose();
-            // Écrit l'image redimensionnée dans le flux de sortie baos sous forme de fichier JPG
+            // Transcrit l'image redimensionnée dans le flux de sortie baos sous forme de fichier JPG
             ImageIO.write(resizedImage, "jpg", baos);
 
         } catch (IOException e) {
             // Si erreur, je la retourne
             e.printStackTrace();
         }
-        // Nouvel objet MultipartFile contenant les données de l'image redimensionnée et le retourne
-        // MultipartFile est une interface qui représente un fichier téléchargé dans un contrôleur
+        // Nouvel objet MultipartFile contenant les données de l'image redimensionnée
         MultipartFile resizedMultipartFile = new ResizedMultipartFile(
                 "resized_image.jpg",
                 "resized_image.jpg",

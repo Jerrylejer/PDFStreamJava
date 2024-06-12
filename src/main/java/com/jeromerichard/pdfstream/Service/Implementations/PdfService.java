@@ -38,12 +38,25 @@ public class PdfService implements PdfServiceInt {
     private PdfRepository repository;
     @Override
     public Pdf savePdf(PdfDTOWayIN pdf, MultipartFile pdfFile, MultipartFile image) throws IOException {
+        byte[] pdfClientFile;
+        byte[] pdfImageFile;
+        // Je vérifie mes fichiers MultipartFile
+        try {
+            pdfClientFile = pdfFile.getBytes();
+            pdfImageFile = image.getBytes();
+            log.info("### pdfClientFileBytes.length in service ### : " + pdfClientFile.length);
+            log.info("### pdfImageFileBytes.length in service ### : " + pdfImageFile.length);
+        } catch (IOException e) {
+            log.error("byte[] image ou pdf vide", e);
+            return null;
+        }
+    // Je sauvegarde mon objety
     Pdf pdfToSave = Pdf.builder()
             .title(pdfFile.getOriginalFilename())
-            .pdfFile(pdfFile.getBytes())
+            .pdfFile(pdfClientFile)
             .size(pdfFile.getSize())
             .type(pdfFile.getContentType())
-            .image(image.getBytes())
+            .image(pdfImageFile)
             .author(pdf.getAuthor())
             .smallDescription(pdf.getSmallDescription())
             .description(pdf.getDescription())
@@ -57,18 +70,19 @@ public class PdfService implements PdfServiceInt {
     @Override
     public Pdf savePdfWithDefaultImage(PdfDTOWayIN pdf, MultipartFile pdfFile, MultipartFile defaultImageMultipartFile) throws IOException {
         Pdf pdfToSave = new Pdf();
+        // Je vérifie mes fichiers MultipartFile et les save
         try {
             byte[] defaultImageBytes = defaultImageMultipartFile.getBytes();
+            byte[] pdfClientFile = pdfFile.getBytes();
             log.info("### defaultImageBytes.length in service ### : " + defaultImageBytes.length);
+            log.info("### pdfClientFileBytes.length in service ### : " + pdfClientFile.length);
             pdfToSave.setImage(defaultImageBytes);
-            log.info("### pdfToSave.setImage(defaultImageBytes) ### : " + pdfToSave.getImage());
+            pdfToSave.setPdfFile(pdfClientFile);
         } catch (IOException e) {
-            //Si erreur
-            log.error("byte[] vide", e);
+            log.error("byte[] image ou pdf vide", e);
             return null;
         }
         pdfToSave.setTitle(pdfFile.getOriginalFilename());
-        pdfToSave.setPdfFile(pdfFile.getBytes());
         pdfToSave.setSize(pdfFile.getSize());
         pdfToSave.setType(pdfFile.getContentType());
         pdfToSave.setAuthor(pdf.getAuthor());
@@ -76,7 +90,6 @@ public class PdfService implements PdfServiceInt {
         pdfToSave.setDescription(pdf.getDescription());
         pdfToSave.setCategories((pdf.getCategories()));
         pdfToSave.setCreatedAt(new Date());
-
         log.info("Nouveau pdf " + pdfToSave.getTitle() + " ajouté");
         return repository.save(pdfToSave);
     }
